@@ -156,8 +156,8 @@ export default function CasesPage() {
   return (
     <MarketingLayout>
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <div className="text-center mb-16">
-          <Badge variant="outline" className="mb-4">
+        <div className="text-center mb-16 animate-fade-in-up">
+          <Badge variant="secondary" className="mb-4">
             <Globe className="h-3 w-3 mr-1" />
             Industry Templates
           </Badge>

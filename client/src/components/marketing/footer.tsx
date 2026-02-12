@@ -13,6 +13,7 @@ const footerLinks = {
   Solutions: [
     { label: "E-commerce", href: "/solutions#ecommerce" },
     { label: "Restaurant", href: "/solutions#restaurant" },
+    { label: "Beauty & Wellness", href: "/solutions#beauty" },
     { label: "Case Studies", href: "/cases" },
   ],
   Company: [
@@ -24,18 +25,18 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="border-t bg-card">
+    <footer className="border-t bg-card/80">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">
+              <div className="flex h-8 w-8 items-center justify-center rounded-md bg-gradient-to-br from-primary to-emerald-600">
                 <Zap className="h-4 w-4 text-primary-foreground" />
               </div>
               <span className="text-lg font-bold">OAIM</span>
             </div>
-            <p className="text-sm text-muted-foreground mb-4">
-              One AI Management. Turn WhatsApp into your AI-powered sales engine.
+            <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+              One AI Management. Turn WhatsApp into your AI-powered sales engine for e-commerce, restaurants, and beauty businesses.
             </p>
             <a
               href="https://wa.me/1234567890"

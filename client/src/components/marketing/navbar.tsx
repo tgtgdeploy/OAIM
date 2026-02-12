@@ -17,12 +17,12 @@ export function Navbar() {
   const [location] = useLocation();
 
   return (
-    <nav className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-50 border-b glass">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
           <Link href="/" data-testid="link-home">
             <div className="flex items-center gap-2 cursor-pointer">
-              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-primary">
+              <div className="flex h-9 w-9 items-center justify-center rounded-md bg-gradient-to-br from-primary to-emerald-600">
                 <Zap className="h-5 w-5 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold tracking-tight">OAIM</span>
@@ -68,36 +68,36 @@ export function Navbar() {
         </div>
       </div>
 
-      {mobileOpen && (
-        <div className="md:hidden border-t bg-background">
-          <div className="flex flex-col p-4 gap-1">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                <Button
-                  variant="ghost"
-                  className="w-full justify-start"
-                  onClick={() => setMobileOpen(false)}
-                  data-testid={`link-mobile-${link.label.toLowerCase()}`}
-                >
-                  {link.label}
-                </Button>
-              </Link>
-            ))}
-            <div className="flex gap-2 mt-2 pt-2 border-t">
-              <Link href="/auth/login" className="flex-1">
-                <Button variant="outline" className="w-full" onClick={() => setMobileOpen(false)}>
-                  Log In
-                </Button>
-              </Link>
-              <Link href="/auth/register" className="flex-1">
-                <Button className="w-full" onClick={() => setMobileOpen(false)}>
-                  Free Trial
-                </Button>
-              </Link>
-            </div>
+      <div
+        className={`md:hidden border-t bg-background transition-all duration-300 overflow-hidden ${mobileOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+      >
+        <div className="flex flex-col p-4 gap-1">
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href}>
+              <Button
+                variant="ghost"
+                className="w-full justify-start mobile-touch-target"
+                onClick={() => setMobileOpen(false)}
+                data-testid={`link-mobile-${link.label.toLowerCase()}`}
+              >
+                {link.label}
+              </Button>
+            </Link>
+          ))}
+          <div className="flex gap-2 mt-2 pt-2 border-t">
+            <Link href="/auth/login" className="flex-1">
+              <Button variant="outline" className="w-full" onClick={() => setMobileOpen(false)}>
+                Log In
+              </Button>
+            </Link>
+            <Link href="/auth/register" className="flex-1">
+              <Button className="w-full" onClick={() => setMobileOpen(false)}>
+                Free Trial
+              </Button>
+            </Link>
           </div>
         </div>
-      )}
+      </div>
     </nav>
   );
 }
