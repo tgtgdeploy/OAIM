@@ -23,10 +23,18 @@ import {
   Settings,
   Zap,
   Lock,
-  Bot,
   Headphones,
   Share2,
   UserCog,
+  ChefHat,
+  CalendarDays,
+  Bike,
+  LayoutGrid,
+  Receipt,
+  Scissors,
+  UserCheck,
+  Truck,
+  CreditCard,
 } from "lucide-react";
 
 const mainItems = [
@@ -35,6 +43,25 @@ const mainItems = [
   { title: "Pipeline", href: "/app/pipeline", icon: GitBranch },
   { title: "Orders", href: "/app/orders", icon: ShoppingCart },
   { title: "Products", href: "/app/products", icon: Package },
+];
+
+const ecommerceItems = [
+  { title: "Shipping", href: "/app/shipping", icon: Truck },
+  { title: "Payments", href: "/app/payments", icon: CreditCard },
+];
+
+const fnbItems = [
+  { title: "Menu", href: "/app/menu", icon: ChefHat },
+  { title: "Reservations", href: "/app/reservations", icon: CalendarDays },
+  { title: "Delivery", href: "/app/delivery", icon: Bike },
+  { title: "Tables", href: "/app/tables", icon: LayoutGrid },
+  { title: "Checkout", href: "/app/checkout", icon: Receipt },
+];
+
+const beautyItems = [
+  { title: "Booking", href: "/app/booking", icon: CalendarDays },
+  { title: "Therapists", href: "/app/therapists", icon: UserCheck },
+  { title: "Services", href: "/app/services", icon: Scissors },
 ];
 
 const advancedItems = [
@@ -53,6 +80,34 @@ const settingsItems = [
 export function AppSidebar() {
   const [location] = useLocation();
 
+  const renderGroup = (label: string, items: typeof mainItems) => (
+    <SidebarGroup>
+      <SidebarGroupLabel>{label}</SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {items.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton asChild isActive={location === item.href}>
+                <Link href={item.href} data-testid={`link-app-${item.title.toLowerCase().replace(/\s/g, "-")}`}>
+                  <item.icon className="h-4 w-4" />
+                  <span className="flex-1">{item.title}</span>
+                  {"badge" in item && item.badge && (
+                    <Badge variant="default" className="text-xs px-1.5 min-w-5 h-5 justify-center">
+                      {item.badge}
+                    </Badge>
+                  )}
+                  {"locked" in item && item.locked && (
+                    <Lock className="h-3 w-3 text-muted-foreground" />
+                  )}
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  );
+
   return (
     <Sidebar>
       <SidebarHeader className="p-4">
@@ -69,67 +124,12 @@ export function AppSidebar() {
         </Link>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Main</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {mainItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={location === item.href}>
-                    <Link href={item.href} data-testid={`link-app-${item.title.toLowerCase().replace(/\s/g, "-")}`}>
-                      <item.icon className="h-4 w-4" />
-                      <span className="flex-1">{item.title}</span>
-                      {item.badge && (
-                        <Badge variant="default" className="text-xs px-1.5 min-w-5 h-5 justify-center">
-                          {item.badge}
-                        </Badge>
-                      )}
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel>Advanced</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {advancedItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={location === item.href}>
-                    <Link href={item.href} data-testid={`link-app-${item.title.toLowerCase().replace(/\s/g, "-")}`}>
-                      <item.icon className="h-4 w-4" />
-                      <span className="flex-1">{item.title}</span>
-                      {item.locked && (
-                        <Lock className="h-3 w-3 text-muted-foreground" />
-                      )}
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel>Management</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {settingsItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={location === item.href}>
-                    <Link href={item.href} data-testid={`link-app-${item.title.toLowerCase().replace(/\s/g, "-")}`}>
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {renderGroup("Main", mainItems)}
+        {renderGroup("E-Commerce", ecommerceItems)}
+        {renderGroup("F&B / Restaurant", fnbItems)}
+        {renderGroup("Beauty & Wellness", beautyItems)}
+        {renderGroup("Advanced", advancedItems)}
+        {renderGroup("Management", settingsItems)}
       </SidebarContent>
       <SidebarFooter className="p-4">
         <div className="rounded-md bg-primary/10 p-3">

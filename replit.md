@@ -27,6 +27,9 @@ Multi-tenant WhatsApp-first AI sales platform for e-commerce and restaurant busi
 
 3. **Merchant Dashboard** (`/app`) — Merchant SaaS backend
    - Main: inbox, contacts, pipeline, orders, products
+   - E-Commerce: shipping, payments
+   - F&B/Restaurant: menu, reservations, delivery, tables, checkout
+   - Beauty & Wellness: booking, therapists, services
    - Advanced: automation, follow-ups, customer support, ads & ROI, referral
    - Management: team & roles, settings
    - Files: `client/src/pages/app/`
@@ -36,6 +39,22 @@ Multi-tenant WhatsApp-first AI sales platform for e-commerce and restaurant busi
    - Pages: dashboard, orders, track, loyalty, refer & earn, profile
    - Files: `client/src/pages/member/`
    - Sidebar: `client/src/components/member/member-sidebar.tsx`
+
+### Industry Storefront Templates
+- `client/src/pages/templates/` — Public-facing merchant storefronts:
+  - `ecommerce.tsx` — E-commerce storefront with product grid, categories, features
+  - `fnb.tsx` — F&B/Restaurant storefront with menu, reservations, delivery
+  - `beauty.tsx` — Beauty/Wellness storefront with services, packages, gallery
+- Each template uses shared storefront components + ManagementShowcase to display industry-specific backend features
+
+### Shared Storefront Components
+- `client/src/components/storefront/` — 14 reusable components:
+  - StoreHeader, StoreHero, StoreFooter — Layout components
+  - CategoryGrid, ProductGrid, ServiceGrid — Content grids
+  - FeatureHighlights, StepProcess, TestimonialGrid — Marketing sections
+  - CTABanner, SpecialOffer, ReservationCard — Conversion elements
+  - PackageGrid, GalleryGrid — Showcase components
+  - ManagementShowcase — Industry-specific backend feature showcase
 
 ### Shared Reusable Module Components
 - `client/src/components/modules/` — Components used across panels:
@@ -66,9 +85,16 @@ Multi-tenant WhatsApp-first AI sales platform for e-commerce and restaurant busi
 - Created shared reusable module components (ads, support, referral, automation)
 - Updated Super Admin sidebar with 3 groups: Platform, Marketing, Operations
 - Added new superadmin pages: modules, ads, design, referral, automation
-- Updated Merchant sidebar with new pages: automation, support, referral, team & roles
+- Built 3 industry storefront templates (ecommerce, fnb, beauty) at `/templates/*`
+- Created 14 reusable storefront components in `client/src/components/storefront/`
+- Created ManagementShowcase component for industry-specific backend feature display
+- Built F&B merchant modules: menu, reservations, delivery, tables, checkout (5 pages)
+- Built Beauty merchant modules: booking, therapists, services (3 pages)
+- Built E-commerce merchant modules: shipping, payments (2 pages)
+- Updated merchant sidebar with industry-grouped modules (E-Commerce, F&B, Beauty)
+- Updated Cases page with template previews and live demo links
 - Added Member Portal referral page
-- All three panels now share reusable module components for cross-cutting features
+- All three panels share reusable module components for cross-cutting features
 
 ## User Preferences
 - Chinese-speaking user

@@ -34,6 +34,16 @@ const AppSupportPage = lazy(() => import("@/pages/app/support"));
 const AppReferralPage = lazy(() => import("@/pages/app/referral"));
 const AppTeamPage = lazy(() => import("@/pages/app/team"));
 const SettingsPage = lazy(() => import("@/pages/app/settings"));
+const MenuPage = lazy(() => import("@/pages/app/menu"));
+const ReservationsPage = lazy(() => import("@/pages/app/reservations"));
+const DeliveryPage = lazy(() => import("@/pages/app/delivery"));
+const TablesPage = lazy(() => import("@/pages/app/tables"));
+const CheckoutPage = lazy(() => import("@/pages/app/checkout"));
+const BookingPage = lazy(() => import("@/pages/app/booking"));
+const TherapistsPage = lazy(() => import("@/pages/app/therapists"));
+const ServicesPage = lazy(() => import("@/pages/app/services"));
+const ShippingPage = lazy(() => import("@/pages/app/shipping"));
+const PaymentsPage = lazy(() => import("@/pages/app/payments"));
 
 const TenantsPage = lazy(() => import("@/pages/superadmin/tenants"));
 const PlansPage = lazy(() => import("@/pages/superadmin/plans"));
@@ -96,6 +106,16 @@ function Router() {
         <Route path="/app/referral" component={AppReferralPage} />
         <Route path="/app/team" component={AppTeamPage} />
         <Route path="/app/settings" component={SettingsPage} />
+        <Route path="/app/menu" component={MenuPage} />
+        <Route path="/app/reservations" component={ReservationsPage} />
+        <Route path="/app/delivery" component={DeliveryPage} />
+        <Route path="/app/tables" component={TablesPage} />
+        <Route path="/app/checkout" component={CheckoutPage} />
+        <Route path="/app/booking" component={BookingPage} />
+        <Route path="/app/therapists" component={TherapistsPage} />
+        <Route path="/app/services" component={ServicesPage} />
+        <Route path="/app/shipping" component={ShippingPage} />
+        <Route path="/app/payments" component={PaymentsPage} />
 
         <Route path="/superadmin" component={TenantsPage} />
         <Route path="/superadmin/plans" component={PlansPage} />
