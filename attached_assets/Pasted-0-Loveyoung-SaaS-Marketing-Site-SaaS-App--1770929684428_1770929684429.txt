@@ -1,0 +1,323 @@
+0) 目标一句话
+
+把现有 Loveyoung 系统的功能抽成 可配置的多租户 SaaS：
+
+一个官网（Marketing Site）
+
+一个多租户业务系统（SaaS App）：商家后台 + 客户侧（可选轻量）
+
+一个我自己的管理后台（Super Admin）
+
+多行业模板（电商/餐饮）+ 模块化试用展示（像电商 SaaS 那种功能模块页、试用入口、截图/数据演示）
+
+A. 产品形态与站点结构
+A1) 需要的 3 个“入口站点/端”
+
+官网（Marketing）
+
+域名例：onetech.com
+
+作用：品牌、功能、案例、定价、CTA、试用注册入口、内容 SEO/案例
+
+SaaS 应用（Merchant App，多租户）
+
+子域名例：app.onetech.com
+
+作用：商家登录后使用 CRM/ERP/WhatsApp/广告等模块（按套餐开关）
+
+超级管理后台（Super Admin）
+
+子域名例：admin.onetech.com
+
+作用：你管理租户、套餐、开关、账单、日志、工单、模版发布、案例/截图管理
+
+（可选）客户侧（Customer Portal）
+
+子域名例：customer.onetech.com 或商家独立域名绑定
+
+作用：客户查询订单/预约/会员积分/优惠券（先做轻量版本）
+
+注意：如果要最快上线，Customer Portal 可以先做成商家落地页 + 表单/链接，后面再升级成完整门户。
+
+B. 信息架构（页面清单）
+B1) 官网（onetech.com）
+
+首页：一句话价值主张 + 2 行业入口（电商/餐饮）+ CTA（免费试用/预约演示）
+
+产品页（模块化）：
+
+WhatsApp AI 自动成交
+
+CRM 跟进与客户管理
+
+订单/产品/库存（ERP Lite）
+
+Meta 广告线索 & ROI（高级）
+
+自动化任务/跟进（Follow-up）
+
+行业解决方案页：
+
+电商：问价/现货/物流/COD/弃单挽回
+
+餐饮：菜单/订位/外卖/回头客唤醒
+
+案例页：Ecom Case、Restaurant Case（支持截图、数据指标）
+
+定价页：套餐对比（功能开关可视化）
+
+试用入口：注册 → 选择行业模板 → 连接 WhatsApp → 完成
+
+内容页（SEO）：文章/指南（可后续自动化生成）
+
+联系我们 / 预约 Demo / WhatsApp 直聊按钮（强制）
+
+B2) 商家后台（app.onetech.com）
+
+Onboarding Wizard（最关键，必须 10 分钟内完成）
+
+创建商家（tenant）
+
+选择行业模板（电商 / 餐饮）
+
+连接 WhatsApp（Cloud API）
+
+导入产品/菜单（CSV/手动）
+
+启用 AI 脚本（语气/目标/优惠规则）
+
+Inbox（WhatsApp 收件箱）
+
+Contacts（客户列表 + 标签 + 阶段）
+
+Pipeline（CRM 漏斗：新咨询/已报价/待跟进/已成交）
+
+Orders（订单：草稿/确认/已发货/完成）
+
+Products / Menu（产品/菜单）
+
+Follow-ups（跟进任务与自动触发）
+
+Ads（Meta 广告线索/报告）【按套餐解锁】
+
+Settings（店铺信息、话术、团队成员、权限、套餐升级）
+
+B3) 超管后台（admin.onetech.com）
+
+Tenants 管理：状态/套餐/试用/封禁/重置
+
+Plans & Feature Flags：功能开关、用量限制
+
+Templates 管理：电商/餐饮模板版本发布（脚本、标签、漏斗、跟进序列）
+
+Case Library：上传案例、截图、数据（用于官网展示）
+
+Logs：Webhook 日志、AI 调用日志、消息发送失败
+
+Support：工单/反馈/客服
+
+B4) 客户侧（可选 customer portal）
+
+订单查询（输入手机号/OTP）
+
+预约查询（餐饮订位）
+
+会员积分/优惠券（可选）
+
+评价/回访表单
+
+C. 多租户与权限模型（必须先做对）
+C1) 角色分层
+
+Super Admin（你）：跨租户管理
+
+Tenant Owner（商家老板）
+
+Tenant Admin（店长/运营）
+
+Staff（客服/员工）
+
+Customer（客户）
+
+C2) 租户隔离策略
+
+所有业务表必须有 tenant_id
+
+强制 RLS（Supabase）
+
+tenant_users 绑定 user 与 tenant + role
+
+D. 模块化选择与套餐（官网展示 + 系统 gating）
+D1) 模块（对外可选）
+
+Module 1：WhatsApp Inbox + 基础自动回复（入门）
+
+Module 2：AI 销售脚本（行业模板）
+
+Module 3：CRM 漏斗 & 客户标签
+
+Module 4：自动跟进（定时触发）
+
+Module 5：ERP Lite（产品/订单/库存）
+
+Module 6：Meta 广告与 ROI 报表（高级）
+
+Module 7：团队多账号与权限（高级）
+
+D2) 套餐建议（先简单）
+
+Trial：WhatsApp + AI 回复（限制消息量）
+
+Starter：+ CRM
+
+Pro：+ Follow-up + ERP Lite
+
+Business：+ Ads + 多账号
+
+关键：系统里模块都存在，但 UI 和 API 通过 feature flags 控制显示/调用。
+
+E. 案例与“模块试用展示”怎么做
+E1) 截图/展示策略
+
+商家后台提供一个“Demo 模式数据集”开关（只读演示）
+
+或者超管后台维护 “Demo Tenant”
+
+官网展示：截图/动图/短视频（Inbox、Pipeline、订单列表、报表）
+
+E2) 试用体验（像 SaaS）
+
+官网点击“免费试用”
+
+注册后直接进入 app
+
+Onboarding 过程中让用户看到：
+
+已自动生成的漏斗/标签
+
+已内置的脚本
+
+可一键导入示例产品/菜单
+
+让商家“第一次登录就感觉系统已经能用”
+
+F. 技术任务拆解（给 agent 的落地顺序）
+F1) 新项目初始化（Monorepo）
+
+apps/marketing 官网
+
+apps/app 商家后台（多租户）
+
+apps/admin 超管后台
+
+apps/customer 客户侧（可选）
+
+packages/ui 共享组件
+
+packages/core 共享权限/feature-check/SDK
+
+F2) 从 Loveyoung 迁移功能
+
+复制功能模块代码（CRM/ERP/Ads/WhatsApp）
+
+抽象为 tenant-aware：所有请求必须带 tenant context
+
+把“写死的品牌/配置”迁移到 tenant_settings
+
+F3) 数据库与权限（优先）
+
+必须先完成：
+
+tenants / tenant_users / roles
+
+plans / subscriptions / feature_flags
+
+RLS policies
+
+基础审计表（logs）
+
+F4) Onboarding（最优先的用户路径）
+
+选择行业模板（电商/餐饮）
+
+连接 WhatsApp Cloud API
+
+导入产品/菜单
+
+启动 AI 脚本
+
+完成后自动跳 Inbox
+
+F5) WhatsApp Webhook & Inbox
+
+webhook 接入（按 phone_number_id 找 tenant）
+
+保存消息
+
+回复发送
+
+错误日志
+
+F6) AI 销售脚本模板（电商/餐饮）
+
+ai_scripts 支持版本号
+
+每个 tenant 可覆盖默认模板
+
+FAQ/产品/菜单摘要进入 prompt
+
+F7) Feature Gating（必须统一）
+
+实现一个 hasFeature(tenant_id, key)
+
+前端路由隐藏
+
+API handler 拦截
+
+超额用量限制（trial message quota）
+
+F8) 官网与 landing pages
+
+行业落地页：/ecommerce、/restaurant
+
+功能模块页：/product/whatsapp-ai 等
+
+案例页：/case/...
+
+CTA 统一：注册/预约/WhatsApp 咨询
+
+G. 必交付物（Definition of Done）
+
+新项目跑起来：marketing + app + admin（3端）
+
+多租户注册/登录/切换 tenant 完整闭环
+
+Onboarding 可跑通（电商/餐饮）
+
+WhatsApp webhook -> inbox -> AI reply -> 记录 contact + conversation
+
+CRM 漏斗可用（至少 4 阶段）
+
+ERP Lite：产品/订单最小可用
+
+官网可展示模块与案例，并能引流到试用
+
+超管后台可：
+
+创建/禁用 tenant
+
+修改套餐与功能开关
+
+查看 webhook/发送失败日志
+
+维护案例截图库
+
+H. 关键产品原则（避免做成 Loveyoung 2.0 的“重系统”）
+
+对外只卖：WhatsApp 自动成交（入口）
+
+系统要做：模块齐全但 默认隐藏/解锁
+
+让商家 10 分钟看懂：Inbox + 转化漏斗 + 订单
+
+不要一上来把 ERP 做成企业级，先 Lite
