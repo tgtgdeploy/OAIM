@@ -17,6 +17,10 @@ const ContactPage = lazy(() => import("@/pages/marketing/contact"));
 const LoginPage = lazy(() => import("@/pages/auth/login"));
 const RegisterPage = lazy(() => import("@/pages/auth/register"));
 
+const EcommerceTemplate = lazy(() => import("@/pages/templates/ecommerce"));
+const FnbTemplate = lazy(() => import("@/pages/templates/fnb"));
+const BeautyTemplate = lazy(() => import("@/pages/templates/beauty"));
+
 const OnboardingPage = lazy(() => import("@/pages/app/onboarding"));
 const InboxPage = lazy(() => import("@/pages/app/inbox"));
 const ContactsPage = lazy(() => import("@/pages/app/contacts"));
@@ -74,6 +78,10 @@ function Router() {
 
         <Route path="/auth/login" component={LoginPage} />
         <Route path="/auth/register" component={RegisterPage} />
+
+        <Route path="/templates/ecommerce" component={EcommerceTemplate} />
+        <Route path="/templates/fnb" component={FnbTemplate} />
+        <Route path="/templates/beauty" component={BeautyTemplate} />
 
         <Route path="/app/onboarding" component={OnboardingPage} />
         <Route path="/app" component={InboxPage} />
