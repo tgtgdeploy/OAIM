@@ -1,4 +1,4 @@
-import { AdminLayout } from "./layout";
+import { SuperAdminLayout } from "./layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -36,7 +36,7 @@ const templates = {
 
 export default function TemplatesPage() {
   return (
-    <AdminLayout title="Templates">
+    <SuperAdminLayout title="Templates">
       <div className="p-4 md:p-6 space-y-4">
         <div className="flex items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">Industry template management</p>
@@ -112,6 +112,6 @@ export default function TemplatesPage() {
           ))}
         </Tabs>
       </div>
-    </AdminLayout>
+    </SuperAdminLayout>
   );
 }

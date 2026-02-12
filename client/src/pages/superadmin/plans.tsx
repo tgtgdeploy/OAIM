@@ -1,4 +1,4 @@
-import { AdminLayout } from "./layout";
+import { SuperAdminLayout } from "./layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -35,7 +35,7 @@ const allTiers = ["trial", "starter", "pro", "business"];
 
 export default function PlansPage() {
   return (
-    <AdminLayout title="Plans & Feature Flags">
+    <SuperAdminLayout title="Plans & Feature Flags">
       <div className="p-4 md:p-6 space-y-4">
         <Tabs defaultValue="plans">
           <TabsList>
@@ -130,6 +130,6 @@ export default function PlansPage() {
           </TabsContent>
         </Tabs>
       </div>
-    </AdminLayout>
+    </SuperAdminLayout>
   );
 }

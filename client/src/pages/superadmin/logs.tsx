@@ -1,4 +1,4 @@
-import { AdminLayout } from "./layout";
+import { SuperAdminLayout } from "./layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -40,7 +40,7 @@ const failedLogs = [
 
 export default function LogsPage() {
   return (
-    <AdminLayout title="Logs">
+    <SuperAdminLayout title="Logs">
       <div className="p-4 md:p-6 space-y-4">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div className="relative">
@@ -161,6 +161,6 @@ export default function LogsPage() {
           </TabsContent>
         </Tabs>
       </div>
-    </AdminLayout>
+    </SuperAdminLayout>
   );
 }

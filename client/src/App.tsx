@@ -24,12 +24,12 @@ const FollowUpsPage = lazy(() => import("@/pages/app/follow-ups"));
 const AdsPage = lazy(() => import("@/pages/app/ads"));
 const SettingsPage = lazy(() => import("@/pages/app/settings"));
 
-const TenantsPage = lazy(() => import("@/pages/admin/tenants"));
-const PlansPage = lazy(() => import("@/pages/admin/plans"));
-const TemplatesPage = lazy(() => import("@/pages/admin/templates"));
-const CaseLibraryPage = lazy(() => import("@/pages/admin/case-library"));
-const LogsPage = lazy(() => import("@/pages/admin/logs"));
-const SupportPage = lazy(() => import("@/pages/admin/support"));
+const TenantsPage = lazy(() => import("@/pages/superadmin/tenants"));
+const PlansPage = lazy(() => import("@/pages/superadmin/plans"));
+const TemplatesPage = lazy(() => import("@/pages/superadmin/templates"));
+const CaseLibraryPage = lazy(() => import("@/pages/superadmin/case-library"));
+const LogsPage = lazy(() => import("@/pages/superadmin/logs"));
+const SupportPage = lazy(() => import("@/pages/superadmin/support"));
 
 const MemberDashboard = lazy(() => import("@/pages/member/dashboard"));
 const MemberOrders = lazy(() => import("@/pages/member/orders"));
@@ -69,12 +69,12 @@ function Router() {
         <Route path="/app/ads" component={AdsPage} />
         <Route path="/app/settings" component={SettingsPage} />
 
-        <Route path="/admin" component={TenantsPage} />
-        <Route path="/admin/plans" component={PlansPage} />
-        <Route path="/admin/templates" component={TemplatesPage} />
-        <Route path="/admin/cases" component={CaseLibraryPage} />
-        <Route path="/admin/logs" component={LogsPage} />
-        <Route path="/admin/support" component={SupportPage} />
+        <Route path="/superadmin" component={TenantsPage} />
+        <Route path="/superadmin/plans" component={PlansPage} />
+        <Route path="/superadmin/templates" component={TemplatesPage} />
+        <Route path="/superadmin/cases" component={CaseLibraryPage} />
+        <Route path="/superadmin/logs" component={LogsPage} />
+        <Route path="/superadmin/support" component={SupportPage} />
 
         <Route path="/member" component={MemberDashboard} />
         <Route path="/member/orders" component={MemberOrders} />

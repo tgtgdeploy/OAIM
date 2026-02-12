@@ -1,4 +1,4 @@
-import { AdminLayout } from "./layout";
+import { SuperAdminLayout } from "./layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Plus, Building2, Users, MoreHorizontal, Ban, RefreshCw, Eye } from "lucide-react";
-import "@/styles/admin.css";
+import "@/styles/superadmin.css";
 
 const tenants = [
   { id: "1", name: "Fashion Hub KL", industry: "ecommerce", plan: "pro", status: "active", users: 3, messages: 1234, created: "2026-01-15" },
@@ -34,7 +34,7 @@ const tenants = [
 
 export default function TenantsPage() {
   return (
-    <AdminLayout title="Tenants">
+    <SuperAdminLayout title="Tenants">
       <div className="admin-content section-spacing">
         <div className="stats-grid">
           <StatCard label="Total Tenants" value={tenants.length.toString()} icon={Building2} />
@@ -103,6 +103,6 @@ export default function TenantsPage() {
           </CardContent>
         </Card>
       </div>
-    </AdminLayout>
+    </SuperAdminLayout>
   );
 }

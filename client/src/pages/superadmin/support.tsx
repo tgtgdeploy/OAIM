@@ -1,4 +1,4 @@
-import { AdminLayout } from "./layout";
+import { SuperAdminLayout } from "./layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -7,7 +7,7 @@ import { StatCard } from "@/components/shared/stat-card";
 import { SearchInput } from "@/components/shared/search-input";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { MessageSquare, Clock, CheckCircle2, AlertCircle } from "lucide-react";
-import "@/styles/admin.css";
+import "@/styles/superadmin.css";
 
 const tickets = [
   { id: "TK-001", tenant: "Fashion Hub KL", subject: "WhatsApp messages not sending", priority: "urgent", status: "open", created: "2h ago" },
@@ -21,7 +21,7 @@ const tickets = [
 
 export default function SupportPage() {
   return (
-    <AdminLayout title="Support">
+    <SuperAdminLayout title="Support">
       <div className="admin-content section-spacing">
         <div className="stats-grid">
           <StatCard label="Open" value={tickets.filter(t => t.status === "open").length.toString()} icon={MessageSquare} iconColor="text-blue-500" />
@@ -77,6 +77,6 @@ export default function SupportPage() {
           ))}
         </Tabs>
       </div>
-    </AdminLayout>
+    </SuperAdminLayout>
   );
 }
