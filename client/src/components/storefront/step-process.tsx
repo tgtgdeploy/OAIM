@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import type { IconType } from "react-icons";
+import { useTranslation } from "react-i18next";
 
 interface StepItem {
   step: string;
@@ -15,6 +16,8 @@ interface StepProcessProps {
 }
 
 export function StepProcess({ title, subtitle, steps }: StepProcessProps) {
+  const { t } = useTranslation("storefront");
+
   return (
     <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-20" data-testid="section-steps">
       <div className="text-center mb-10">
@@ -27,7 +30,7 @@ export function StepProcess({ title, subtitle, steps }: StepProcessProps) {
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground mx-auto mb-4">
               <item.icon className="h-6 w-6" />
             </div>
-            <div className="text-xs text-muted-foreground mb-1">Step {item.step}</div>
+            <div className="text-xs text-muted-foreground mb-1">{t("step.step", { number: item.step })}</div>
             <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
             <p className="text-sm text-muted-foreground">{item.desc}</p>
           </div>

@@ -1,0 +1,42 @@
+{
+  "sidebar": {
+    "main": "主要",
+    "advanced": "高级",
+    "management": "管理",
+    "storeHomepage": "店铺首页",
+    "inbox": "收件箱",
+    "contacts": "联系人",
+    "pipeline": "销售管道",
+    "orders": "订单",
+    "products": "商品",
+    "shipping": "物流",
+    "payments": "支付",
+    "menu": "菜单",
+    "reservations": "预约",
+    "delivery": "配送",
+    "tables": "桌位",
+    "checkout": "结账",
+    "booking": "预约",
+    "therapists": "技师",
+    "services": "服务",
+    "automation": "自动化",
+    "followUps": "跟进",
+    "customerSupport": "客户支持",
+    "adsRoi": "广告与投资回报",
+    "referral": "推荐计划",
+    "teamRoles": "团队与角色",
+    "settings": "设置",
+    "industry": {
+      "ecommerce": "电商",
+      "fnb": "餐饮",
+      "beauty": "美容",
+      "ecommerceGroup": "电商",
+      "fnbGroup": "餐饮",
+      "beautyGroup": "美容健康"
+    },
+    "footer": {
+      "proPlan": "专业版",
+      "messagesUsage": "{{used}} / {{total}} 条消息"
+    }
+  }
+}

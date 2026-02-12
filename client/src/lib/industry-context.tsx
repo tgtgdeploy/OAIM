@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 export type Industry = "ecommerce" | "fnb" | "beauty";
 
@@ -15,15 +16,16 @@ const industryTemplateMap: Record<Industry, string> = {
   beauty: "/templates/beauty",
 };
 
-const industryLabelMap: Record<Industry, string> = {
-  ecommerce: "E-Commerce",
-  fnb: "F&B / Restaurant",
-  beauty: "Beauty & Wellness",
+const industryLabelKeys: Record<Industry, string> = {
+  ecommerce: "sidebar.industry.ecommerceGroup",
+  fnb: "sidebar.industry.fnbGroup",
+  beauty: "sidebar.industry.beautyGroup",
 };
 
 const IndustryContext = createContext<IndustryContextType | null>(null);
 
 export function IndustryProvider({ children }: { children: React.ReactNode }) {
+  const { t } = useTranslation("app");
   const [industry, setIndustryState] = useState<Industry>(() => {
     try {
       const stored = localStorage.getItem("oaim-industry");
@@ -47,7 +49,7 @@ export function IndustryProvider({ children }: { children: React.ReactNode }) {
         industry,
         setIndustry,
         templatePath: industryTemplateMap[industry],
-        industryLabel: industryLabelMap[industry],
+        industryLabel: t(industryLabelKeys[industry]),
       }}
     >
       {children}

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MarketingLayout } from "./layout";
-import { CheckCircle2, X, ArrowRight, Crown, Zap } from "lucide-react";
+import { CheckCircle2, ArrowRight, Crown, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export default function PricingPage() {
@@ -16,15 +16,10 @@ export default function PricingPage() {
       period: t("pricing.trialPeriod"),
       description: t("pricing.trialDesc"),
       features: [
-        { name: t("pricing.featureWhatsappInbox"), included: true },
-        { name: t("pricing.featureAiBasic"), included: true },
-        { name: t("pricing.feature100Msg"), included: true },
-        { name: t("pricing.feature1User"), included: true },
-        { name: t("pricing.featureCrm"), included: false },
-        { name: t("pricing.featureFollowUp"), included: false },
-        { name: t("pricing.featureErp"), included: false },
-        { name: t("pricing.featureAds"), included: false },
-        { name: t("pricing.featureTeam"), included: false },
+        t("pricing.trialF1"),
+        t("pricing.trialF2"),
+        t("pricing.trialF3"),
+        t("pricing.trialF4"),
       ],
       cta: t("pricing.trialCta"),
       popular: false,
@@ -37,15 +32,11 @@ export default function PricingPage() {
       period: t("pricing.starterPeriod"),
       description: t("pricing.starterDesc"),
       features: [
-        { name: t("pricing.featureWhatsappInbox"), included: true },
-        { name: t("pricing.featureAiFull"), included: true },
-        { name: t("pricing.feature1000Msg"), included: true },
-        { name: t("pricing.feature2Users"), included: true },
-        { name: t("pricing.featureCrm"), included: true },
-        { name: t("pricing.featureFollowUp"), included: false },
-        { name: t("pricing.featureErp"), included: false },
-        { name: t("pricing.featureAds"), included: false },
-        { name: t("pricing.featureTeam"), included: false },
+        t("pricing.starterF1"),
+        t("pricing.starterF2"),
+        t("pricing.starterF3"),
+        t("pricing.starterF4"),
+        t("pricing.starterF5"),
       ],
       cta: t("pricing.starterCta"),
       popular: false,
@@ -58,15 +49,12 @@ export default function PricingPage() {
       period: t("pricing.proPeriod"),
       description: t("pricing.proDesc"),
       features: [
-        { name: t("pricing.featureWhatsappInbox"), included: true },
-        { name: t("pricing.featureAiFull"), included: true },
-        { name: t("pricing.feature5000Msg"), included: true },
-        { name: t("pricing.feature5Users"), included: true },
-        { name: t("pricing.featureCrm"), included: true },
-        { name: t("pricing.featureFollowUp"), included: true },
-        { name: t("pricing.featureErp"), included: true },
-        { name: t("pricing.featureAds"), included: false },
-        { name: t("pricing.featureTeam"), included: false },
+        t("pricing.proF1"),
+        t("pricing.proF2"),
+        t("pricing.proF3"),
+        t("pricing.proF4"),
+        t("pricing.proF5"),
+        t("pricing.proF6"),
       ],
       cta: t("pricing.proCta"),
       popular: true,
@@ -79,15 +67,13 @@ export default function PricingPage() {
       period: t("pricing.businessPeriod"),
       description: t("pricing.businessDesc"),
       features: [
-        { name: t("pricing.featureWhatsappInbox"), included: true },
-        { name: t("pricing.featureAiFull"), included: true },
-        { name: t("pricing.featureUnlimitedMsg"), included: true },
-        { name: t("pricing.featureUnlimitedUsers"), included: true },
-        { name: t("pricing.featureCrm"), included: true },
-        { name: t("pricing.featureFollowUp"), included: true },
-        { name: t("pricing.featureErp"), included: true },
-        { name: t("pricing.featureAds"), included: true },
-        { name: t("pricing.featureTeam"), included: true },
+        t("pricing.businessF1"),
+        t("pricing.businessF2"),
+        t("pricing.businessF3"),
+        t("pricing.businessF4"),
+        t("pricing.businessF5"),
+        t("pricing.businessF6"),
+        t("pricing.businessF7"),
       ],
       cta: t("pricing.businessCta"),
       popular: false,
@@ -143,15 +129,9 @@ export default function PricingPage() {
                   </Link>
                   <ul className="space-y-2.5">
                     {plan.features.map((f) => (
-                      <li key={f.name} className="flex items-center gap-2 text-sm">
-                        {f.included ? (
-                          <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0" />
-                        ) : (
-                          <X className="h-4 w-4 text-muted-foreground/30 flex-shrink-0" />
-                        )}
-                        <span className={f.included ? "" : "text-muted-foreground/50"}>
-                          {f.name}
-                        </span>
+                      <li key={f} className="flex items-center gap-2 text-sm">
+                        <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0" />
+                        <span>{f}</span>
                       </li>
                     ))}
                   </ul>

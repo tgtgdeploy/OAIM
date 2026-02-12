@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "wouter";
 import { Lock, ArrowRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface LockedFeatureCard {
   icon: LucideIcon;
@@ -19,6 +20,8 @@ interface LockedFeatureProps {
 }
 
 export function LockedFeature({ title, description, upgradePlan, features, testId }: LockedFeatureProps) {
+  const { t } = useTranslation("storefront");
+
   return (
     <div className="max-w-2xl mx-auto py-12 text-center" data-testid={testId}>
       <div className="flex h-16 w-16 items-center justify-center rounded-md bg-muted mx-auto mb-6">
@@ -43,7 +46,7 @@ export function LockedFeature({ title, description, upgradePlan, features, testI
 
       <Link href="/pricing">
         <Button>
-          Upgrade to {upgradePlan}
+          {t("locked.upgradeTo", { plan: upgradePlan })}
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </Link>

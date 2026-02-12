@@ -21,18 +21,20 @@ import {
   Zap,
   Share2,
 } from "lucide-react";
-
-const items = [
-  { title: "Dashboard", href: "/member", icon: LayoutDashboard },
-  { title: "My Orders", href: "/member/orders", icon: ShoppingBag },
-  { title: "Track Order", href: "/member/track", icon: MapPin },
-  { title: "Loyalty", href: "/member/loyalty", icon: Star },
-  { title: "Refer & Earn", href: "/member/referral", icon: Share2 },
-  { title: "Profile", href: "/member/profile", icon: User },
-];
+import { useTranslation } from "react-i18next";
 
 export function MemberSidebar() {
   const [location] = useLocation();
+  const { t } = useTranslation("member");
+
+  const items = [
+    { title: t("sidebar.dashboard"), href: "/member", icon: LayoutDashboard },
+    { title: t("sidebar.myOrders"), href: "/member/orders", icon: ShoppingBag },
+    { title: t("sidebar.trackOrder"), href: "/member/track", icon: MapPin },
+    { title: t("sidebar.loyalty"), href: "/member/loyalty", icon: Star },
+    { title: t("sidebar.referEarn"), href: "/member/referral", icon: Share2 },
+    { title: t("sidebar.profile"), href: "/member/profile", icon: User },
+  ];
 
   return (
     <Sidebar>
@@ -44,20 +46,20 @@ export function MemberSidebar() {
             </div>
             <div>
               <div className="text-sm font-bold leading-none">OAIM</div>
-              <div className="text-xs text-muted-foreground">My Account</div>
+              <div className="text-xs text-muted-foreground">{t("sidebar.myAccount")}</div>
             </div>
           </div>
         </Link>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Menu</SidebarGroupLabel>
+          <SidebarGroupLabel>{t("sidebar.menu")}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton asChild isActive={location === item.href}>
-                    <Link href={item.href} data-testid={`link-member-${item.title.toLowerCase().replace(/\s/g, "-")}`}>
+                    <Link href={item.href} data-testid={`link-member-${item.href.split("/").pop()}`}>
                       <item.icon className="h-4 w-4" />
                       <span>{item.title}</span>
                     </Link>
@@ -72,9 +74,9 @@ export function MemberSidebar() {
         <div className="rounded-md bg-primary/10 p-3">
           <div className="flex items-center gap-2 mb-1">
             <Star className="h-4 w-4 text-primary" />
-            <span className="text-xs font-medium">Gold Member</span>
+            <span className="text-xs font-medium">{t("sidebar.goldMember")}</span>
           </div>
-          <div className="text-xs text-muted-foreground">450 / 1,000 points to Platinum</div>
+          <div className="text-xs text-muted-foreground">{t("sidebar.pointsToNext", { current: 450, target: "1,000" })}</div>
           <div className="mt-2 h-1.5 rounded-full bg-muted overflow-hidden">
             <div className="h-full bg-primary rounded-full" style={{ width: "45%" }} />
           </div>

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, ArrowRight, Zap, Users, Store } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import type { LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface StoreHeaderProps {
   storeName: string;
@@ -29,6 +30,7 @@ export function StoreHeader({
   industry = "ecommerce",
 }: StoreHeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t } = useTranslation("storefront");
   const merchantLoginHref = `/auth/login?role=merchant&industry=${industry}`;
   const memberLoginHref = `/auth/login?role=member&industry=${industry}`;
 
@@ -47,19 +49,19 @@ export function StoreHeader({
           <div className="flex items-center gap-3">
             <Link href="/">
               <span className="text-[11px] text-white/60 cursor-pointer hidden sm:inline" data-testid="link-oaim-homepage">
-                Visit OAIM to explore more solutions
+                {t("header.visitOaim")}
               </span>
             </Link>
             <Link href={memberLoginHref}>
               <span className="flex items-center gap-1 text-[11px] text-white/80 cursor-pointer" data-testid="link-member-login-topbar">
                 <Users className="h-3 w-3" />
-                Member
+                {t("header.member")}
               </span>
             </Link>
             <Link href={merchantLoginHref}>
               <span className="flex items-center gap-1 text-[11px] text-white/80 cursor-pointer" data-testid="link-merchant-login-topbar">
                 <Store className="h-3 w-3" />
-                Merchant
+                {t("header.merchant")}
               </span>
             </Link>
           </div>
@@ -129,7 +131,7 @@ export function StoreHeader({
               <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="block">
                 <Button variant="outline" className="w-full" data-testid="button-whatsapp-mobile">
                   <SiWhatsapp className="mr-2 h-4 w-4" />
-                  WhatsApp Us
+                  {t("header.whatsappUs")}
                 </Button>
               </a>
             )}
@@ -144,13 +146,13 @@ export function StoreHeader({
               <Link href={memberLoginHref} className="flex-1">
                 <Button variant="outline" className="w-full" data-testid="link-member-login-mobile">
                   <Users className="mr-2 h-4 w-4" />
-                  Member Login
+                  {t("header.memberLogin")}
                 </Button>
               </Link>
               <Link href={merchantLoginHref} className="flex-1">
                 <Button variant="outline" className="w-full" data-testid="link-merchant-login-mobile">
                   <Store className="mr-2 h-4 w-4" />
-                  Merchant
+                  {t("header.merchant")}
                 </Button>
               </Link>
             </div>

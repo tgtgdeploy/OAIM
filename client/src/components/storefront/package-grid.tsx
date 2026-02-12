@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
+import { useTranslation } from "react-i18next";
 
 interface PackageItem {
   name: string;
@@ -25,9 +26,11 @@ export function PackageGrid({
   subtitle,
   packages: pkgs,
   accentColor = "text-primary",
-  ctaLabel = "Book Package",
+  ctaLabel,
   whatsappNumber = "1234567890",
 }: PackageGridProps) {
+  const { t } = useTranslation("storefront");
+  const resolvedCtaLabel = ctaLabel || t("package.bookPackage");
   const borderAccent = accentColor.replace("text-", "border-").replace(/(\w+)$/, "$1/50");
   const badgeBg = accentColor.replace("text-", "bg-").replace(/(\w+)$/, "$1/10");
   const checkColor = accentColor;
@@ -49,7 +52,7 @@ export function PackageGrid({
               <CardContent className="p-6">
                 {pkg.popular && (
                   <Badge variant="secondary" className={`mb-3 ${badgeBg} ${accentColor}`} data-testid={`badge-popular-${idx}`}>
-                    Most Popular
+                    {t("package.mostPopular")}
                   </Badge>
                 )}
                 <h3 className="text-xl font-bold mb-1" data-testid={`text-package-name-${idx}`}>{pkg.name}</h3>
@@ -65,7 +68,7 @@ export function PackageGrid({
                 <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
                   <Button className="w-full" variant={pkg.popular ? "default" : "outline"} data-testid={`button-book-package-${idx}`}>
                     <SiWhatsapp className="mr-2 h-4 w-4" />
-                    {ctaLabel}
+                    {resolvedCtaLabel}
                   </Button>
                 </a>
               </CardContent>

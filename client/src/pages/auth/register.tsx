@@ -13,6 +13,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTheme } from "@/lib/theme-provider";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useTranslation } from "react-i18next";
 import {
   ArrowRight,
   Moon,
@@ -26,22 +28,23 @@ import {
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
-const benefits = [
-  "Free 14-day trial, no credit card required",
-  "AI sales scripts for your industry",
-  "WhatsApp Business API integration",
-  "Full CRM with pipeline management",
-];
-
 export default function RegisterPage() {
   const [, navigate] = useLocation();
   const { theme, toggleTheme } = useTheme();
+  const { t } = useTranslation("auth");
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [businessType, setBusinessType] = useState("");
   const [phone, setPhone] = useState("");
+
+  const benefits = [
+    t("register.leftPanel.benefit1"),
+    t("register.leftPanel.benefit2"),
+    t("register.leftPanel.benefit3"),
+    t("register.leftPanel.benefit4"),
+  ];
 
   function handleRegister(e: React.FormEvent) {
     e.preventDefault();
@@ -64,10 +67,10 @@ export default function RegisterPage() {
           <div className="space-y-8">
             <div className="space-y-4">
               <h1 className="text-4xl font-bold leading-tight">
-                Start selling smarter<br />with WhatsApp AI
+                {t("register.leftPanel.heading1")}<br />{t("register.leftPanel.heading2")}
               </h1>
               <p className="text-lg text-white/80 max-w-md">
-                Join hundreds of businesses using OAIM to automate sales and boost revenue through WhatsApp.
+                {t("register.leftPanel.description")}
               </p>
             </div>
 
@@ -83,21 +86,21 @@ export default function RegisterPage() {
             <div className="flex items-center gap-6 pt-4">
               <div className="flex flex-col items-center gap-1">
                 <Store className="h-6 w-6 text-white/60" />
-                <span className="text-xs text-white/50">E-commerce</span>
+                <span className="text-xs text-white/50">{t("register.leftPanel.ecommerce")}</span>
               </div>
               <div className="flex flex-col items-center gap-1">
                 <UtensilsCrossed className="h-6 w-6 text-white/60" />
-                <span className="text-xs text-white/50">F&B</span>
+                <span className="text-xs text-white/50">{t("register.leftPanel.fnb")}</span>
               </div>
               <div className="flex flex-col items-center gap-1">
                 <ShoppingCart className="h-6 w-6 text-white/60" />
-                <span className="text-xs text-white/50">Retail</span>
+                <span className="text-xs text-white/50">{t("register.leftPanel.retail")}</span>
               </div>
             </div>
           </div>
 
           <p className="text-xs text-white/40">
-            &copy; 2026 OAIM. All rights reserved.
+            {t("register.leftPanel.copyright")}
           </p>
         </div>
       </div>
@@ -111,6 +114,7 @@ export default function RegisterPage() {
             <span className="font-bold">OAIM</span>
           </div>
           <div className="flex items-center gap-2 ml-auto">
+            <LanguageSwitcher />
             <Button
               size="icon"
               variant="ghost"
@@ -125,19 +129,19 @@ export default function RegisterPage() {
         <div className="flex-1 flex items-center justify-center p-4 md:p-8">
           <div className="w-full max-w-md space-y-6">
             <div className="space-y-2 text-center">
-              <h2 className="text-2xl font-bold" data-testid="text-register-title">Create your account</h2>
+              <h2 className="text-2xl font-bold" data-testid="text-register-title">{t("register.title")}</h2>
               <p className="text-sm text-muted-foreground">
-                Get started with a 14-day free trial
+                {t("register.subtitle")}
               </p>
             </div>
 
             <form onSubmit={handleRegister} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
+                <Label htmlFor="name">{t("register.fullName")}</Label>
                 <Input
                   id="name"
                   type="text"
-                  placeholder="John Doe"
+                  placeholder={t("register.namePlaceholder")}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   data-testid="input-name"
@@ -145,11 +149,11 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("register.email")}</Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@company.com"
+                  placeholder={t("register.emailPlaceholder")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   data-testid="input-email"
@@ -157,11 +161,11 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="phone">WhatsApp Number</Label>
+                <Label htmlFor="phone">{t("register.whatsappNumber")}</Label>
                 <Input
                   id="phone"
                   type="tel"
-                  placeholder="+60 12-345 6789"
+                  placeholder={t("register.phonePlaceholder")}
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   data-testid="input-phone"
@@ -169,28 +173,28 @@ export default function RegisterPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="business-type">Business Type</Label>
+                <Label htmlFor="business-type">{t("register.businessType")}</Label>
                 <Select value={businessType} onValueChange={setBusinessType}>
                   <SelectTrigger data-testid="select-business-type">
-                    <SelectValue placeholder="Select your business type" />
+                    <SelectValue placeholder={t("register.businessTypePlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="ecommerce">E-commerce</SelectItem>
-                    <SelectItem value="fnb">Food & Beverage</SelectItem>
-                    <SelectItem value="retail">Retail</SelectItem>
-                    <SelectItem value="services">Services</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
+                    <SelectItem value="ecommerce">{t("register.businessTypes.ecommerce")}</SelectItem>
+                    <SelectItem value="fnb">{t("register.businessTypes.fnb")}</SelectItem>
+                    <SelectItem value="retail">{t("register.businessTypes.retail")}</SelectItem>
+                    <SelectItem value="services">{t("register.businessTypes.services")}</SelectItem>
+                    <SelectItem value="other">{t("register.businessTypes.other")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("register.password")}</Label>
                 <div className="relative">
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="Create a password"
+                    placeholder={t("register.passwordPlaceholder")}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     data-testid="input-password"
@@ -207,15 +211,15 @@ export default function RegisterPage() {
               </div>
 
               <Button type="submit" className="w-full" data-testid="button-register">
-                Create Account
+                {t("register.createAccount")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
 
               <p className="text-xs text-center text-muted-foreground">
-                By signing up, you agree to our{" "}
-                <span className="text-primary cursor-pointer">Terms of Service</span>
-                {" "}and{" "}
-                <span className="text-primary cursor-pointer">Privacy Policy</span>
+                {t("register.termsPrefix")}{" "}
+                <span className="text-primary cursor-pointer">{t("register.termsOfService")}</span>
+                {" "}{t("register.and")}{" "}
+                <span className="text-primary cursor-pointer">{t("register.privacyPolicy")}</span>
               </p>
             </form>
 
@@ -225,16 +229,16 @@ export default function RegisterPage() {
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="bg-background px-2 text-muted-foreground">
-                  Or
+                  {t("register.or")}
                 </span>
               </div>
             </div>
 
             <p className="text-center text-sm text-muted-foreground">
-              Already have an account?{" "}
+              {t("register.hasAccount")}{" "}
               <Link href="/auth/login">
                 <span className="text-primary font-medium cursor-pointer" data-testid="link-login">
-                  Sign in
+                  {t("register.signIn")}
                 </span>
               </Link>
             </p>

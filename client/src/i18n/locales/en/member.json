@@ -1,0 +1,35 @@
+{
+  "sidebar": {
+    "myAccount": "My Account",
+    "menu": "Menu",
+    "dashboard": "Dashboard",
+    "myOrders": "My Orders",
+    "trackOrder": "Track Order",
+    "loyalty": "Loyalty",
+    "referEarn": "Refer & Earn",
+    "profile": "Profile",
+    "goldMember": "Gold Member",
+    "pointsToNext": "{{current}} / {{target}} points to Platinum"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back, Sarah!",
+    "summary": "Here's a summary of your account activity.",
+    "totalOrders": "Total Orders",
+    "inTransit": "In Transit",
+    "loyaltyPoints": "Loyalty Points",
+    "messages": "Messages",
+    "recentOrders": "Recent Orders",
+    "viewAll": "View All",
+    "loyaltyProgram": "Loyalty Program",
+    "goldMember": "Gold Member",
+    "points": "{{count}} Points",
+    "morePointsToReach": "{{count}} more points to reach Platinum",
+    "viewRewards": "View Rewards",
+    "quickActions": "Quick Actions",
+    "trackOrder": "Track Order",
+    "myOrders": "My Orders",
+    "myProfile": "My Profile",
+    "chatWithUs": "Chat with Us"
+  }
+}

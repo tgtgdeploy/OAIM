@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { useTheme } from "@/lib/theme-provider";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import {
   Store,
   UtensilsCrossed,
+  Sparkles,
   ArrowRight,
   ArrowLeft,
   CheckCircle2,
@@ -16,60 +18,96 @@ import {
   Zap,
   MessageSquare,
   Bot,
+  Moon,
+  Sun,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
-const steps = [
-  { title: "Business Info", icon: Store },
-  { title: "Industry", icon: Zap },
-  { title: "WhatsApp", icon: MessageSquare },
-  { title: "Products", icon: Upload },
-  { title: "AI Script", icon: Bot },
-];
+const stepIcons = [Store, Zap, MessageSquare, Upload, Bot];
 
 export default function OnboardingPage() {
   const [step, setStep] = useState(0);
-  const [industry, setIndustry] = useState<"ecommerce" | "restaurant" | null>(null);
-  const progress = ((step + 1) / steps.length) * 100;
+  const [industry, setIndustry] = useState<"ecommerce" | "restaurant" | "beauty" | null>(null);
+  const { theme, toggleTheme } = useTheme();
+  const totalSteps = 5;
+  const progress = ((step + 1) / totalSteps) * 100;
+
+  const stepLabels = ["Business", "Industry", "WhatsApp", "Products", "AI Script"];
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <div className="border-b bg-background sticky top-0 z-50">
-        <div className="max-w-3xl mx-auto px-4 py-4">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">
-              <Zap className="h-4 w-4 text-primary-foreground" />
-            </div>
-            <span className="font-bold">OAIM</span>
-            <span className="text-muted-foreground text-sm">Setup</span>
-          </div>
-          <Progress value={progress} className="h-1.5" data-testid="progress-onboarding" />
-          <div className="flex items-center gap-2 mt-3 overflow-x-auto">
-            {steps.map((s, i) => (
-              <div
-                key={s.title}
-                className={`flex items-center gap-1.5 text-xs whitespace-nowrap ${i <= step ? "text-primary font-medium" : "text-muted-foreground"}`}
-              >
-                {i < step ? (
-                  <CheckCircle2 className="h-4 w-4 text-primary" />
-                ) : (
-                  <s.icon className="h-4 w-4" />
-                )}
-                {s.title}
-                {i < steps.length - 1 && <ArrowRight className="h-3 w-3 text-muted-foreground mx-1" />}
+      {/* Header */}
+      <div className="border-b bg-background/95 backdrop-blur-sm sticky top-0 z-50">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <div className="flex items-center justify-between mb-3">
+            <Link href="/">
+              <div className="flex items-center gap-2 cursor-pointer" data-testid="link-logo-home">
+                <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">
+                  <Zap className="h-4 w-4 text-primary-foreground" />
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="font-bold">OAIM</span>
+                  <span className="text-muted-foreground text-xs hidden sm:inline">Setup</span>
+                </div>
               </div>
-            ))}
+            </Link>
+            <div className="flex items-center gap-1.5">
+              <span className="text-xs text-muted-foreground">{step + 1}/{totalSteps}</span>
+              <LanguageSwitcher />
+              <Button size="icon" variant="ghost" onClick={toggleTheme} data-testid="button-theme-toggle">
+                {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </Button>
+            </div>
+          </div>
+
+          {/* Progress bar */}
+          <div className="h-1 rounded-full bg-muted overflow-hidden">
+            <div
+              className="h-full bg-primary rounded-full transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
+          {/* Step indicators — horizontal, compact for mobile */}
+          <div className="flex items-center justify-between mt-2.5 gap-1">
+            {stepLabels.map((label, i) => {
+              const Icon = stepIcons[i];
+              const isActive = i === step;
+              const isDone = i < step;
+              return (
+                <div
+                  key={label}
+                  className={`flex items-center gap-1 text-[11px] sm:text-xs transition-colors ${
+                    isDone
+                      ? "text-primary"
+                      : isActive
+                        ? "text-foreground font-medium"
+                        : "text-muted-foreground/50"
+                  }`}
+                >
+                  {isDone ? (
+                    <CheckCircle2 className="h-3.5 w-3.5 text-primary shrink-0" />
+                  ) : (
+                    <Icon className="h-3.5 w-3.5 shrink-0" />
+                  )}
+                  <span className={`${isActive ? "" : "hidden sm:inline"}`}>{label}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      <div className="flex-1 flex items-start justify-center px-4 py-8">
-        <div className="w-full max-w-xl">
+      {/* Content */}
+      <div className="flex-1 flex items-start justify-center px-4 sm:px-6 py-6 sm:py-10">
+        <div className="w-full max-w-lg">
+
+          {/* Step 0: Business Info */}
           {step === 0 && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-2xl font-bold mb-2" data-testid="text-step-title">Create Your Business</h2>
-                <p className="text-muted-foreground">Let's set up your OAIM account. This takes about 5 minutes.</p>
+                <h2 className="text-xl sm:text-2xl font-bold mb-1.5" data-testid="text-step-title">Create Your Business</h2>
+                <p className="text-sm text-muted-foreground">Let's set up your OAIM account. This takes about 5 minutes.</p>
               </div>
               <div className="space-y-4">
                 <div className="space-y-2">
@@ -88,63 +126,63 @@ export default function OnboardingPage() {
             </div>
           )}
 
+          {/* Step 1: Industry */}
           {step === 1 && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-2xl font-bold mb-2" data-testid="text-step-title">Choose Your Industry</h2>
-                <p className="text-muted-foreground">This will load a pre-built template with AI scripts, tags, and workflows.</p>
+                <h2 className="text-xl sm:text-2xl font-bold mb-1.5" data-testid="text-step-title">Choose Your Industry</h2>
+                <p className="text-sm text-muted-foreground">This will load a pre-built template with AI scripts, tags, and workflows.</p>
               </div>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <Card
-                  className={`cursor-pointer transition-all overflow-visible hover-elevate ${industry === "ecommerce" ? "border-primary ring-1 ring-primary" : ""}`}
-                  onClick={() => setIndustry("ecommerce")}
-                  data-testid="card-industry-ecommerce"
-                >
-                  <CardContent className="p-6 text-center">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-md bg-blue-500/10 dark:bg-blue-400/10 mx-auto mb-4">
-                      <Store className="h-8 w-8 text-blue-600 dark:text-blue-400" />
-                    </div>
-                    <h3 className="font-bold text-lg mb-1">E-commerce</h3>
-                    <p className="text-sm text-muted-foreground">Products, pricing, orders, COD, shipping</p>
-                    {industry === "ecommerce" && (
-                      <Badge className="mt-3">Selected</Badge>
-                    )}
-                  </CardContent>
-                </Card>
-                <Card
-                  className={`cursor-pointer transition-all overflow-visible hover-elevate ${industry === "restaurant" ? "border-primary ring-1 ring-primary" : ""}`}
-                  onClick={() => setIndustry("restaurant")}
-                  data-testid="card-industry-restaurant"
-                >
-                  <CardContent className="p-6 text-center">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-md bg-orange-500/10 dark:bg-orange-400/10 mx-auto mb-4">
-                      <UtensilsCrossed className="h-8 w-8 text-orange-600 dark:text-orange-400" />
-                    </div>
-                    <h3 className="font-bold text-lg mb-1">Restaurant</h3>
-                    <p className="text-sm text-muted-foreground">Menu, reservations, delivery, loyalty</p>
-                    {industry === "restaurant" && (
-                      <Badge className="mt-3">Selected</Badge>
-                    )}
-                  </CardContent>
-                </Card>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {[
+                  { id: "ecommerce" as const, icon: Store, label: "E-commerce", desc: "Products, pricing, orders, shipping", color: "bg-blue-500/10 dark:bg-blue-400/10", iconColor: "text-blue-600 dark:text-blue-400" },
+                  { id: "restaurant" as const, label: "Restaurant", icon: UtensilsCrossed, desc: "Menu, reservations, delivery, loyalty", color: "bg-orange-500/10 dark:bg-orange-400/10", iconColor: "text-orange-600 dark:text-orange-400" },
+                  { id: "beauty" as const, label: "Beauty & Wellness", icon: Sparkles, desc: "Booking, services, therapists", color: "bg-rose-500/10 dark:bg-rose-400/10", iconColor: "text-rose-600 dark:text-rose-400" },
+                ].map((item) => (
+                  <Card
+                    key={item.id}
+                    className={`cursor-pointer transition-all overflow-visible hover-elevate ${industry === item.id ? "border-primary ring-1 ring-primary" : ""}`}
+                    onClick={() => setIndustry(item.id)}
+                    data-testid={`card-industry-${item.id}`}
+                  >
+                    <CardContent className="p-4 sm:p-5 sm:text-center">
+                      <div className="flex sm:flex-col items-center gap-3 sm:gap-0">
+                        <div className={`flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-md ${item.color} shrink-0 sm:mx-auto sm:mb-3`}>
+                          <item.icon className={`h-6 w-6 sm:h-7 sm:w-7 ${item.iconColor}`} />
+                        </div>
+                        <div className="flex-1 sm:flex-none min-w-0">
+                          <h3 className="font-semibold text-sm sm:text-base sm:mb-1">{item.label}</h3>
+                          <p className="text-xs text-muted-foreground">{item.desc}</p>
+                        </div>
+                        {industry === item.id && (
+                          <CheckCircle2 className="h-5 w-5 text-primary shrink-0 sm:hidden" />
+                        )}
+                      </div>
+                      {industry === item.id && (
+                        <Badge className="mt-2 hidden sm:inline-flex">Selected</Badge>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
             </div>
           )}
 
+          {/* Step 2: WhatsApp */}
           {step === 2 && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-2xl font-bold mb-2" data-testid="text-step-title">Connect WhatsApp</h2>
-                <p className="text-muted-foreground">Link your WhatsApp Business number via Cloud API.</p>
+                <h2 className="text-xl sm:text-2xl font-bold mb-1.5" data-testid="text-step-title">Connect WhatsApp</h2>
+                <p className="text-sm text-muted-foreground">Link your WhatsApp Business number via Cloud API.</p>
               </div>
               <Card>
-                <CardContent className="p-6">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-md bg-green-500/10 dark:bg-green-400/10 mx-auto mb-4">
-                    <SiWhatsapp className="h-8 w-8 text-green-600 dark:text-green-400" />
+                <CardContent className="p-5 sm:p-6">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-md bg-green-500/10 dark:bg-green-400/10 mx-auto mb-4">
+                    <SiWhatsapp className="h-7 w-7 text-green-600 dark:text-green-400" />
                   </div>
-                  <div className="text-center mb-6">
+                  <div className="text-center mb-5">
                     <h3 className="font-semibold mb-1">WhatsApp Business API</h3>
-                    <p className="text-sm text-muted-foreground">Enter your WhatsApp Cloud API credentials</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Enter your WhatsApp Cloud API credentials</p>
                   </div>
                   <div className="space-y-4">
                     <div className="space-y-2">
@@ -159,44 +197,50 @@ export default function OnboardingPage() {
                 </CardContent>
               </Card>
               <p className="text-xs text-muted-foreground text-center">
-                Don't have a Cloud API account? <a href="https://developers.facebook.com" target="_blank" rel="noopener noreferrer" className="text-primary underline">Set up here</a>
+                Don't have a Cloud API account?{" "}
+                <a href="https://developers.facebook.com" target="_blank" rel="noopener noreferrer" className="text-primary underline">
+                  Set up here
+                </a>
               </p>
             </div>
           )}
 
+          {/* Step 3: Products */}
           {step === 3 && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-2xl font-bold mb-2" data-testid="text-step-title">
+                <h2 className="text-xl sm:text-2xl font-bold mb-1.5" data-testid="text-step-title">
                   Import {industry === "restaurant" ? "Menu Items" : "Products"}
                 </h2>
-                <p className="text-muted-foreground">Add your {industry === "restaurant" ? "menu" : "product catalog"} or use our sample data to get started.</p>
+                <p className="text-sm text-muted-foreground">
+                  Add your {industry === "restaurant" ? "menu" : "product catalog"} or use our sample data to get started.
+                </p>
               </div>
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-3">
                 <Card className="cursor-pointer hover-elevate overflow-visible" data-testid="card-import-csv">
-                  <CardContent className="p-6 text-center">
-                    <Upload className="h-8 w-8 text-primary mx-auto mb-3" />
-                    <h3 className="font-semibold mb-1">Upload CSV</h3>
-                    <p className="text-sm text-muted-foreground">Import from a spreadsheet</p>
+                  <CardContent className="p-4 sm:p-6 text-center">
+                    <Upload className="h-7 w-7 text-primary mx-auto mb-2" />
+                    <h3 className="font-semibold text-sm mb-0.5">Upload CSV</h3>
+                    <p className="text-xs text-muted-foreground hidden sm:block">Import from a spreadsheet</p>
                   </CardContent>
                 </Card>
                 <Card className="cursor-pointer hover-elevate overflow-visible" data-testid="card-import-sample">
-                  <CardContent className="p-6 text-center">
-                    <Zap className="h-8 w-8 text-primary mx-auto mb-3" />
-                    <h3 className="font-semibold mb-1">Use Sample Data</h3>
-                    <p className="text-sm text-muted-foreground">Start with demo {industry === "restaurant" ? "menu" : "products"}</p>
+                  <CardContent className="p-4 sm:p-6 text-center">
+                    <Zap className="h-7 w-7 text-primary mx-auto mb-2" />
+                    <h3 className="font-semibold text-sm mb-0.5">Sample Data</h3>
+                    <p className="text-xs text-muted-foreground hidden sm:block">Start with demo {industry === "restaurant" ? "menu" : "products"}</p>
                   </CardContent>
                 </Card>
               </div>
               <Card>
                 <CardContent className="p-4">
                   <div className="text-sm font-medium mb-2">Sample data will include:</div>
-                  <ul className="space-y-1">
+                  <ul className="space-y-1.5">
                     {(industry === "restaurant"
                       ? ["10 menu items with categories", "Sample pricing", "Item descriptions and images"]
                       : ["15 products with categories", "Sample pricing and stock", "Product descriptions"]
                     ).map((item) => (
-                      <li key={item} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <li key={item} className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
                         <CheckCircle2 className="h-3.5 w-3.5 text-primary flex-shrink-0" />
                         {item}
                       </li>
@@ -207,33 +251,34 @@ export default function OnboardingPage() {
             </div>
           )}
 
+          {/* Step 4: AI Script */}
           {step === 4 && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-2xl font-bold mb-2" data-testid="text-step-title">Enable AI Script</h2>
-                <p className="text-muted-foreground">Your AI assistant is ready. Review the settings and launch.</p>
+                <h2 className="text-xl sm:text-2xl font-bold mb-1.5" data-testid="text-step-title">Enable AI Script</h2>
+                <p className="text-sm text-muted-foreground">Your AI assistant is ready. Review the settings and launch.</p>
               </div>
               <Card>
-                <CardContent className="p-6">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-md bg-primary/10 mx-auto mb-4">
-                    <Bot className="h-8 w-8 text-primary" />
+                <CardContent className="p-5 sm:p-6">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-md bg-primary/10 mx-auto mb-4">
+                    <Bot className="h-7 w-7 text-primary" />
                   </div>
-                  <div className="text-center mb-6">
+                  <div className="text-center mb-5">
                     <h3 className="font-semibold mb-1">
-                      {industry === "restaurant" ? "Restaurant" : "E-commerce"} AI Script
+                      {industry === "restaurant" ? "Restaurant" : industry === "beauty" ? "Beauty" : "E-commerce"} AI Script
                     </h3>
-                    <p className="text-sm text-muted-foreground">Pre-configured for your industry</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">Pre-configured for your industry</p>
                   </div>
-                  <div className="space-y-3">
+                  <div className="space-y-0">
                     {[
                       { label: "Tone", value: "Friendly & Professional" },
-                      { label: "Goal", value: industry === "restaurant" ? "Reservations & Orders" : "Close Sales" },
+                      { label: "Goal", value: industry === "restaurant" ? "Reservations & Orders" : industry === "beauty" ? "Bookings & Consultations" : "Close Sales" },
                       { label: "Auto-reply", value: "Within 5 seconds" },
                       { label: "Language", value: "English + Bahasa" },
                     ].map((item) => (
-                      <div key={item.label} className="flex items-center justify-between py-2 border-b last:border-0">
-                        <span className="text-sm text-muted-foreground">{item.label}</span>
-                        <span className="text-sm font-medium">{item.value}</span>
+                      <div key={item.label} className="flex items-center justify-between py-2.5 border-b last:border-0">
+                        <span className="text-xs sm:text-sm text-muted-foreground">{item.label}</span>
+                        <span className="text-xs sm:text-sm font-medium">{item.value}</span>
                       </div>
                     ))}
                   </div>
@@ -245,7 +290,7 @@ export default function OnboardingPage() {
                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                     <div>
                       <div className="text-sm font-medium">You're all set!</div>
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-xs sm:text-sm text-muted-foreground">
                         Click "Complete Setup" to go to your Inbox and start receiving messages.
                       </div>
                     </div>
@@ -255,6 +300,7 @@ export default function OnboardingPage() {
             </div>
           )}
 
+          {/* Navigation buttons */}
           <div className="flex items-center justify-between mt-8 gap-4">
             <Button
               variant="outline"
@@ -263,9 +309,9 @@ export default function OnboardingPage() {
               data-testid="button-prev-step"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back
+              <span className="hidden sm:inline">Back</span>
             </Button>
-            {step < steps.length - 1 ? (
+            {step < totalSteps - 1 ? (
               <Button
                 onClick={() => setStep(step + 1)}
                 disabled={step === 1 && !industry}

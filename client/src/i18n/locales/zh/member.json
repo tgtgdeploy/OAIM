@@ -1,0 +1,35 @@
+{
+  "sidebar": {
+    "myAccount": "我的账户",
+    "menu": "菜单",
+    "dashboard": "仪表盘",
+    "myOrders": "我的订单",
+    "trackOrder": "追踪订单",
+    "loyalty": "积分",
+    "referEarn": "推荐赚积分",
+    "profile": "个人资料",
+    "goldMember": "金牌会员",
+    "pointsToNext": "{{current}} / {{target}} 积分升级白金会员"
+  },
+  "dashboard": {
+    "title": "仪表盘",
+    "welcome": "欢迎回来，Sarah！",
+    "summary": "以下是您的账户活动概要。",
+    "totalOrders": "总订单数",
+    "inTransit": "运输中",
+    "loyaltyPoints": "积分",
+    "messages": "消息",
+    "recentOrders": "最近订单",
+    "viewAll": "查看全部",
+    "loyaltyProgram": "积分计划",
+    "goldMember": "金牌会员",
+    "points": "{{count}} 积分",
+    "morePointsToReach": "还差 {{count}} 积分升级白金会员",
+    "viewRewards": "查看奖励",
+    "quickActions": "快捷操作",
+    "trackOrder": "追踪订单",
+    "myOrders": "我的订单",
+    "myProfile": "个人资料",
+    "chatWithUs": "联系客服"
+  }
+}

@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import type { LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface ContactInfo {
   address: string;
@@ -39,6 +40,8 @@ export function StoreFooter({
   whatsappNumber = "1234567890",
   year = "2026",
 }: StoreFooterProps) {
+  const { t } = useTranslation("storefront");
+
   return (
     <footer className="border-t bg-card" data-testid="section-footer">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 md:py-14">
@@ -61,7 +64,7 @@ export function StoreFooter({
           <div>
             {operatingHours && operatingHours.length > 0 && (
               <>
-                <h4 className="font-semibold mb-3">Operating Hours</h4>
+                <h4 className="font-semibold mb-3">{t("footer.operatingHours")}</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   {operatingHours.map((h) => (
                     <li key={h.label} className="flex items-center gap-2">
@@ -71,7 +74,7 @@ export function StoreFooter({
                 </ul>
               </>
             )}
-            <h4 className={`font-semibold mb-3 ${operatingHours ? "mt-6" : ""}`}>Quick Links</h4>
+            <h4 className={`font-semibold mb-3 ${operatingHours ? "mt-6" : ""}`}>{t("footer.quickLinks")}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               {quickLinks.map((link) => (
                 <li key={link}>
@@ -84,11 +87,11 @@ export function StoreFooter({
           </div>
 
           <div>
-            <h4 className="font-semibold mb-3">Account</h4>
+            <h4 className="font-semibold mb-3">{t("footer.account")}</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link href="/auth/login">
-                  <span className="cursor-pointer" data-testid="link-merchant-login-footer">Merchant Login</span>
+                  <span className="cursor-pointer" data-testid="link-merchant-login-footer">{t("footer.merchantLogin")}</span>
                 </Link>
               </li>
               {extraLinks.map((link) => (
@@ -101,7 +104,7 @@ export function StoreFooter({
         </div>
 
         <div className="border-t mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-muted-foreground">
-          <p data-testid="text-copyright">{year} {storeName}. All rights reserved.</p>
+          <p data-testid="text-copyright">{year} {storeName}. {t("footer.allRightsReserved")}</p>
           <div className="flex items-center gap-3">
             <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" data-testid="link-footer-whatsapp">
               <SiWhatsapp className="h-4 w-4" />

@@ -1,0 +1,43 @@
+{
+  "header": {
+    "visitOaim": "访问 OAIM 了解更多解决方案",
+    "member": "会员",
+    "merchant": "商家",
+    "memberLogin": "会员登录",
+    "whatsappUs": "WhatsApp 联系我们"
+  },
+  "footer": {
+    "operatingHours": "营业时间",
+    "quickLinks": "快速链接",
+    "account": "账户",
+    "merchantLogin": "商家登录",
+    "allRightsReserved": "保留所有权利。"
+  },
+  "product": {
+    "addToCart": "加入购物车",
+    "ask": "咨询"
+  },
+  "package": {
+    "mostPopular": "最受欢迎",
+    "bookPackage": "预约套餐"
+  },
+  "reservation": {
+    "bookViaWhatsapp": "通过 WhatsApp 预约"
+  },
+  "service": {
+    "bookNow": "立即预约"
+  },
+  "offer": {
+    "orderNow": "立即订购"
+  },
+  "step": {
+    "step": "第 {{number}} 步"
+  },
+  "notFound": {
+    "title": "404 页面未找到",
+    "description": "是否忘记将页面添加到路由中？"
+  },
+  "locked": {
+    "upgradeTo": "升级至 {{plan}}"
+  }
+}

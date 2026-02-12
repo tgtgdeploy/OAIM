@@ -8,6 +8,8 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "@/lib/theme-provider";
 import { useIndustry, type Industry as IndustryType } from "@/lib/industry-context";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useTranslation } from "react-i18next";
 import {
   Shield,
   Store,
@@ -38,86 +40,12 @@ type Step = "choose-role" | "choose-industry" | "login-form";
 type Role = "superadmin" | "merchant" | "member";
 type Industry = "ecommerce" | "fnb" | "beauty";
 
-const roles = [
-  {
-    id: "superadmin" as Role,
-    label: "Super Admin",
-    desc: "Platform management — manage all tenants, plans, and modules",
-    icon: Shield,
-    color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
-    borderColor: "border-violet-500/20",
-    path: "/superadmin",
-  },
-  {
-    id: "merchant" as Role,
-    label: "Merchant Dashboard",
-    desc: "Business management — choose your industry to enter the backend",
-    icon: Store,
-    color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-    borderColor: "border-emerald-500/20",
-    path: "/app",
-  },
-  {
-    id: "member" as Role,
-    label: "Member Portal",
-    desc: "Customer portal — orders, loyalty, referrals, and account",
-    icon: Users,
-    color: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
-    borderColor: "border-blue-500/20",
-    path: "/member",
-  },
-];
-
-const industryOptions = [
-  {
-    id: "ecommerce" as Industry,
-    label: "E-Commerce",
-    desc: "Product catalog, payments, shipping & order management",
-    icon: Store,
-    color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-    borderColor: "border-emerald-500/20",
-    modules: [
-      { icon: Package, label: "Products" },
-      { icon: CreditCard, label: "Payments" },
-      { icon: Truck, label: "Shipping" },
-    ],
-  },
-  {
-    id: "fnb" as Industry,
-    label: "F&B / Restaurant",
-    desc: "Menu, reservations, delivery, table management & checkout",
-    icon: UtensilsCrossed,
-    color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
-    borderColor: "border-orange-500/20",
-    modules: [
-      { icon: ChefHat, label: "Menu" },
-      { icon: CalendarDays, label: "Reservations" },
-      { icon: Bike, label: "Delivery" },
-      { icon: LayoutGrid, label: "Tables" },
-      { icon: Receipt, label: "Checkout" },
-    ],
-  },
-  {
-    id: "beauty" as Industry,
-    label: "Beauty & Wellness",
-    desc: "Booking, therapist scheduling, services & session management",
-    icon: Sparkles,
-    color: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
-    borderColor: "border-rose-500/20",
-    modules: [
-      { icon: CalendarDays, label: "Booking" },
-      { icon: UserCheck, label: "Therapists" },
-      { icon: Scissors, label: "Services" },
-      { icon: Clock, label: "Sessions" },
-    ],
-  },
-];
-
 export default function LoginPage() {
   const [, navigate] = useLocation();
   const search = useSearch();
   const { theme, toggleTheme } = useTheme();
   const { setIndustry } = useIndustry();
+  const { t } = useTranslation("auth");
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -128,6 +56,81 @@ export default function LoginPage() {
 
   const [step, setStep] = useState<Step>("choose-role");
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
+
+  const roles = [
+    {
+      id: "superadmin" as Role,
+      label: t("login.roles.superadmin"),
+      desc: t("login.roles.superadminDesc"),
+      icon: Shield,
+      color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
+      borderColor: "border-violet-500/20",
+      path: "/superadmin",
+    },
+    {
+      id: "merchant" as Role,
+      label: t("login.roles.merchant"),
+      desc: t("login.roles.merchantDesc"),
+      icon: Store,
+      color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+      borderColor: "border-emerald-500/20",
+      path: "/app",
+    },
+    {
+      id: "member" as Role,
+      label: t("login.roles.member"),
+      desc: t("login.roles.memberDesc"),
+      icon: Users,
+      color: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+      borderColor: "border-blue-500/20",
+      path: "/member",
+    },
+  ];
+
+  const industryOptions = [
+    {
+      id: "ecommerce" as Industry,
+      label: t("login.industries.ecommerce"),
+      desc: t("login.industries.ecommerceDesc"),
+      icon: Store,
+      color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+      borderColor: "border-emerald-500/20",
+      modules: [
+        { icon: Package, label: t("login.modules.products") },
+        { icon: CreditCard, label: t("login.modules.payments") },
+        { icon: Truck, label: t("login.modules.shipping") },
+      ],
+    },
+    {
+      id: "fnb" as Industry,
+      label: t("login.industries.fnb"),
+      desc: t("login.industries.fnbDesc"),
+      icon: UtensilsCrossed,
+      color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+      borderColor: "border-orange-500/20",
+      modules: [
+        { icon: ChefHat, label: t("login.modules.menu") },
+        { icon: CalendarDays, label: t("login.modules.reservations") },
+        { icon: Bike, label: t("login.modules.delivery") },
+        { icon: LayoutGrid, label: t("login.modules.tables") },
+        { icon: Receipt, label: t("login.modules.checkout") },
+      ],
+    },
+    {
+      id: "beauty" as Industry,
+      label: t("login.industries.beauty"),
+      desc: t("login.industries.beautyDesc"),
+      icon: Sparkles,
+      color: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+      borderColor: "border-rose-500/20",
+      modules: [
+        { icon: CalendarDays, label: t("login.modules.booking") },
+        { icon: UserCheck, label: t("login.modules.therapists") },
+        { icon: Scissors, label: t("login.modules.services") },
+        { icon: Clock, label: t("login.modules.sessions") },
+      ],
+    },
+  ];
 
   useEffect(() => {
     if (queryRole === "merchant" || queryRole === "member") {
@@ -186,7 +189,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex bg-background">
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary to-emerald-800" />
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNCI+PHBhdGggZD0iTTM2IDE4YzMuMzE0IDAgNi0yLjY4NiA2LTZWMTJINGNIMCA2IDIuNjg2IDYgNnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-60" />
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNCI+PHBhdGggZD0iTTM2IDE4YzMuMzE0IDAgNi0yLjY4NiA2LTZWMTJINGJIMCA2IDIuNjg2IDYgNnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-60" />
         <div className="relative z-10 flex flex-col justify-between p-12 text-white">
           <Link href="/">
             <div className="flex items-center gap-3 cursor-pointer">
@@ -199,29 +202,29 @@ export default function LoginPage() {
 
           <div className="space-y-6">
             <h1 className="text-4xl font-bold leading-tight">
-              One AI Management
+              {t("login.leftPanel.heading")}
             </h1>
             <p className="text-lg text-white/80 max-w-md">
-              WhatsApp-first AI sales platform for e-commerce, restaurant, and beauty businesses. Manage conversations, automate sales, and grow revenue.
+              {t("login.leftPanel.description")}
             </p>
             <div className="flex flex-col gap-3 text-sm text-white/70">
               <div className="flex items-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-white/60" />
-                AI-powered sales scripts for your industry
+                {t("login.leftPanel.feature1")}
               </div>
               <div className="flex items-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-white/60" />
-                Multi-tenant SaaS with full CRM pipeline
+                {t("login.leftPanel.feature2")}
               </div>
               <div className="flex items-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-white/60" />
-                WhatsApp automation + Meta ads integration
+                {t("login.leftPanel.feature3")}
               </div>
             </div>
           </div>
 
           <p className="text-xs text-white/40">
-            &copy; 2026 OAIM. All rights reserved.
+            {t("login.leftPanel.copyright")}
           </p>
         </div>
       </div>
@@ -237,6 +240,7 @@ export default function LoginPage() {
             </div>
           </Link>
           <div className="flex items-center gap-2 ml-auto">
+            <LanguageSwitcher />
             <Button
               size="icon"
               variant="ghost"
@@ -254,9 +258,9 @@ export default function LoginPage() {
             {step === "choose-role" && (
               <>
                 <div className="space-y-2 text-center">
-                  <h2 className="text-2xl font-bold" data-testid="text-login-title">Welcome to OAIM</h2>
+                  <h2 className="text-2xl font-bold" data-testid="text-login-title">{t("login.title")}</h2>
                   <p className="text-sm text-muted-foreground">
-                    Choose your portal to continue
+                    {t("login.subtitle")}
                   </p>
                 </div>
 
@@ -291,18 +295,18 @@ export default function LoginPage() {
                   </div>
                   <div className="relative flex justify-center text-xs uppercase">
                     <span className="bg-background px-2 text-muted-foreground">
-                      Or sign in with credentials
+                      {t("login.orCredentials")}
                     </span>
                   </div>
                 </div>
 
                 <form onSubmit={handleFormLogin} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email">{t("login.email")}</Label>
                     <Input
                       id="email"
                       type="email"
-                      placeholder="you@company.com"
+                      placeholder={t("login.emailPlaceholder")}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       data-testid="input-email"
@@ -310,10 +314,10 @@ export default function LoginPage() {
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <Label htmlFor="password">Password</Label>
+                      <Label htmlFor="password">{t("login.password")}</Label>
                       <Link href="/auth/forgot-password">
                         <span className="text-xs text-primary cursor-pointer" data-testid="link-forgot-password">
-                          Forgot password?
+                          {t("login.forgotPassword")}
                         </span>
                       </Link>
                     </div>
@@ -321,7 +325,7 @@ export default function LoginPage() {
                       <Input
                         id="password"
                         type={showPassword ? "text" : "password"}
-                        placeholder="Enter your password"
+                        placeholder={t("login.passwordPlaceholder")}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         data-testid="input-password"
@@ -337,16 +341,16 @@ export default function LoginPage() {
                     </div>
                   </div>
                   <Button type="submit" className="w-full" data-testid="button-login">
-                    Sign In
+                    {t("login.signIn")}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </form>
 
                 <p className="text-center text-sm text-muted-foreground">
-                  Don't have an account?{" "}
+                  {t("login.noAccount")}{" "}
                   <Link href="/auth/register">
                     <span className="text-primary font-medium cursor-pointer" data-testid="link-register">
-                      Sign up
+                      {t("login.signUp")}
                     </span>
                   </Link>
                 </p>
@@ -362,13 +366,13 @@ export default function LoginPage() {
                     data-testid="button-back-to-roles"
                   >
                     <ArrowLeft className="h-3.5 w-3.5" />
-                    Back
+                    {t("login.back")}
                   </button>
-                  <h2 className="text-2xl font-bold" data-testid="text-industry-title">Select Your Industry</h2>
+                  <h2 className="text-2xl font-bold" data-testid="text-industry-title">{t("login.selectIndustry")}</h2>
                   <p className="text-sm text-muted-foreground">
                     {selectedRole === "member"
-                      ? "Choose the business type you're a member of"
-                      : "Choose your business type to see the matching management backend"}
+                      ? t("login.memberIndustryDesc")
+                      : t("login.merchantIndustryDesc")}
                   </p>
                 </div>
 

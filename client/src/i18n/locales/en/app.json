@@ -1,0 +1,42 @@
+{
+  "sidebar": {
+    "main": "Main",
+    "advanced": "Advanced",
+    "management": "Management",
+    "storeHomepage": "Store Homepage",
+    "inbox": "Inbox",
+    "contacts": "Contacts",
+    "pipeline": "Pipeline",
+    "orders": "Orders",
+    "products": "Products",
+    "shipping": "Shipping",
+    "payments": "Payments",
+    "menu": "Menu",
+    "reservations": "Reservations",
+    "delivery": "Delivery",
+    "tables": "Tables",
+    "checkout": "Checkout",
+    "booking": "Booking",
+    "therapists": "Therapists",
+    "services": "Services",
+    "automation": "Automation",
+    "followUps": "Follow-ups",
+    "customerSupport": "Customer Support",
+    "adsRoi": "Ads & ROI",
+    "referral": "Referral",
+    "teamRoles": "Team & Roles",
+    "settings": "Settings",
+    "industry": {
+      "ecommerce": "E-Commerce",
+      "fnb": "F&B",
+      "beauty": "Beauty",
+      "ecommerceGroup": "E-Commerce",
+      "fnbGroup": "F&B / Restaurant",
+      "beautyGroup": "Beauty & Wellness"
+    },
+    "footer": {
+      "proPlan": "Pro Plan",
+      "messagesUsage": "{{used}} / {{total}} messages"
+    }
+  }
+}

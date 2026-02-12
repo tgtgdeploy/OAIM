@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { StatCard } from "@/components/shared/stat-card";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { ShoppingBag, MapPin, Star, ArrowRight, MessageSquare } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const recentOrders = [
   { id: "ORD-005", items: "Blue Dress x3", total: "RM 267.00", status: "confirmed", date: "Feb 10" },
@@ -14,29 +15,38 @@ const recentOrders = [
 ];
 
 export default function MemberDashboard() {
+  const { t } = useTranslation("member");
+
+  const quickActions = [
+    { label: t("dashboard.trackOrder"), href: "/member/track", icon: MapPin },
+    { label: t("dashboard.myOrders"), href: "/member/orders", icon: ShoppingBag },
+    { label: t("dashboard.myProfile"), href: "/member/profile", icon: Star },
+    { label: t("dashboard.chatWithUs"), href: "#", icon: MessageSquare },
+  ];
+
   return (
-    <MemberLayout title="Dashboard">
+    <MemberLayout title={t("dashboard.title")}>
       <div className="member-page-padding section-spacing">
         <div>
-          <h2 className="text-2xl font-bold mb-1" data-testid="text-welcome">Welcome back, Sarah!</h2>
-          <p className="text-muted-foreground">Here's a summary of your account activity.</p>
+          <h2 className="text-2xl font-bold mb-1" data-testid="text-welcome">{t("dashboard.welcome")}</h2>
+          <p className="text-muted-foreground">{t("dashboard.summary")}</p>
         </div>
 
         <div className="stats-grid">
-          <StatCard label="Total Orders" value="12" icon={ShoppingBag} />
-          <StatCard label="In Transit" value="2" icon={MapPin} />
-          <StatCard label="Loyalty Points" value="450" icon={Star} iconColor="text-primary" />
-          <StatCard label="Messages" value="3" icon={MessageSquare} />
+          <StatCard label={t("dashboard.totalOrders")} value="12" icon={ShoppingBag} />
+          <StatCard label={t("dashboard.inTransit")} value="2" icon={MapPin} />
+          <StatCard label={t("dashboard.loyaltyPoints")} value="450" icon={Star} iconColor="text-primary" />
+          <StatCard label={t("dashboard.messages")} value="3" icon={MessageSquare} />
         </div>
 
         <div className="grid lg:grid-cols-2 gap-4">
           <Card>
             <CardContent className="p-5">
               <div className="flex items-center justify-between gap-4 mb-4">
-                <h3 className="font-semibold">Recent Orders</h3>
+                <h3 className="font-semibold">{t("dashboard.recentOrders")}</h3>
                 <Link href="/member/orders">
                   <Button variant="ghost" size="sm" data-testid="button-view-all-orders">
-                    View All <ArrowRight className="ml-1 h-3 w-3" />
+                    {t("dashboard.viewAll")} <ArrowRight className="ml-1 h-3 w-3" />
                   </Button>
                 </Link>
               </div>
@@ -62,20 +72,20 @@ export default function MemberDashboard() {
 
           <Card>
             <CardContent className="p-5">
-              <h3 className="font-semibold mb-4">Loyalty Program</h3>
+              <h3 className="font-semibold mb-4">{t("dashboard.loyaltyProgram")}</h3>
               <div className="text-center py-4">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 mx-auto mb-3">
                   <Star className="h-8 w-8 text-primary" />
                 </div>
-                <Badge className="mb-2">Gold Member</Badge>
-                <p className="text-2xl font-bold mb-1">450 Points</p>
-                <p className="text-sm text-muted-foreground mb-4">550 more points to reach Platinum</p>
+                <Badge className="mb-2">{t("dashboard.goldMember")}</Badge>
+                <p className="text-2xl font-bold mb-1">{t("dashboard.points", { count: 450 })}</p>
+                <p className="text-sm text-muted-foreground mb-4">{t("dashboard.morePointsToReach", { count: 550 })}</p>
                 <div className="h-2 rounded-full bg-muted overflow-hidden max-w-xs mx-auto mb-4">
                   <div className="h-full bg-primary rounded-full" style={{ width: "45%" }} />
                 </div>
                 <Link href="/member/loyalty">
                   <Button variant="outline" size="sm" data-testid="button-view-rewards">
-                    View Rewards <ArrowRight className="ml-1 h-3 w-3" />
+                    {t("dashboard.viewRewards")} <ArrowRight className="ml-1 h-3 w-3" />
                   </Button>
                 </Link>
               </div>
@@ -85,16 +95,11 @@ export default function MemberDashboard() {
 
         <Card>
           <CardContent className="p-5">
-            <h3 className="font-semibold mb-3">Quick Actions</h3>
+            <h3 className="font-semibold mb-3">{t("dashboard.quickActions")}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {[
-                { label: "Track Order", href: "/member/track", icon: MapPin },
-                { label: "My Orders", href: "/member/orders", icon: ShoppingBag },
-                { label: "My Profile", href: "/member/profile", icon: Star },
-                { label: "Chat with Us", href: "#", icon: MessageSquare },
-              ].map((action) => (
-                <Link key={action.label} href={action.href}>
-                  <Card className="hover-elevate overflow-visible cursor-pointer" data-testid={`quick-action-${action.label.toLowerCase().replace(/\s/g, "-")}`}>
+              {quickActions.map((action) => (
+                <Link key={action.href} href={action.href}>
+                  <Card className="hover-elevate overflow-visible cursor-pointer" data-testid={`quick-action-${action.href.split("/").pop()}`}>
                     <CardContent className="p-4 text-center">
                       <action.icon className="h-6 w-6 text-primary mx-auto mb-2" />
                       <span className="text-sm font-medium">{action.label}</span>

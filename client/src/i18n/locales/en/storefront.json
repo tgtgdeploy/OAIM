@@ -1,0 +1,43 @@
+{
+  "header": {
+    "visitOaim": "Visit OAIM to explore more solutions",
+    "member": "Member",
+    "merchant": "Merchant",
+    "memberLogin": "Member Login",
+    "whatsappUs": "WhatsApp Us"
+  },
+  "footer": {
+    "operatingHours": "Operating Hours",
+    "quickLinks": "Quick Links",
+    "account": "Account",
+    "merchantLogin": "Merchant Login",
+    "allRightsReserved": "All rights reserved."
+  },
+  "product": {
+    "addToCart": "Add to Cart",
+    "ask": "Ask"
+  },
+  "package": {
+    "mostPopular": "Most Popular",
+    "bookPackage": "Book Package"
+  },
+  "reservation": {
+    "bookViaWhatsapp": "Book via WhatsApp"
+  },
+  "service": {
+    "bookNow": "Book Now"
+  },
+  "offer": {
+    "orderNow": "Order Now"
+  },
+  "step": {
+    "step": "Step {{number}}"
+  },
+  "notFound": {
+    "title": "404 Page Not Found",
+    "description": "Did you forget to add the page to the router?"
+  },
+  "locked": {
+    "upgradeTo": "Upgrade to {{plan}}"
+  }
+}
