@@ -13,6 +13,8 @@ import memberEn from './locales/en/member.json';
 import memberZh from './locales/zh/member.json';
 import storefrontEn from './locales/en/storefront.json';
 import storefrontZh from './locales/zh/storefront.json';
+import templatesEn from './locales/en/templates.json';
+import templatesZh from './locales/zh/templates.json';
 
 const savedLanguage = localStorage.getItem('oaim-language') || 'en';
 
@@ -25,6 +27,7 @@ i18n.use(initReactI18next).init({
       app: appEn,
       member: memberEn,
       storefront: storefrontEn,
+      templates: templatesEn,
     },
     zh: {
       marketing: marketingZh,
@@ -33,11 +36,12 @@ i18n.use(initReactI18next).init({
       app: appZh,
       member: memberZh,
       storefront: storefrontZh,
+      templates: templatesZh,
     },
   },
   lng: savedLanguage,
   fallbackLng: 'en',
-  ns: ['marketing', 'superadmin', 'auth', 'app', 'member', 'storefront'],
+  ns: ['marketing', 'superadmin', 'auth', 'app', 'member', 'storefront', 'templates'],
   defaultNS: 'marketing',
   interpolation: {
     escapeValue: false,

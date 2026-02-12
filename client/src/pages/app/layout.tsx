@@ -1,6 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app/app-sidebar";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Bell } from "lucide-react";
@@ -25,6 +26,7 @@ export function AppLayout({ children, title }: { children: React.ReactNode; titl
               <Button size="icon" variant="ghost" data-testid="button-notifications">
                 <Bell className="h-4 w-4" />
               </Button>
+              <LanguageSwitcher />
               <ThemeToggle />
               <Avatar className="h-8 w-8" data-testid="avatar-user">
                 <AvatarFallback className="text-xs bg-primary/10 text-primary">JD</AvatarFallback>

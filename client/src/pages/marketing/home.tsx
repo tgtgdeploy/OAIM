@@ -63,9 +63,9 @@ export default function HomePage() {
   ];
 
   const testimonials = [
-    { name: "Ahmad Razak", role: "Owner, Fashion Hub KL", text: "OAIM transformed our WhatsApp sales. We went from manually replying to 50+ daily messages to having AI handle 80% automatically. Revenue doubled in 3 months.", rating: 5 },
-    { name: "Lisa Chen", role: "Manager, The Noodle House", text: "Our reservations are now fully automated through WhatsApp. Customers love it, and we reduced no-shows by 60%. The delivery integration is seamless.", rating: 5 },
-    { name: "Priya Kaur", role: "Founder, Glow Beauty Studio", text: "Booking management used to be a nightmare. Now clients book via WhatsApp, get automatic reminders, and we've grown our repeat customer base by 40%.", rating: 5 },
+    { name: t("pricing.testimonial1Name"), role: t("pricing.testimonial1Role"), text: t("pricing.testimonial1Text"), rating: 5 },
+    { name: t("pricing.testimonial2Name"), role: t("pricing.testimonial2Role"), text: t("pricing.testimonial2Text"), rating: 5 },
+    { name: t("pricing.testimonial3Name"), role: t("pricing.testimonial3Role"), text: t("pricing.testimonial3Text"), rating: 5 },
   ];
 
   const workflow = [

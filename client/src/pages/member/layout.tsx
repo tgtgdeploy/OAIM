@@ -1,6 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { MemberSidebar } from "@/components/member/member-sidebar";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import "@/styles/member.css";
 
@@ -21,6 +22,7 @@ export function MemberLayout({ children, title }: { children: React.ReactNode; t
               {title && <h1 className="text-lg font-semibold">{title}</h1>}
             </div>
             <div className="flex items-center gap-1">
+              <LanguageSwitcher />
               <ThemeToggle />
               <Avatar className="h-8 w-8" data-testid="avatar-member">
                 <AvatarFallback className="text-xs bg-primary/10 text-primary">SA</AvatarFallback>

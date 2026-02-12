@@ -16,6 +16,7 @@ import {
   MapPin,
   Quote,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { SiWhatsapp } from "react-icons/si";
 import {
   StoreHeader,
@@ -40,59 +41,67 @@ import imgTherapist1 from "@/assets/images/therapist-1_1.jpg";
 import imgTherapist2 from "@/assets/images/therapist-1_2.jpg";
 import imgTherapist3 from "@/assets/images/therapist-1_3.jpg";
 
-const navLinks = ["Home", "Services", "Booking", "Gallery", "Contact"];
-
-const services = [
-  { name: "Facial Treatment", image: imgFacial, desc: "Deep cleansing, hydrating, and anti-aging facial therapies", price: "From RM 80", duration: "60 - 90 min", rating: 4.9 },
-  { name: "Body Massage", image: imgMassage, desc: "Relaxing full body massages with aromatherapy oils", price: "From RM 120", duration: "60 - 120 min", rating: 4.8 },
-  { name: "Hair & Styling", image: imgHair, desc: "Precision cuts, coloring, treatments, and bridal styling", price: "From RM 50", duration: "30 - 90 min", rating: 4.7 },
-  { name: "Nail Art", image: imgNails, desc: "Manicures, pedicures, gel art, and nail extensions", price: "From RM 40", duration: "45 - 75 min", rating: 4.9 },
-];
-
-const therapists = [
-  { name: "Sarah Chen", role: "Senior Therapist", specialty: "Facial & Skin Care", experience: "8 years", rating: 4.9, reviews: 342, image: imgTherapist1 },
-  { name: "Maya Lim", role: "Massage Specialist", specialty: "Deep Tissue & Aromatherapy", experience: "6 years", rating: 4.8, reviews: 256, image: imgTherapist2 },
-  { name: "Aisha Rahman", role: "Beauty Consultant", specialty: "Bridal Makeup & Hair", experience: "10 years", rating: 5.0, reviews: 189, image: imgTherapist3 },
-];
-
-const whyUs = [
-  { icon: Award, title: "Certified Therapists", desc: "All our therapists are professionally certified and trained" },
-  { icon: Droplets, title: "Premium Products", desc: "We use only high-quality, dermatologically tested products" },
-  { icon: ShieldCheck, title: "Hygiene Guaranteed", desc: "Strict hygiene and sanitization protocols for your safety" },
-  { icon: CalendarCheck, title: "Flexible Booking", desc: "Book anytime via WhatsApp — we work around your schedule" },
-];
-
-const packages = [
-  {
-    name: "Glow Up",
-    price: "RM 199",
-    items: ["60-min Facial Treatment", "Express Manicure", "Scalp Massage", "Complimentary Drink"],
-    popular: false,
-  },
-  {
-    name: "Total Bliss",
-    price: "RM 399",
-    items: ["90-min Full Body Massage", "Luxury Facial", "Gel Manicure & Pedicure", "Hair Wash & Blowdry", "Welcome Refreshments"],
-    popular: true,
-  },
-  {
-    name: "Bridal Prep",
-    price: "RM 899",
-    items: ["Pre-wedding Facial Course (3x)", "Bridal Makeup Trial", "Day-of Makeup & Hair", "Mani-Pedi with Nail Art", "Relaxation Massage"],
-    popular: false,
-  },
-];
-
-const reviews = [
-  { name: "Joanna T.", rating: 5, text: "Sarah is absolutely amazing with facials! My skin has never looked better. The studio is clean, relaxing, and the team is so welcoming.", service: "Facial Treatment", date: "2 weeks ago" },
-  { name: "Priya M.", rating: 5, text: "Had the Total Bliss package for my birthday — every single treatment was perfect. Maya's massage is the best I've ever had!", service: "Total Bliss Package", date: "1 month ago" },
-  { name: "Wei Lin K.", rating: 4, text: "Great nail art designs and very attentive service. The booking through WhatsApp was super convenient. Will definitely come back!", service: "Nail Art", date: "3 weeks ago" },
-  { name: "Fatimah A.", rating: 5, text: "Aisha did an incredible job for my sister's wedding. The bridal prep package was worth every ringgit. Highly recommend!", service: "Bridal Prep", date: "1 month ago" },
-];
-
-const timeSlots = ["9:00 AM", "10:00 AM", "11:00 AM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"];
-
 export default function BeautyTemplate() {
+  const { t } = useTranslation("templates");
+
+  const navLinks = [
+    t("beauty.navHome"),
+    t("beauty.navServices"),
+    t("beauty.navBooking"),
+    t("beauty.navGallery"),
+    t("beauty.navContact"),
+  ];
+
+  const services = [
+    { name: t("beauty.service1Name"), image: imgFacial, desc: t("beauty.service1Desc"), price: t("beauty.service1Price"), duration: t("beauty.service1Duration"), rating: 4.9 },
+    { name: t("beauty.service2Name"), image: imgMassage, desc: t("beauty.service2Desc"), price: t("beauty.service2Price"), duration: t("beauty.service2Duration"), rating: 4.8 },
+    { name: t("beauty.service3Name"), image: imgHair, desc: t("beauty.service3Desc"), price: t("beauty.service3Price"), duration: t("beauty.service3Duration"), rating: 4.7 },
+    { name: t("beauty.service4Name"), image: imgNails, desc: t("beauty.service4Desc"), price: t("beauty.service4Price"), duration: t("beauty.service4Duration"), rating: 4.9 },
+  ];
+
+  const therapists = [
+    { name: t("beauty.therapist1Name"), role: t("beauty.therapist1Role"), specialty: t("beauty.therapist1Specialty"), experience: t("beauty.therapist1Exp"), rating: 4.9, reviews: 342, image: imgTherapist1 },
+    { name: t("beauty.therapist2Name"), role: t("beauty.therapist2Role"), specialty: t("beauty.therapist2Specialty"), experience: t("beauty.therapist2Exp"), rating: 4.8, reviews: 256, image: imgTherapist2 },
+    { name: t("beauty.therapist3Name"), role: t("beauty.therapist3Role"), specialty: t("beauty.therapist3Specialty"), experience: t("beauty.therapist3Exp"), rating: 5.0, reviews: 189, image: imgTherapist3 },
+  ];
+
+  const whyUs = [
+    { icon: Award, title: t("beauty.why1Title"), desc: t("beauty.why1Desc") },
+    { icon: Droplets, title: t("beauty.why2Title"), desc: t("beauty.why2Desc") },
+    { icon: ShieldCheck, title: t("beauty.why3Title"), desc: t("beauty.why3Desc") },
+    { icon: CalendarCheck, title: t("beauty.why4Title"), desc: t("beauty.why4Desc") },
+  ];
+
+  const packages = [
+    {
+      name: t("beauty.package1Name"),
+      price: "RM 199",
+      items: [t("beauty.package1Item1"), t("beauty.package1Item2"), t("beauty.package1Item3"), t("beauty.package1Item4")],
+      popular: false,
+    },
+    {
+      name: t("beauty.package2Name"),
+      price: "RM 399",
+      items: [t("beauty.package2Item1"), t("beauty.package2Item2"), t("beauty.package2Item3"), t("beauty.package2Item4"), t("beauty.package2Item5")],
+      popular: true,
+    },
+    {
+      name: t("beauty.package3Name"),
+      price: "RM 899",
+      items: [t("beauty.package3Item1"), t("beauty.package3Item2"), t("beauty.package3Item3"), t("beauty.package3Item4"), t("beauty.package3Item5")],
+      popular: false,
+    },
+  ];
+
+  const reviews = [
+    { name: t("beauty.review1Name"), rating: 5, text: t("beauty.review1Text"), service: t("beauty.review1Service"), date: t("beauty.review1Date") },
+    { name: t("beauty.review2Name"), rating: 5, text: t("beauty.review2Text"), service: t("beauty.review2Service"), date: t("beauty.review2Date") },
+    { name: t("beauty.review3Name"), rating: 4, text: t("beauty.review3Text"), service: t("beauty.review3Service"), date: t("beauty.review3Date") },
+    { name: t("beauty.review4Name"), rating: 5, text: t("beauty.review4Text"), service: t("beauty.review4Service"), date: t("beauty.review4Date") },
+  ];
+
+  const timeSlots = ["9:00 AM", "10:00 AM", "11:00 AM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM"];
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <StoreHeader
@@ -100,7 +109,7 @@ export default function BeautyTemplate() {
         storeIcon={Sparkles}
         iconBgClass="bg-rose-500 dark:bg-rose-600 text-white"
         navLinks={navLinks}
-        ctaLabel="Book Now"
+        ctaLabel={t("beauty.bookNow")}
         industry="beauty"
       />
 
@@ -109,11 +118,11 @@ export default function BeautyTemplate() {
           bgImage={heroImg}
           gradientClass="bg-gradient-to-r from-black/80 via-black/50 to-transparent dark:from-black/90 dark:via-black/60 dark:to-black/20"
           badgeIcon={Sparkles}
-          badgeText="Premium beauty treatments"
-          title="Relax, Rejuvenate, Refresh"
-          subtitle="Indulge in our professional beauty and wellness treatments. Book your appointment effortlessly via WhatsApp and let us take care of the rest."
-          primaryCTA={{ label: "Book Appointment", isWhatsApp: true }}
-          secondaryCTA={{ label: "View Services", variant: "outline" }}
+          badgeText={t("beauty.heroBadge")}
+          title={t("beauty.heroTitle")}
+          subtitle={t("beauty.heroSubtitle")}
+          primaryCTA={{ label: t("beauty.heroCta"), isWhatsApp: true }}
+          secondaryCTA={{ label: t("beauty.heroCtaSecondary"), variant: "outline" }}
           align="left"
         />
 
@@ -121,10 +130,10 @@ export default function BeautyTemplate() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { icon: Star, value: "4.9/5", label: "Client Rating" },
-                { icon: UserCheck, value: "15+", label: "Therapists" },
-                { icon: Clock, value: "10 Years", label: "Experience" },
-                { icon: Heart, value: "8K+", label: "Happy Clients" },
+                { icon: Star, value: "4.9/5", label: t("beauty.statRating") },
+                { icon: UserCheck, value: "15+", label: t("beauty.statTherapists") },
+                { icon: Clock, value: "10 Years", label: t("beauty.statExperience") },
+                { icon: Heart, value: "8K+", label: t("beauty.statClients") },
               ].map((stat) => (
                 <div key={stat.label} className="flex items-center gap-3" data-testid={`stat-${stat.label.toLowerCase().replace(/\s/g, "-")}`}>
                   <div className="flex h-10 w-10 items-center justify-center rounded-md bg-rose-500/10 dark:bg-rose-400/10 shrink-0">
@@ -143,9 +152,9 @@ export default function BeautyTemplate() {
         <section data-testid="section-services">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-20">
             <div className="text-center mb-10">
-              <Badge variant="secondary" className="mb-4 bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20">Our Services</Badge>
-              <h2 className="text-2xl md:text-3xl font-bold mb-3" data-testid="text-services-title">Professional Beauty & Wellness</h2>
-              <p className="text-muted-foreground max-w-xl mx-auto">Tailored treatments delivered by certified therapists using premium products</p>
+              <Badge variant="secondary" className="mb-4 bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20">{t("beauty.servicesBadge")}</Badge>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3" data-testid="text-services-title">{t("beauty.servicesTitle")}</h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">{t("beauty.servicesSubtitle")}</p>
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               {services.map((service, idx) => (
@@ -181,7 +190,7 @@ export default function BeautyTemplate() {
                             <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
                               <Button size="sm" data-testid={`button-book-${idx}`}>
                                 <SiWhatsapp className="mr-1.5 h-3 w-3" />
-                                Book
+                                {t("beauty.book")}
                               </Button>
                             </a>
                           </div>
@@ -198,44 +207,44 @@ export default function BeautyTemplate() {
         <section className="bg-card border-y" data-testid="section-therapists">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-20">
             <div className="text-center mb-10">
-              <Badge variant="secondary" className="mb-4 bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20">Meet Our Team</Badge>
-              <h2 className="text-2xl md:text-3xl font-bold mb-3" data-testid="text-therapists-title">Expert Therapists</h2>
-              <p className="text-muted-foreground max-w-xl mx-auto">Our certified professionals bring years of expertise and genuine care to every session</p>
+              <Badge variant="secondary" className="mb-4 bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20">{t("beauty.teamBadge")}</Badge>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3" data-testid="text-therapists-title">{t("beauty.teamTitle")}</h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">{t("beauty.teamSubtitle")}</p>
             </div>
             <div className="grid md:grid-cols-3 gap-4">
-              {therapists.map((t, idx) => (
-                <Card key={t.name} className="hover-elevate overflow-visible" data-testid={`card-therapist-${idx}`}>
+              {therapists.map((therapist, idx) => (
+                <Card key={therapist.name} className="hover-elevate overflow-visible" data-testid={`card-therapist-${idx}`}>
                   <CardContent className="p-0">
                     <div className="relative overflow-hidden rounded-t-md">
                       <img
-                        src={t.image}
-                        alt={t.name}
+                        src={therapist.image}
+                        alt={therapist.name}
                         className="w-full h-56 object-cover object-top"
                         loading="lazy"
                       />
                     </div>
                     <div className="p-4">
-                      <h3 className="font-semibold mb-0.5">{t.name}</h3>
-                      <p className="text-xs text-rose-600 dark:text-rose-400 font-medium mb-2">{t.role}</p>
+                      <h3 className="font-semibold mb-0.5">{therapist.name}</h3>
+                      <p className="text-xs text-rose-600 dark:text-rose-400 font-medium mb-2">{therapist.role}</p>
                       <div className="space-y-1 text-xs text-muted-foreground mb-3">
                         <div className="flex items-center gap-1.5">
                           <Scissors className="h-3 w-3" />
-                          {t.specialty}
+                          {therapist.specialty}
                         </div>
                         <div className="flex items-center gap-1.5">
                           <Clock className="h-3 w-3" />
-                          {t.experience} experience
+                          {therapist.experience} {t("beauty.experience")}
                         </div>
                       </div>
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-1">
                           <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
-                          <span className="text-sm font-semibold">{t.rating}</span>
-                          <span className="text-xs text-muted-foreground">({t.reviews})</span>
+                          <span className="text-sm font-semibold">{therapist.rating}</span>
+                          <span className="text-xs text-muted-foreground">({therapist.reviews})</span>
                         </div>
                         <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
                           <Button size="sm" variant="outline" data-testid={`button-book-therapist-${idx}`}>
-                            Book
+                            {t("beauty.book")}
                           </Button>
                         </a>
                       </div>
@@ -251,10 +260,10 @@ export default function BeautyTemplate() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-20">
             <div className="grid md:grid-cols-2 gap-10 items-start">
               <div>
-                <Badge variant="secondary" className="mb-4 bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20">Book Now</Badge>
-                <h2 className="text-2xl md:text-3xl font-bold mb-4" data-testid="text-booking-title">Schedule Your Session</h2>
+                <Badge variant="secondary" className="mb-4 bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20">{t("beauty.bookingBadge")}</Badge>
+                <h2 className="text-2xl md:text-3xl font-bold mb-4" data-testid="text-booking-title">{t("beauty.bookingTitle")}</h2>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                  Choose your preferred time slot and service, then confirm your booking via WhatsApp. We will send you a confirmation within minutes.
+                  {t("beauty.bookingDesc")}
                 </p>
                 <div className="relative overflow-hidden rounded-md">
                   <img src={imgSpaRoom} alt="Spa treatment room" className="w-full h-48 md:h-64 object-cover" loading="lazy" />
@@ -262,15 +271,15 @@ export default function BeautyTemplate() {
                   <div className="absolute bottom-4 left-4 text-white">
                     <div className="flex items-center gap-1.5 text-sm">
                       <MapPin className="h-3.5 w-3.5" />
-                      88 Beauty Lane, Bangsar
+                      {t("beauty.bookingAddress")}
                     </div>
                   </div>
                 </div>
               </div>
               <Card className="overflow-visible" data-testid="card-booking-form">
                 <CardContent className="p-6">
-                  <h3 className="font-semibold mb-4">Available Time Slots</h3>
-                  <p className="text-sm text-muted-foreground mb-4">Select a time and confirm via WhatsApp</p>
+                  <h3 className="font-semibold mb-4">{t("beauty.bookingSlots")}</h3>
+                  <p className="text-sm text-muted-foreground mb-4">{t("beauty.bookingSlotsDesc")}</p>
                   <div className="grid grid-cols-4 gap-2 mb-6">
                     {timeSlots.map((slot, idx) => (
                       <Button
@@ -285,11 +294,17 @@ export default function BeautyTemplate() {
                     ))}
                   </div>
                   <div className="border-t pt-4 mb-4">
-                    <h4 className="text-sm font-medium mb-3">Quick Select Service</h4>
+                    <h4 className="text-sm font-medium mb-3">{t("beauty.bookingQuickSelect")}</h4>
                     <div className="flex flex-wrap gap-2">
-                      {["Facial", "Massage", "Hair", "Nails", "Spa Package"].map((s) => (
-                        <Badge key={s} variant="outline" className="cursor-pointer" data-testid={`badge-service-${s.toLowerCase()}`}>
-                          {s}
+                      {[
+                        { label: t("beauty.bookingFacial"), key: "facial" },
+                        { label: t("beauty.bookingMassage"), key: "massage" },
+                        { label: t("beauty.bookingHair"), key: "hair" },
+                        { label: t("beauty.bookingNails"), key: "nails" },
+                        { label: t("beauty.bookingSpaPackage"), key: "spa package" },
+                      ].map((s) => (
+                        <Badge key={s.key} variant="outline" className="cursor-pointer" data-testid={`badge-service-${s.key}`}>
+                          {s.label}
                         </Badge>
                       ))}
                     </div>
@@ -297,7 +312,7 @@ export default function BeautyTemplate() {
                   <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="block">
                     <Button className="w-full" data-testid="button-confirm-booking">
                       <SiWhatsapp className="mr-2 h-4 w-4" />
-                      Confirm via WhatsApp
+                      {t("beauty.bookingConfirm")}
                     </Button>
                   </a>
                 </CardContent>
@@ -307,8 +322,8 @@ export default function BeautyTemplate() {
         </section>
 
         <FeatureHighlights
-          title="Why Choose Us"
-          subtitle="Trusted by thousands of clients for quality, safety, and results"
+          title={t("beauty.whyTitle")}
+          subtitle={t("beauty.whySubtitle")}
           features={whyUs}
           iconColorClass="bg-rose-500/10 dark:bg-rose-400/10 text-rose-600 dark:text-rose-400"
           bgSection
@@ -317,9 +332,9 @@ export default function BeautyTemplate() {
         <section data-testid="section-reviews">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-20">
             <div className="text-center mb-10">
-              <Badge variant="secondary" className="mb-4">Client Reviews</Badge>
-              <h2 className="text-2xl md:text-3xl font-bold mb-3" data-testid="text-reviews-title">What Our Clients Say</h2>
-              <p className="text-muted-foreground max-w-xl mx-auto">Real reviews from verified clients</p>
+              <Badge variant="secondary" className="mb-4">{t("beauty.reviewBadge")}</Badge>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3" data-testid="text-reviews-title">{t("beauty.reviewTitle")}</h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">{t("beauty.reviewSubtitle")}</p>
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
               {reviews.map((review, idx) => (
@@ -359,8 +374,8 @@ export default function BeautyTemplate() {
         </section>
 
         <PackageGrid
-          title="Special Packages"
-          subtitle="Save more with our curated beauty bundles"
+          title={t("beauty.packageTitle")}
+          subtitle={t("beauty.packageSubtitle")}
           packages={packages}
           accentColor="text-rose-500 dark:text-rose-400"
         />
@@ -368,15 +383,15 @@ export default function BeautyTemplate() {
         <section className="bg-card border-y" data-testid="section-recommended">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-20">
             <div className="text-center mb-10">
-              <Badge variant="secondary" className="mb-4 bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20">Recommended</Badge>
-              <h2 className="text-2xl md:text-3xl font-bold mb-3" data-testid="text-recommended-title">Popular Combinations</h2>
-              <p className="text-muted-foreground max-w-xl mx-auto">Our clients love these treatment combos — book together and save</p>
+              <Badge variant="secondary" className="mb-4 bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20">{t("beauty.comboBadge")}</Badge>
+              <h2 className="text-2xl md:text-3xl font-bold mb-3" data-testid="text-recommended-title">{t("beauty.comboTitle")}</h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">{t("beauty.comboSubtitle")}</p>
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               {[
-                { title: "Weekend Reset", items: ["Full Body Massage", "Express Facial", "Head Massage"], price: "RM 220", save: "Save RM 45", image: imgMassage },
-                { title: "Bridal Glow", items: ["3x Facial Course", "Makeup Trial", "Mani-Pedi"], price: "RM 680", save: "Save RM 120", image: imgFacial },
-                { title: "Girls Day Out", items: ["Group Massage (3 pax)", "Gel Nails", "Refreshments"], price: "RM 550", save: "Save RM 80", image: imgNails },
+                { title: t("beauty.combo1Title"), items: [t("beauty.combo1Item1"), t("beauty.combo1Item2"), t("beauty.combo1Item3")], price: "RM 220", save: t("beauty.combo1Save"), image: imgMassage },
+                { title: t("beauty.combo2Title"), items: [t("beauty.combo2Item1"), t("beauty.combo2Item2"), t("beauty.combo2Item3")], price: "RM 680", save: t("beauty.combo2Save"), image: imgFacial },
+                { title: t("beauty.combo3Title"), items: [t("beauty.combo3Item1"), t("beauty.combo3Item2"), t("beauty.combo3Item3")], price: "RM 550", save: t("beauty.combo3Save"), image: imgNails },
               ].map((combo, idx) => (
                 <Card key={combo.title} className="hover-elevate overflow-visible group" data-testid={`card-combo-${idx}`}>
                   <CardContent className="p-0">
@@ -404,7 +419,7 @@ export default function BeautyTemplate() {
                         <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
                           <Button size="sm" data-testid={`button-combo-${idx}`}>
                             <SiWhatsapp className="mr-1.5 h-3 w-3" />
-                            Book
+                            {t("beauty.book")}
                           </Button>
                         </a>
                       </div>
@@ -417,9 +432,9 @@ export default function BeautyTemplate() {
         </section>
 
         <CTABanner
-          title="Book Your Session Today"
-          subtitle="Ready to treat yourself? Reach out on WhatsApp and our team will help you find the perfect treatment."
-          buttonLabel="Book on WhatsApp"
+          title={t("beauty.ctaTitle")}
+          subtitle={t("beauty.ctaSubtitle")}
+          buttonLabel={t("beauty.ctaButton")}
           bgClass="bg-gradient-to-r from-rose-500 to-pink-600 dark:from-rose-600 dark:to-pink-700 text-white"
         />
       </main>
@@ -428,17 +443,17 @@ export default function BeautyTemplate() {
         storeName="Beauty Studio"
         storeIcon={Sparkles}
         iconBgClass="bg-rose-500 dark:bg-rose-600 text-white"
-        description="Your destination for premium beauty and wellness treatments. Relax, rejuvenate, and refresh with us."
+        description={t("beauty.footerDesc")}
         contact={{ address: "88 Beauty Lane, Bangsar", phone: "+60 12-888 9999", email: "hello@beautystudio.com" }}
-        quickLinks={["Services", "Booking", "Gallery", "Contact"]}
+        quickLinks={[t("beauty.navServices"), t("beauty.navBooking"), t("beauty.navGallery"), t("beauty.navContact")]}
         operatingHours={[
           { label: "Mon - Fri", time: "10:00 AM - 9:00 PM" },
           { label: "Sat - Sun", time: "9:00 AM - 7:00 PM" },
         ]}
         extraLinks={[
-          { label: "Gift Cards", href: "#" },
-          { label: "Loyalty Program", href: "#" },
-          { label: "Careers", href: "#" },
+          { label: t("beauty.footerGiftCards"), href: "#" },
+          { label: t("beauty.footerLoyalty"), href: "#" },
+          { label: t("beauty.footerCareers"), href: "#" },
         ]}
       />
     </div>

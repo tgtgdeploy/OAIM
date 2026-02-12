@@ -14,6 +14,7 @@ import {
   Heart,
   Leaf,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { SiWhatsapp } from "react-icons/si";
 import {
   StoreHeader,
@@ -38,53 +39,61 @@ import imgDessert from "@/assets/images/food-dessert.jpg";
 import imgSatay from "@/assets/images/food-satay.jpg";
 import imgInterior from "@/assets/images/restaurant-interior.jpg";
 
-const navLinks = ["Home", "Menu", "Reservations", "About", "Contact"];
-
-const menuCategories = [
-  {
-    name: "Signature Mains",
-    items: [
-      { name: "Nasi Lemak Special", desc: "Fragrant coconut rice with sambal, fried chicken, egg, and anchovies", price: "RM 15.90", image: imgNasilemak, badge: "Popular" },
-      { name: "Grilled Salmon Set", desc: "Atlantic salmon with herb butter, seasonal vegetables, and rice", price: "RM 38.00", image: imgSalmon },
-      { name: "Tom Yum Seafood", desc: "Spicy and sour Thai soup with fresh prawns, squid, and mussels", price: "RM 22.00", image: imgTomyum, badge: "Chef's Pick" },
-    ],
-  },
-  {
-    name: "Appetizers & Sides",
-    items: [
-      { name: "Chicken Satay (10 pcs)", desc: "Charcoal-grilled with homemade peanut sauce", price: "RM 18.90", image: imgSatay },
-      { name: "Chocolate Lava Cake", desc: "Warm chocolate cake with vanilla ice cream", price: "RM 16.00", image: imgDessert, badge: "Sweet" },
-    ],
-  },
-];
-
-const steps = [
-  { step: "1", icon: UtensilsCrossed, title: "Browse Menu", desc: "Explore our full menu with photos and descriptions" },
-  { step: "2", icon: SiWhatsapp, title: "WhatsApp Order", desc: "Send us your order via WhatsApp — fast and easy" },
-  { step: "3", icon: Bike, title: "Delivery / Pickup", desc: "Get your food delivered or pick it up at our outlet" },
-];
-
-const testimonials = [
-  { name: "Sarah M.", rating: 5, text: "The food is always fresh and delivery is super fast. Love ordering through WhatsApp!" },
-  { name: "Ahmad R.", rating: 5, text: "Best Nasi Lemak in town. The portions are generous and the sambal is incredible." },
-  { name: "Lisa T.", rating: 4, text: "Great variety on the menu. The reservation system through WhatsApp is very convenient." },
-];
-
-const reservationFields = [
-  { icon: CalendarDays, title: "Date & Time", desc: "Let us know your preferred slot" },
-  { icon: Users, title: "Party Size", desc: "How many guests are joining" },
-];
-
-const galleryItems = [
-  { image: imgNasilemak, alt: "Nasi Lemak Special" },
-  { image: imgSalmon, alt: "Grilled Salmon" },
-  { image: imgInterior, alt: "Restaurant Interior" },
-  { image: imgTomyum, alt: "Tom Yum Seafood" },
-  { image: imgSatay, alt: "Chicken Satay" },
-  { image: imgDessert, alt: "Chocolate Cake" },
-];
-
 export default function FnbTemplate() {
+  const { t } = useTranslation("templates");
+
+  const navLinks = [
+    t("fnb.navHome"),
+    t("fnb.navMenu"),
+    t("fnb.navReservations"),
+    t("fnb.navAbout"),
+    t("fnb.navContact"),
+  ];
+
+  const menuCategories = [
+    {
+      name: t("fnb.menuCat1"),
+      items: [
+        { name: t("fnb.dish1Name"), desc: t("fnb.dish1Desc"), price: "RM 15.90", image: imgNasilemak, badge: t("fnb.dish1Badge") },
+        { name: t("fnb.dish2Name"), desc: t("fnb.dish2Desc"), price: "RM 38.00", image: imgSalmon },
+        { name: t("fnb.dish3Name"), desc: t("fnb.dish3Desc"), price: "RM 22.00", image: imgTomyum, badge: t("fnb.dish3Badge") },
+      ],
+    },
+    {
+      name: t("fnb.menuCat2"),
+      items: [
+        { name: t("fnb.dish4Name"), desc: t("fnb.dish4Desc"), price: "RM 18.90", image: imgSatay },
+        { name: t("fnb.dish5Name"), desc: t("fnb.dish5Desc"), price: "RM 16.00", image: imgDessert, badge: t("fnb.dish5Badge") },
+      ],
+    },
+  ];
+
+  const steps = [
+    { step: "1", icon: UtensilsCrossed, title: t("fnb.step1Title"), desc: t("fnb.step1Desc") },
+    { step: "2", icon: SiWhatsapp, title: t("fnb.step2Title"), desc: t("fnb.step2Desc") },
+    { step: "3", icon: Bike, title: t("fnb.step3Title"), desc: t("fnb.step3Desc") },
+  ];
+
+  const testimonials = [
+    { name: t("fnb.review1Name"), rating: 5, text: t("fnb.review1Text") },
+    { name: t("fnb.review2Name"), rating: 5, text: t("fnb.review2Text") },
+    { name: t("fnb.review3Name"), rating: 4, text: t("fnb.review3Text") },
+  ];
+
+  const reservationFields = [
+    { icon: CalendarDays, title: t("fnb.reserveDateTime"), desc: t("fnb.reserveDateTimeDesc") },
+    { icon: Users, title: t("fnb.reservePartySize"), desc: t("fnb.reservePartySizeDesc") },
+  ];
+
+  const galleryItems = [
+    { image: imgNasilemak, alt: "Nasi Lemak Special" },
+    { image: imgSalmon, alt: "Grilled Salmon" },
+    { image: imgInterior, alt: "Restaurant Interior" },
+    { image: imgTomyum, alt: "Tom Yum Seafood" },
+    { image: imgSatay, alt: "Chicken Satay" },
+    { image: imgDessert, alt: "Chocolate Cake" },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <StoreHeader
@@ -92,7 +101,7 @@ export default function FnbTemplate() {
         storeIcon={UtensilsCrossed}
         iconBgClass="bg-orange-600 dark:bg-orange-700 text-white"
         navLinks={navLinks}
-        ctaLabel="Order Now"
+        ctaLabel={t("fnb.orderNow")}
         industry="fnb"
       />
 
@@ -101,11 +110,11 @@ export default function FnbTemplate() {
           bgImage={heroImg}
           gradientClass="bg-gradient-to-r from-black/85 via-black/60 to-transparent dark:from-black/95 dark:via-black/70 dark:to-black/20"
           badgeIcon={UtensilsCrossed}
-          badgeText="Fresh from our kitchen"
-          title="Authentic Flavors, Delivered to You"
-          subtitle="Experience the taste of home-cooked meals crafted with the finest ingredients. Order easily through WhatsApp and enjoy delivery or pickup."
-          primaryCTA={{ label: "View Menu" }}
-          secondaryCTA={{ label: "Order via WhatsApp", variant: "outline", isWhatsApp: true }}
+          badgeText={t("fnb.heroBadge")}
+          title={t("fnb.heroTitle")}
+          subtitle={t("fnb.heroSubtitle")}
+          primaryCTA={{ label: t("fnb.heroCta") }}
+          secondaryCTA={{ label: t("fnb.heroCtaWa"), variant: "outline", isWhatsApp: true }}
           align="left"
         />
 
@@ -113,10 +122,10 @@ export default function FnbTemplate() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { icon: ChefHat, label: "Chef-Crafted", desc: "Every dish made fresh" },
-                { icon: Leaf, label: "Fresh Ingredients", desc: "Locally sourced daily" },
-                { icon: Clock, label: "Fast Delivery", desc: "30 min average" },
-                { icon: Star, label: "4.8 Rating", desc: "2,000+ reviews" },
+                { icon: ChefHat, label: t("fnb.highlightChef"), desc: t("fnb.highlightChefDesc") },
+                { icon: Leaf, label: t("fnb.highlightFresh"), desc: t("fnb.highlightFreshDesc") },
+                { icon: Clock, label: t("fnb.highlightDelivery"), desc: t("fnb.highlightDeliveryDesc") },
+                { icon: Star, label: t("fnb.highlightRating"), desc: t("fnb.highlightRatingDesc") },
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3" data-testid={`highlight-${item.label.toLowerCase().replace(/\s/g, "-")}`}>
                   <div className="flex h-10 w-10 items-center justify-center rounded-md bg-orange-500/10 dark:bg-orange-400/10 shrink-0">
@@ -148,28 +157,28 @@ export default function FnbTemplate() {
                       <Award className="h-5 w-5 text-orange-600 dark:text-orange-400" />
                     </div>
                     <div>
-                      <div className="text-sm font-bold">Est. 2010</div>
-                      <div className="text-xs text-muted-foreground">Serving with love for 15 years</div>
+                      <div className="text-sm font-bold">{t("fnb.aboutEst")}</div>
+                      <div className="text-xs text-muted-foreground">{t("fnb.aboutEstDesc")}</div>
                     </div>
                   </CardContent>
                 </Card>
               </div>
               <div className="pt-4 md:pt-0">
-                <Badge variant="secondary" className="mb-4 bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20">Our Story</Badge>
+                <Badge variant="secondary" className="mb-4 bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20">{t("fnb.aboutBadge")}</Badge>
                 <h2 className="text-2xl md:text-3xl font-bold mb-4" data-testid="text-about-title">
-                  Where Tradition Meets Taste
+                  {t("fnb.aboutTitle")}
                 </h2>
                 <p className="text-muted-foreground mb-4 leading-relaxed">
-                  The Kitchen was born from a passion for authentic Malaysian and Asian cuisine. Our head chef brings over 20 years of culinary expertise, crafting dishes that celebrate the rich flavors of our heritage.
+                  {t("fnb.aboutP1")}
                 </p>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                  Every ingredient is sourced fresh from local markets daily. We believe great food starts with great ingredients and is served with heart.
+                  {t("fnb.aboutP2")}
                 </p>
                 <div className="flex gap-4 flex-wrap">
                   {[
-                    { value: "15+", label: "Years" },
-                    { value: "50+", label: "Menu Items" },
-                    { value: "2K+", label: "Daily Orders" },
+                    { value: "15+", label: t("fnb.aboutYears") },
+                    { value: "50+", label: t("fnb.aboutMenuItems") },
+                    { value: "2K+", label: t("fnb.aboutDailyOrders") },
                   ].map((s) => (
                     <div key={s.label} className="text-center" data-testid={`about-stat-${s.label.toLowerCase()}`}>
                       <div className="text-xl font-bold text-orange-600 dark:text-orange-400">{s.value}</div>
@@ -188,10 +197,10 @@ export default function FnbTemplate() {
               <div className="flex items-center justify-between gap-4 mb-8 flex-wrap">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-bold" data-testid={`text-menu-cat-${catIdx}`}>{cat.name}</h2>
-                  <p className="text-muted-foreground mt-1">Fresh, flavorful, made with love</p>
+                  <p className="text-muted-foreground mt-1">{t("fnb.menuCatDesc")}</p>
                 </div>
                 <Button variant="outline" data-testid={`button-menu-all-${catIdx}`}>
-                  View Full Menu
+                  {t("fnb.viewFullMenu")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
@@ -218,7 +227,7 @@ export default function FnbTemplate() {
                         <p className="text-sm text-muted-foreground mb-3">{dish.desc}</p>
                         <div className="flex gap-2">
                           <Button size="sm" className="flex-1" data-testid={`button-order-${catIdx}-${idx}`}>
-                            Order Now
+                            {t("fnb.orderNow")}
                           </Button>
                           <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
                             <Button size="sm" variant="outline" data-testid={`button-wa-${catIdx}-${idx}`}>
@@ -238,42 +247,42 @@ export default function FnbTemplate() {
         <SpecialOffer
           icon={Flame}
           iconColor="bg-amber-500/10 dark:bg-amber-400/10 text-amber-600 dark:text-amber-400"
-          badgeText="Today's Deal"
-          title="Family Feast Bundle"
-          description="Get 4 main courses + 2 drinks + 1 dessert for only RM 89.90 (save RM 30). Available for delivery and dine-in."
-          ctaLabel="Order Now"
+          badgeText={t("fnb.offerBadge")}
+          title={t("fnb.offerTitle")}
+          description={t("fnb.offerDesc")}
+          ctaLabel={t("fnb.orderNow")}
         />
 
         <StepProcess
-          title="How to Order"
-          subtitle="Three simple steps to get your favorite meals"
+          title={t("fnb.stepsTitle")}
+          subtitle={t("fnb.stepsSubtitle")}
           steps={steps}
         />
 
         <ReservationCard
-          title="Make a Reservation"
-          subtitle="Book your table easily through WhatsApp"
+          title={t("fnb.reserveTitle")}
+          subtitle={t("fnb.reserveSubtitle")}
           fields={reservationFields}
-          description="Send us your reservation details on WhatsApp and we will confirm your booking within minutes."
-          buttonLabel="Book via WhatsApp"
+          description={t("fnb.reserveDesc")}
+          buttonLabel={t("fnb.reserveButton")}
         />
 
         <GalleryGrid
-          title="A Taste of Our Kitchen"
-          subtitle="Every dish tells a story — here are some of our favorites"
+          title={t("fnb.galleryTitle")}
+          subtitle={t("fnb.gallerySubtitle")}
           items={galleryItems}
         />
 
         <TestimonialGrid
-          title="What Our Customers Say"
-          subtitle="Real reviews from our happy diners"
+          title={t("fnb.reviewTitle")}
+          subtitle={t("fnb.reviewSubtitle")}
           testimonials={testimonials}
         />
 
         <CTABanner
-          title="Order Your Next Meal on WhatsApp"
-          subtitle="Browse our menu, ask about daily specials, and place your order in seconds. Fast, personal, delicious."
-          buttonLabel="Order on WhatsApp"
+          title={t("fnb.ctaTitle")}
+          subtitle={t("fnb.ctaSubtitle")}
+          buttonLabel={t("fnb.ctaButton")}
           bgClass="bg-gradient-to-r from-orange-600 to-amber-600 dark:from-orange-700 dark:to-amber-700 text-white"
         />
       </main>
@@ -282,17 +291,17 @@ export default function FnbTemplate() {
         storeName="The Kitchen"
         storeIcon={UtensilsCrossed}
         iconBgClass="bg-orange-600 dark:bg-orange-700 text-white"
-        description="Serving authentic flavors with love since 2010. Dine-in, takeaway, or delivery — we bring the best to your table."
+        description={t("fnb.footerDesc")}
         contact={{ address: "45 Food Street, Petaling Jaya", phone: "+60 3-7890 1234", email: "hello@thekitchen.com" }}
-        quickLinks={["Menu", "Reservations", "About", "Contact"]}
+        quickLinks={[t("fnb.navMenu"), t("fnb.navReservations"), t("fnb.navAbout"), t("fnb.navContact")]}
         operatingHours={[
           { label: "Mon - Fri", time: "10:00 AM - 10:00 PM" },
           { label: "Sat - Sun", time: "9:00 AM - 11:00 PM" },
         ]}
         extraLinks={[
-          { label: "Delivery Info", href: "#" },
-          { label: "Catering Services", href: "#" },
-          { label: "Careers", href: "#" },
+          { label: t("fnb.footerDeliveryInfo"), href: "#" },
+          { label: t("fnb.footerCatering"), href: "#" },
+          { label: t("fnb.footerCareers"), href: "#" },
         ]}
       />
     </div>

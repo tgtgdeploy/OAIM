@@ -21,6 +21,7 @@ import {
   Clock,
   Gift,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { SiWhatsapp } from "react-icons/si";
 import {
   StoreHeader,
@@ -44,47 +45,55 @@ import imgSneakers from "@/assets/images/product-sneakers.jpg";
 import imgWatch from "@/assets/images/product-watch.jpg";
 import imgBag from "@/assets/images/product-bag.jpg";
 
-const navLinks = ["Home", "Products", "Categories", "About", "Contact"];
-
-const categories = [
-  { name: "Fashion", icon: Shirt, color: "bg-pink-500/10 dark:bg-pink-400/10 text-pink-600 dark:text-pink-400" },
-  { name: "Electronics", icon: Smartphone, color: "bg-blue-500/10 dark:bg-blue-400/10 text-blue-600 dark:text-blue-400" },
-  { name: "Home & Living", icon: Home, color: "bg-amber-500/10 dark:bg-amber-400/10 text-amber-600 dark:text-amber-400" },
-  { name: "Health & Beauty", icon: HeartPulse, color: "bg-emerald-500/10 dark:bg-emerald-400/10 text-emerald-600 dark:text-emerald-400" },
-];
-
-const featuredProducts = [
-  { name: "Classic Cotton T-Shirt", price: "RM 49.90", originalPrice: "RM 69.90", badge: "Best Seller", image: imgTshirt, desc: "Premium 100% organic cotton, available in 8 colors" },
-  { name: "Wireless Earbuds Pro", price: "RM 129.00", badge: "New", image: imgEarbuds, desc: "Active noise cancellation, 24h battery life" },
-  { name: "Organic Face Serum", price: "RM 89.00", badge: "Popular", image: imgSerum, desc: "Vitamin C brightening formula with hyaluronic acid" },
-];
-
-const newArrivals = [
-  { name: "Sport Sneakers V2", price: "RM 199.00", image: imgSneakers, desc: "Lightweight breathable running shoes" },
-  { name: "Smart Watch Elite", price: "RM 349.00", badge: "New", image: imgWatch, desc: "Heart rate, GPS, 7-day battery" },
-  { name: "Leather Crossbody Bag", price: "RM 159.00", image: imgBag, desc: "Genuine leather, adjustable strap" },
-];
-
-const features = [
-  { icon: Truck, title: "Free Delivery", desc: "Free shipping on orders above RM 100 nationwide" },
-  { icon: ShieldCheck, title: "Secure Payment", desc: "All transactions encrypted with bank-grade security" },
-  { icon: MessageCircle, title: "WhatsApp Support", desc: "Chat with us anytime for instant help" },
-  { icon: RotateCcw, title: "14-Day Returns", desc: "Hassle-free returns with full refund guarantee" },
-];
-
-const testimonials = [
-  { name: "Aisyah K.", rating: 5, text: "Super fast delivery and the quality exceeded my expectations! Love ordering through WhatsApp, so convenient." },
-  { name: "Daniel L.", rating: 5, text: "The earbuds are amazing, great sound quality. Customer service was very responsive via WhatsApp." },
-  { name: "Mei Ling C.", rating: 4, text: "Beautiful packaging and genuine products. The face serum is now my daily essential. Will reorder!" },
-];
-
-const flashDeals = [
-  { name: "Smart Watch Elite", price: "RM 249.00", originalPrice: "RM 349.00", image: imgWatch, badge: "-29%", desc: "Limited time offer" },
-  { name: "Leather Crossbody Bag", price: "RM 119.00", originalPrice: "RM 159.00", image: imgBag, badge: "-25%", desc: "While stocks last" },
-  { name: "Organic Face Serum", price: "RM 59.00", originalPrice: "RM 89.00", image: imgSerum, badge: "-34%", desc: "Bundle with cleanser" },
-];
-
 export default function EcommerceTemplate() {
+  const { t } = useTranslation("templates");
+
+  const navLinks = [
+    t("ecommerce.navHome"),
+    t("ecommerce.navProducts"),
+    t("ecommerce.navCategories"),
+    t("ecommerce.navAbout"),
+    t("ecommerce.navContact"),
+  ];
+
+  const categories = [
+    { name: t("ecommerce.catFashion"), icon: Shirt, color: "bg-pink-500/10 dark:bg-pink-400/10 text-pink-600 dark:text-pink-400" },
+    { name: t("ecommerce.catElectronics"), icon: Smartphone, color: "bg-blue-500/10 dark:bg-blue-400/10 text-blue-600 dark:text-blue-400" },
+    { name: t("ecommerce.catHomeLiving"), icon: Home, color: "bg-amber-500/10 dark:bg-amber-400/10 text-amber-600 dark:text-amber-400" },
+    { name: t("ecommerce.catHealthBeauty"), icon: HeartPulse, color: "bg-emerald-500/10 dark:bg-emerald-400/10 text-emerald-600 dark:text-emerald-400" },
+  ];
+
+  const featuredProducts = [
+    { name: t("ecommerce.product1Name"), price: "RM 49.90", originalPrice: "RM 69.90", badge: t("ecommerce.product1Badge"), image: imgTshirt, desc: t("ecommerce.product1Desc") },
+    { name: t("ecommerce.product2Name"), price: "RM 129.00", badge: t("ecommerce.product2Badge"), image: imgEarbuds, desc: t("ecommerce.product2Desc") },
+    { name: t("ecommerce.product3Name"), price: "RM 89.00", badge: t("ecommerce.product3Badge"), image: imgSerum, desc: t("ecommerce.product3Desc") },
+  ];
+
+  const newArrivals = [
+    { name: t("ecommerce.new1Name"), price: "RM 199.00", image: imgSneakers, desc: t("ecommerce.new1Desc") },
+    { name: t("ecommerce.new2Name"), price: "RM 349.00", badge: t("ecommerce.new2Badge"), image: imgWatch, desc: t("ecommerce.new2Desc") },
+    { name: t("ecommerce.new3Name"), price: "RM 159.00", image: imgBag, desc: t("ecommerce.new3Desc") },
+  ];
+
+  const features = [
+    { icon: Truck, title: t("ecommerce.feature1Title"), desc: t("ecommerce.feature1Desc") },
+    { icon: ShieldCheck, title: t("ecommerce.feature2Title"), desc: t("ecommerce.feature2Desc") },
+    { icon: MessageCircle, title: t("ecommerce.feature3Title"), desc: t("ecommerce.feature3Desc") },
+    { icon: RotateCcw, title: t("ecommerce.feature4Title"), desc: t("ecommerce.feature4Desc") },
+  ];
+
+  const testimonials = [
+    { name: t("ecommerce.review1Name"), rating: 5, text: t("ecommerce.review1Text") },
+    { name: t("ecommerce.review2Name"), rating: 5, text: t("ecommerce.review2Text") },
+    { name: t("ecommerce.review3Name"), rating: 4, text: t("ecommerce.review3Text") },
+  ];
+
+  const flashDeals = [
+    { name: t("ecommerce.deal1Name"), price: "RM 249.00", originalPrice: "RM 349.00", image: imgWatch, badge: "-29%", desc: t("ecommerce.deal1Desc") },
+    { name: t("ecommerce.deal2Name"), price: "RM 119.00", originalPrice: "RM 159.00", image: imgBag, badge: "-25%", desc: t("ecommerce.deal2Desc") },
+    { name: t("ecommerce.deal3Name"), price: "RM 59.00", originalPrice: "RM 89.00", image: imgSerum, badge: "-34%", desc: t("ecommerce.deal3Desc") },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <StoreHeader
@@ -100,11 +109,11 @@ export default function EcommerceTemplate() {
           bgImage={heroImg}
           gradientClass="bg-gradient-to-r from-black/80 via-black/60 to-black/30 dark:from-black/90 dark:via-black/70 dark:to-black/40"
           badgeIcon={SiWhatsapp}
-          badgeText="Shop via WhatsApp"
-          title="Discover Quality Products for Every Lifestyle"
-          subtitle="Browse curated collections, shop confidently with secure checkout, and enjoy fast nationwide delivery. Chat with us on WhatsApp for personalized recommendations."
-          primaryCTA={{ label: "Browse Products" }}
-          secondaryCTA={{ label: "WhatsApp Us", variant: "outline", isWhatsApp: true }}
+          badgeText={t("ecommerce.heroBadge")}
+          title={t("ecommerce.heroTitle")}
+          subtitle={t("ecommerce.heroSubtitle")}
+          primaryCTA={{ label: t("ecommerce.heroCta") }}
+          secondaryCTA={{ label: t("ecommerce.heroCtaWa"), variant: "outline", isWhatsApp: true }}
           align="left"
         />
 
@@ -112,10 +121,10 @@ export default function EcommerceTemplate() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
-                { icon: Package, value: "2,500+", label: "Products" },
-                { icon: Star, value: "4.9/5", label: "Rating" },
-                { icon: Truck, value: "1-3 Days", label: "Delivery" },
-                { icon: Heart, value: "15K+", label: "Happy Customers" },
+                { icon: Package, value: "2,500+", label: t("ecommerce.statProducts") },
+                { icon: Star, value: "4.9/5", label: t("ecommerce.statRating") },
+                { icon: Truck, value: "1-3 Days", label: t("ecommerce.statDelivery") },
+                { icon: Heart, value: "15K+", label: t("ecommerce.statCustomers") },
               ].map((stat) => (
                 <div key={stat.label} className="flex items-center gap-3" data-testid={`stat-${stat.label.toLowerCase().replace(/\s/g, "-")}`}>
                   <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 shrink-0">
@@ -132,18 +141,18 @@ export default function EcommerceTemplate() {
         </section>
 
         <CategoryGrid
-          title="Shop by Category"
-          subtitle="Find exactly what you need across our curated collections"
+          title={t("ecommerce.catTitle")}
+          subtitle={t("ecommerce.catSubtitle")}
           categories={categories}
         />
 
         <ProductGrid
-          title="Featured Products"
-          subtitle="Handpicked items at great prices — order directly via WhatsApp"
+          title={t("ecommerce.featuredTitle")}
+          subtitle={t("ecommerce.featuredSubtitle")}
           products={featuredProducts}
           placeholderIcon={ShoppingBag}
-          actionLabel="Add to Cart"
-          whatsappLabel="Ask"
+          actionLabel={t("ecommerce.addToCart")}
+          whatsappLabel={t("ecommerce.ask")}
         />
 
         <section className="bg-card border-y" data-testid="section-flash-deals">
@@ -152,14 +161,14 @@ export default function EcommerceTemplate() {
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <Zap className="h-5 w-5 text-amber-500" />
-                  <Badge variant="secondary" className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20">Limited Time</Badge>
+                  <Badge variant="secondary" className="bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20">{t("ecommerce.flashLimitedTime")}</Badge>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-bold" data-testid="text-flash-title">Flash Deals</h2>
-                <p className="text-muted-foreground mt-1">Grab these deals before they expire</p>
+                <h2 className="text-2xl md:text-3xl font-bold" data-testid="text-flash-title">{t("ecommerce.flashTitle")}</h2>
+                <p className="text-muted-foreground mt-1">{t("ecommerce.flashSubtitle")}</p>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Clock className="h-4 w-4" />
-                <span>Ends in 23:59:59</span>
+                <span>{t("ecommerce.flashEndsIn")}</span>
               </div>
             </div>
             <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -184,7 +193,7 @@ export default function EcommerceTemplate() {
                       </div>
                       <Button size="sm" className="w-full" data-testid={`button-deal-${idx}`}>
                         <ShoppingBag className="mr-2 h-3.5 w-3.5" />
-                        Grab Deal
+                        {t("ecommerce.grabDeal")}
                       </Button>
                     </div>
                   </CardContent>
@@ -195,11 +204,11 @@ export default function EcommerceTemplate() {
         </section>
 
         <ProductGrid
-          title="New Arrivals"
-          subtitle="Fresh styles and the latest products just added to our store"
+          title={t("ecommerce.newTitle")}
+          subtitle={t("ecommerce.newSubtitle")}
           products={newArrivals}
           placeholderIcon={ShoppingBag}
-          actionLabel="Add to Cart"
+          actionLabel={t("ecommerce.addToCart")}
           bgSection={false}
         />
 
@@ -207,25 +216,25 @@ export default function EcommerceTemplate() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-20">
             <div className="grid md:grid-cols-2 gap-10 items-center">
               <div>
-                <Badge variant="secondary" className="mb-4">Our Story</Badge>
+                <Badge variant="secondary" className="mb-4">{t("ecommerce.storyBadge")}</Badge>
                 <h2 className="text-2xl md:text-3xl font-bold mb-4" data-testid="text-brand-title">
-                  Quality Products, Honest Prices
+                  {t("ecommerce.storyTitle")}
                 </h2>
                 <p className="text-muted-foreground mb-4 leading-relaxed">
-                  Founded in 2020, ShopName started with a simple mission: to bring quality, curated products to Malaysian shoppers at honest prices. Every item in our store is carefully selected and tested by our team.
+                  {t("ecommerce.storyP1")}
                 </p>
                 <p className="text-muted-foreground mb-6 leading-relaxed">
-                  We believe shopping should be personal and convenient. That is why we are on WhatsApp — so you can chat with real people, ask questions about products, and get personalized recommendations before you buy.
+                  {t("ecommerce.storyP2")}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Button variant="outline" data-testid="button-about-more">
-                    Read Our Story
+                    {t("ecommerce.storyReadMore")}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                   <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
                     <Button variant="outline" data-testid="button-about-whatsapp">
                       <SiWhatsapp className="mr-2 h-4 w-4" />
-                      Chat With Us
+                      {t("ecommerce.storyChatWithUs")}
                     </Button>
                   </a>
                 </div>
@@ -241,24 +250,24 @@ export default function EcommerceTemplate() {
         </section>
 
         <FeatureHighlights
-          title="Why Shop With Us"
-          subtitle="We make your shopping experience simple, safe, and satisfying"
+          title={t("ecommerce.featureTitle")}
+          subtitle={t("ecommerce.featureSubtitle")}
           features={features}
         />
 
         <TestimonialGrid
-          title="What Our Customers Say"
-          subtitle="Real reviews from verified shoppers"
+          title={t("ecommerce.reviewTitle")}
+          subtitle={t("ecommerce.reviewSubtitle")}
           testimonials={testimonials}
         />
 
         <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-20" data-testid="section-perks">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
-              { icon: Gift, title: "Loyalty Points", desc: "Earn points on every purchase and redeem for discounts", color: "bg-violet-500/10 dark:bg-violet-400/10 text-violet-600 dark:text-violet-400" },
-              { icon: Tags, title: "Member Discounts", desc: "Exclusive prices and early access to new products", color: "bg-pink-500/10 dark:bg-pink-400/10 text-pink-600 dark:text-pink-400" },
-              { icon: Truck, title: "Track Orders", desc: "Real-time tracking from warehouse to your doorstep", color: "bg-blue-500/10 dark:bg-blue-400/10 text-blue-600 dark:text-blue-400" },
-              { icon: MessageCircle, title: "WhatsApp Updates", desc: "Order confirmations and delivery updates via WhatsApp", color: "bg-green-500/10 dark:bg-green-400/10 text-green-600 dark:text-green-400" },
+              { icon: Gift, title: t("ecommerce.perk1Title"), desc: t("ecommerce.perk1Desc"), color: "bg-violet-500/10 dark:bg-violet-400/10 text-violet-600 dark:text-violet-400" },
+              { icon: Tags, title: t("ecommerce.perk2Title"), desc: t("ecommerce.perk2Desc"), color: "bg-pink-500/10 dark:bg-pink-400/10 text-pink-600 dark:text-pink-400" },
+              { icon: Truck, title: t("ecommerce.perk3Title"), desc: t("ecommerce.perk3Desc"), color: "bg-blue-500/10 dark:bg-blue-400/10 text-blue-600 dark:text-blue-400" },
+              { icon: MessageCircle, title: t("ecommerce.perk4Title"), desc: t("ecommerce.perk4Desc"), color: "bg-green-500/10 dark:bg-green-400/10 text-green-600 dark:text-green-400" },
             ].map((perk) => (
               <Card key={perk.title} className="overflow-visible" data-testid={`card-perk-${perk.title.toLowerCase().replace(/\s/g, "-")}`}>
                 <CardContent className="p-5">
@@ -274,22 +283,28 @@ export default function EcommerceTemplate() {
         </section>
 
         <CTABanner
-          title="Start Shopping on WhatsApp"
-          subtitle="Browse our catalog, ask questions, and place orders — all in one chat. Fast replies guaranteed."
-          buttonLabel="Chat & Shop Now"
+          title={t("ecommerce.ctaTitle")}
+          subtitle={t("ecommerce.ctaSubtitle")}
+          buttonLabel={t("ecommerce.ctaButton")}
         />
       </main>
 
       <StoreFooter
         storeName="ShopName"
         storeIcon={ShoppingBag}
-        description="Your trusted online store for quality products. Shop anytime, anywhere via WhatsApp."
+        description={t("ecommerce.footerDesc")}
         contact={{ address: "123 Commerce Street, KL", phone: "+60 12-345 6789", email: "hello@shopname.com" }}
-        quickLinks={["Home", "Products", "Categories", "About Us", "Contact"]}
+        quickLinks={[
+          t("ecommerce.navHome"),
+          t("ecommerce.navProducts"),
+          t("ecommerce.navCategories"),
+          t("ecommerce.footerAboutUs"),
+          t("ecommerce.navContact"),
+        ]}
         extraLinks={[
-          { label: "Track Order", href: "#" },
-          { label: "Shipping Policy", href: "#" },
-          { label: "Return Policy", href: "#" },
+          { label: t("ecommerce.footerTrackOrder"), href: "#" },
+          { label: t("ecommerce.footerShippingPolicy"), href: "#" },
+          { label: t("ecommerce.footerReturnPolicy"), href: "#" },
         ]}
       />
     </div>

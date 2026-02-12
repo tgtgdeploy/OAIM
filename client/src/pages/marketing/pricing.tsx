@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MarketingLayout } from "./layout";
-import { CheckCircle2, ArrowRight, Crown, Zap } from "lucide-react";
+import { CheckCircle2, ArrowRight, Crown, Zap, Store, UtensilsCrossed, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export default function PricingPage() {
@@ -37,6 +37,7 @@ export default function PricingPage() {
         t("pricing.starterF3"),
         t("pricing.starterF4"),
         t("pricing.starterF5"),
+        t("pricing.starterF6"),
       ],
       cta: t("pricing.starterCta"),
       popular: false,
@@ -138,6 +139,56 @@ export default function PricingPage() {
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          {/* Industry Features */}
+          <div className="mt-16 animate-fade-in-up">
+            <div className="text-center mb-10">
+              <h2 className="text-2xl md:text-3xl font-bold mb-3">{t("pricing.industryTitle")}</h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">{t("pricing.industrySubtitle")}</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                {
+                  icon: Store,
+                  label: t("pricing.industryEcommerceLabel"),
+                  features: [t("pricing.industryEcommerceF1"), t("pricing.industryEcommerceF2"), t("pricing.industryEcommerceF3"), t("pricing.industryEcommerceF4")],
+                  color: "bg-blue-500/10 dark:bg-blue-400/10",
+                  iconColor: "text-blue-600 dark:text-blue-400",
+                },
+                {
+                  icon: UtensilsCrossed,
+                  label: t("pricing.industryFnbLabel"),
+                  features: [t("pricing.industryFnbF1"), t("pricing.industryFnbF2"), t("pricing.industryFnbF3"), t("pricing.industryFnbF4")],
+                  color: "bg-orange-500/10 dark:bg-orange-400/10",
+                  iconColor: "text-orange-600 dark:text-orange-400",
+                },
+                {
+                  icon: Sparkles,
+                  label: t("pricing.industryBeautyLabel"),
+                  features: [t("pricing.industryBeautyF1"), t("pricing.industryBeautyF2"), t("pricing.industryBeautyF3"), t("pricing.industryBeautyF4")],
+                  color: "bg-rose-500/10 dark:bg-rose-400/10",
+                  iconColor: "text-rose-600 dark:text-rose-400",
+                },
+              ].map((industry) => (
+                <Card key={industry.label}>
+                  <CardContent className="p-6">
+                    <div className={`flex h-12 w-12 items-center justify-center rounded-md ${industry.color} mb-4`}>
+                      <industry.icon className={`h-6 w-6 ${industry.iconColor}`} />
+                    </div>
+                    <h3 className="font-bold mb-3">{industry.label}</h3>
+                    <ul className="space-y-2">
+                      {industry.features.map((f) => (
+                        <li key={f} className="flex items-center gap-2 text-sm">
+                          <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0" />
+                          <span>{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
 
           <div className="text-center mt-16 animate-fade-in-up">
