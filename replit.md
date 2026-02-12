@@ -95,6 +95,10 @@ Multi-tenant WhatsApp-first AI sales platform for e-commerce and restaurant busi
 - Updated Cases page with template previews and live demo links
 - Added Member Portal referral page
 - All three panels share reusable module components for cross-cutting features
+- StoreHeader now includes OAIM branding top bar with logo + homepage link + Member/Merchant login links
+- Member login is industry-specific: selecting Member on login page goes through industry selection first
+- Template pages link Member Login and Merchant Login with industry query params for auto-redirect
+- Hero section redesigned with AI-generated imagery, floating mockup phone, and animated stat cards
 
 ## User Preferences
 - Chinese-speaking user

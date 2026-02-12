@@ -130,18 +130,21 @@ export default function LoginPage() {
   const [selectedRole, setSelectedRole] = useState<Role | null>(null);
 
   useEffect(() => {
-    if (queryRole === "merchant") {
-      setSelectedRole("merchant");
-      setStep("choose-industry");
-    } else if (queryRole === "member") {
-      setSelectedRole("member");
-      setStep("choose-role");
+    if (queryRole === "merchant" || queryRole === "member") {
+      setSelectedRole(queryRole);
+      const validIndustries: Industry[] = ["ecommerce", "fnb", "beauty"];
+      if (queryIndustry && validIndustries.includes(queryIndustry as Industry)) {
+        setIndustry(queryIndustry as IndustryType);
+        navigate(queryRole === "member" ? "/member" : "/app");
+      } else {
+        setStep("choose-industry");
+      }
     }
-  }, [queryRole]);
+  }, [queryRole, queryIndustry]);
 
   function handleRoleSelect(role: Role) {
     setSelectedRole(role);
-    if (role === "merchant") {
+    if (role === "merchant" || role === "member") {
       setStep("choose-industry");
     } else {
       const r = roles.find((r) => r.id === role);
@@ -151,12 +154,22 @@ export default function LoginPage() {
 
   function handleIndustrySelect(industry: Industry) {
     setIndustry(industry as IndustryType);
-    navigate("/app");
+    if (selectedRole === "member") {
+      navigate("/member");
+    } else {
+      navigate("/app");
+    }
   }
 
   function handleFormLogin(e: React.FormEvent) {
     e.preventDefault();
-    navigate("/app");
+    if (selectedRole === "member") {
+      navigate("/member");
+    } else if (selectedRole === "superadmin") {
+      navigate("/superadmin");
+    } else {
+      navigate("/app");
+    }
   }
 
   function handleBack() {
@@ -353,7 +366,9 @@ export default function LoginPage() {
                   </button>
                   <h2 className="text-2xl font-bold" data-testid="text-industry-title">Select Your Industry</h2>
                   <p className="text-sm text-muted-foreground">
-                    Choose your business type to see the matching management backend
+                    {selectedRole === "member"
+                      ? "Choose the business type you're a member of"
+                      : "Choose your business type to see the matching management backend"}
                   </p>
                 </div>
 
