@@ -36,16 +36,11 @@ import {
   Truck,
   CreditCard,
   Globe,
+  Store,
+  UtensilsCrossed,
+  Sparkles,
 } from "lucide-react";
-
-const mainItems = [
-  { title: "Store Homepage", href: "/templates/ecommerce", icon: Globe },
-  { title: "Inbox", href: "/app", icon: MessageSquare, badge: "3" },
-  { title: "Contacts", href: "/app/contacts", icon: Users },
-  { title: "Pipeline", href: "/app/pipeline", icon: GitBranch },
-  { title: "Orders", href: "/app/orders", icon: ShoppingCart },
-  { title: "Products", href: "/app/products", icon: Package },
-];
+import { useIndustry } from "@/lib/industry-context";
 
 const ecommerceItems = [
   { title: "Shipping", href: "/app/shipping", icon: Truck },
@@ -79,8 +74,43 @@ const settingsItems = [
   { title: "Settings", href: "/app/settings", icon: Settings },
 ];
 
+const industryConfig = {
+  ecommerce: {
+    icon: Store,
+    label: "E-Commerce",
+    color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+    items: ecommerceItems,
+    groupLabel: "E-Commerce",
+  },
+  fnb: {
+    icon: UtensilsCrossed,
+    label: "F&B",
+    color: "bg-orange-500/10 text-orange-600 dark:text-orange-400",
+    items: fnbItems,
+    groupLabel: "F&B / Restaurant",
+  },
+  beauty: {
+    icon: Sparkles,
+    label: "Beauty",
+    color: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+    items: beautyItems,
+    groupLabel: "Beauty & Wellness",
+  },
+};
+
 export function AppSidebar() {
   const [location] = useLocation();
+  const { industry, templatePath, industryLabel } = useIndustry();
+  const config = industryConfig[industry];
+
+  const mainItems = [
+    { title: "Store Homepage", href: templatePath, icon: Globe },
+    { title: "Inbox", href: "/app", icon: MessageSquare, badge: "3" },
+    { title: "Contacts", href: "/app/contacts", icon: Users },
+    { title: "Pipeline", href: "/app/pipeline", icon: GitBranch },
+    { title: "Orders", href: "/app/orders", icon: ShoppingCart },
+    { title: "Products", href: "/app/products", icon: Package },
+  ];
 
   const renderGroup = (label: string, items: typeof mainItems) => (
     <SidebarGroup>
@@ -120,16 +150,14 @@ export function AppSidebar() {
             </div>
             <div>
               <div className="text-sm font-bold leading-none">OAIM</div>
-              <div className="text-xs text-muted-foreground">Merchant</div>
+              <div className="text-xs text-muted-foreground">{industryLabel}</div>
             </div>
           </div>
         </Link>
       </SidebarHeader>
       <SidebarContent>
         {renderGroup("Main", mainItems)}
-        {renderGroup("E-Commerce", ecommerceItems)}
-        {renderGroup("F&B / Restaurant", fnbItems)}
-        {renderGroup("Beauty & Wellness", beautyItems)}
+        {renderGroup(config.groupLabel, config.items)}
         {renderGroup("Advanced", advancedItems)}
         {renderGroup("Management", settingsItems)}
       </SidebarContent>

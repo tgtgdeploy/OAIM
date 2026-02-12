@@ -69,8 +69,8 @@ export function SuperAdminSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="p-4">
-        <Link href="/superadmin">
-          <div className="flex items-center gap-2 cursor-pointer">
+        <Link href="/">
+          <div className="flex items-center gap-2 cursor-pointer" data-testid="link-superadmin-logo">
             <div className="flex h-8 w-8 items-center justify-center rounded-md bg-destructive">
               <Shield className="h-4 w-4 text-destructive-foreground" />
             </div>

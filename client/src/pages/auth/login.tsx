@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { useTheme } from "@/lib/theme-provider";
+import { useIndustry, type Industry as IndustryType } from "@/lib/industry-context";
 import {
   Shield,
   Store,
@@ -116,6 +117,7 @@ export default function LoginPage() {
   const [, navigate] = useLocation();
   const search = useSearch();
   const { theme, toggleTheme } = useTheme();
+  const { setIndustry } = useIndustry();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -148,6 +150,7 @@ export default function LoginPage() {
   }
 
   function handleIndustrySelect(industry: Industry) {
+    setIndustry(industry as IndustryType);
     navigate("/app");
   }
 

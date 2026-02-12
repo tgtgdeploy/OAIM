@@ -10,6 +10,8 @@ interface ProductItem {
   price: string;
   badge?: string;
   desc?: string;
+  image?: string;
+  originalPrice?: string;
 }
 
 interface ProductGridProps {
@@ -21,6 +23,7 @@ interface ProductGridProps {
   whatsappLabel?: string;
   whatsappNumber?: string;
   bgSection?: boolean;
+  columns?: 2 | 3 | 4;
 }
 
 export function ProductGrid({
@@ -32,7 +35,10 @@ export function ProductGrid({
   whatsappLabel = "Ask",
   whatsappNumber = "1234567890",
   bgSection = true,
+  columns = 3,
 }: ProductGridProps) {
+  const colClass = columns === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : columns === 2 ? "sm:grid-cols-2" : "md:grid-cols-3";
+
   return (
     <section className={bgSection ? "bg-card border-y" : ""} data-testid="section-products">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-20">
@@ -40,32 +46,47 @@ export function ProductGrid({
           <h2 className="text-2xl md:text-3xl font-bold mb-3" data-testid="text-products-title">{title}</h2>
           <p className="text-muted-foreground max-w-xl mx-auto">{subtitle}</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className={`grid ${colClass} gap-4`}>
           {products.map((product, idx) => (
-            <Card key={product.name} className="hover-elevate overflow-visible" data-testid={`card-product-${idx}`}>
+            <Card key={product.name} className="hover-elevate overflow-visible group" data-testid={`card-product-${idx}`}>
               <CardContent className="p-0">
-                <div className="flex flex-row md:flex-col">
-                  <div className="w-32 md:w-full h-32 md:h-48 bg-muted rounded-l-md md:rounded-l-none md:rounded-t-md flex items-center justify-center shrink-0">
-                    <PlaceholderIcon className="h-10 w-10 text-muted-foreground/40" />
+                <div className="relative overflow-hidden rounded-t-md">
+                  {product.image ? (
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="w-full h-48 bg-muted flex items-center justify-center">
+                      <PlaceholderIcon className="h-10 w-10 text-muted-foreground/40" />
+                    </div>
+                  )}
+                  {product.badge && (
+                    <Badge className="absolute top-3 left-3" data-testid={`badge-product-${idx}`}>
+                      {product.badge}
+                    </Badge>
+                  )}
+                </div>
+                <div className="p-4 flex flex-col">
+                  <h3 className="font-semibold text-sm mb-1" data-testid={`text-product-name-${idx}`}>{product.name}</h3>
+                  {product.desc && <p className="text-xs text-muted-foreground mb-2 line-clamp-2" data-testid={`text-product-desc-${idx}`}>{product.desc}</p>}
+                  <div className="flex items-baseline gap-2 mb-3">
+                    <p className="text-lg font-bold" data-testid={`text-product-price-${idx}`}>{product.price}</p>
+                    {product.originalPrice && (
+                      <p className="text-sm text-muted-foreground line-through">{product.originalPrice}</p>
+                    )}
                   </div>
-                  <div className="p-4 flex-1 flex flex-col">
-                    <div className="flex items-start justify-between gap-2 mb-1 flex-wrap">
-                      <h3 className="font-semibold text-sm" data-testid={`text-product-name-${idx}`}>{product.name}</h3>
-                      {product.badge && <Badge variant="secondary" data-testid={`badge-product-${idx}`}>{product.badge}</Badge>}
-                    </div>
-                    {product.desc && <p className="text-xs text-muted-foreground mb-2" data-testid={`text-product-desc-${idx}`}>{product.desc}</p>}
-                    <p className="text-lg font-bold mb-3" data-testid={`text-product-price-${idx}`}>{product.price}</p>
-                    <div className="flex flex-col sm:flex-row gap-2 mt-auto">
-                      <Button size="sm" className="flex-1" data-testid={`button-action-${idx}`}>
-                        {actionLabel}
+                  <div className="flex gap-2 mt-auto">
+                    <Button size="sm" className="flex-1" data-testid={`button-action-${idx}`}>
+                      {actionLabel}
+                    </Button>
+                    <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer">
+                      <Button size="sm" variant="outline" data-testid={`button-whatsapp-${idx}`}>
+                        <SiWhatsapp className="h-3.5 w-3.5" />
                       </Button>
-                      <a href={`https://wa.me/${whatsappNumber}`} target="_blank" rel="noopener noreferrer" className="flex-1">
-                        <Button size="sm" variant="outline" className="w-full" data-testid={`button-whatsapp-${idx}`}>
-                          <SiWhatsapp className="mr-1 h-3 w-3" />
-                          {whatsappLabel}
-                        </Button>
-                      </a>
-                    </div>
+                    </a>
                   </div>
                 </div>
               </CardContent>

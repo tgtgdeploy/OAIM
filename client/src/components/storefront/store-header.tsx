@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight, ExternalLink } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import type { LucideIcon } from "lucide-react";
 
@@ -14,6 +14,7 @@ interface StoreHeaderProps {
   ctaHref?: string;
   whatsappNumber?: string;
   showWhatsappInNav?: boolean;
+  industry?: "ecommerce" | "fnb" | "beauty";
 }
 
 export function StoreHeader({
@@ -25,8 +26,10 @@ export function StoreHeader({
   ctaHref = "https://wa.me/1234567890",
   whatsappNumber = "1234567890",
   showWhatsappInNav = false,
+  industry = "ecommerce",
 }: StoreHeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const merchantLoginHref = `/auth/login?role=merchant&industry=${industry}`;
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur-sm">
@@ -64,9 +67,15 @@ export function StoreHeader({
                 </Button>
               </a>
             )}
-            <Link href="/auth/login">
+            <Link href={merchantLoginHref}>
               <span className="text-sm text-muted-foreground cursor-pointer" data-testid="link-merchant-login-nav">
                 Merchant Login
+              </span>
+            </Link>
+            <Link href="/">
+              <span className="text-xs text-muted-foreground/60 cursor-pointer flex items-center gap-1" data-testid="link-back-oaim">
+                <ExternalLink className="h-3 w-3" />
+                OAIM
               </span>
             </Link>
           </div>
@@ -108,9 +117,15 @@ export function StoreHeader({
               </Button>
             </a>
           )}
-          <Link href="/auth/login">
+          <Link href={merchantLoginHref}>
             <span className="block text-sm text-muted-foreground py-1 cursor-pointer" data-testid="link-merchant-login-mobile">
               Merchant Login
+            </span>
+          </Link>
+          <Link href="/">
+            <span className="block text-xs text-muted-foreground/60 py-1 cursor-pointer flex items-center gap-1" data-testid="link-back-oaim-mobile">
+              <ExternalLink className="h-3 w-3" />
+              Back to OAIM
             </span>
           </Link>
         </div>
