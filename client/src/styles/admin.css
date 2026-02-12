@@ -1,0 +1,52 @@
+.admin-badge {
+  font-size: 0.75rem;
+}
+
+.admin-content {
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .admin-content {
+    padding: 1.5rem;
+  }
+}
+
+.admin-table-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.admin-flag-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .admin-flag-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .admin-flag-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.admin-log-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+.admin-case-card-image {
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem 0.375rem 0 0;
+}
