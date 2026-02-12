@@ -45,12 +45,12 @@ export function Navbar() {
 
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <Link href="/app" className="hidden sm:block">
+            <Link href="/auth/login" className="hidden sm:block">
               <Button variant="outline" data-testid="button-login">
                 Log In
               </Button>
             </Link>
-            <Link href="/app/onboarding" className="hidden sm:block">
+            <Link href="/auth/register" className="hidden sm:block">
               <Button data-testid="button-free-trial">
                 Free Trial
               </Button>
@@ -84,12 +84,12 @@ export function Navbar() {
               </Link>
             ))}
             <div className="flex gap-2 mt-2 pt-2 border-t">
-              <Link href="/app" className="flex-1">
+              <Link href="/auth/login" className="flex-1">
                 <Button variant="outline" className="w-full" onClick={() => setMobileOpen(false)}>
                   Log In
                 </Button>
               </Link>
-              <Link href="/app/onboarding" className="flex-1">
+              <Link href="/auth/register" className="flex-1">
                 <Button className="w-full" onClick={() => setMobileOpen(false)}>
                   Free Trial
                 </Button>

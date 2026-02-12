@@ -16,12 +16,12 @@ export function AppLayout({ children, title }: { children: React.ReactNode; titl
       <div className="flex h-screen w-full">
         <AppSidebar />
         <div className="flex flex-col flex-1 min-w-0">
-          <header className="flex items-center justify-between gap-4 p-3 border-b bg-background sticky top-0 z-50">
-            <div className="flex items-center gap-2">
+          <header className="flex items-center justify-between gap-2 px-2 py-2 sm:px-3 sm:py-3 border-b bg-background sticky top-0 z-50">
+            <div className="flex items-center gap-2 min-w-0">
               <SidebarTrigger data-testid="button-app-sidebar-toggle" />
-              {title && <h1 className="text-lg font-semibold">{title}</h1>}
+              {title && <h1 className="text-base sm:text-lg font-semibold truncate" data-testid="text-page-title">{title}</h1>}
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 shrink-0">
               <Button size="icon" variant="ghost" data-testid="button-notifications">
                 <Bell className="h-4 w-4" />
               </Button>

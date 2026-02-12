@@ -35,9 +35,11 @@ import {
   UserCheck,
   Truck,
   CreditCard,
+  Globe,
 } from "lucide-react";
 
 const mainItems = [
+  { title: "Store Homepage", href: "/templates/ecommerce", icon: Globe },
   { title: "Inbox", href: "/app", icon: MessageSquare, badge: "3" },
   { title: "Contacts", href: "/app/contacts", icon: Users },
   { title: "Pipeline", href: "/app/pipeline", icon: GitBranch },

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Search, Send, Paperclip, Bot, Phone } from "lucide-react";
+import { Search, Send, Paperclip, Bot, Phone, ArrowLeft } from "lucide-react";
 
 const conversations = [
   { id: "1", name: "Sarah Ahmad", phone: "+60 12-345-6789", lastMsg: "Hi, I want to order the blue dress", time: "2m ago", unread: 2, stage: "new_inquiry" },
@@ -35,15 +35,21 @@ const stageColors: Record<string, string> = {
 export default function InboxPage() {
   const [selected, setSelected] = useState(conversations[0]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showChat, setShowChat] = useState(false);
 
   const filtered = conversations.filter(c =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  function handleSelectConversation(conv: typeof conversations[0]) {
+    setSelected(conv);
+    setShowChat(true);
+  }
+
   return (
     <AppLayout>
       <div className="flex h-full">
-        <div className="w-80 border-r flex flex-col bg-background">
+        <div className={`w-full md:w-80 border-r flex flex-col bg-background ${showChat ? "hidden md:flex" : "flex"}`}>
           <div className="p-3 border-b">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -62,7 +68,7 @@ export default function InboxPage() {
                 <div
                   key={conv.id}
                   className={`flex items-start gap-3 p-3 rounded-md cursor-pointer transition-colors ${selected.id === conv.id ? "bg-accent" : "hover-elevate"}`}
-                  onClick={() => setSelected(conv)}
+                  onClick={() => handleSelectConversation(conv)}
                   data-testid={`conversation-${conv.id}`}
                 >
                   <Avatar className="h-10 w-10 flex-shrink-0">
@@ -86,9 +92,18 @@ export default function InboxPage() {
           </ScrollArea>
         </div>
 
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className={`flex-1 flex flex-col min-w-0 ${showChat ? "flex" : "hidden md:flex"}`}>
           <div className="flex items-center justify-between gap-4 p-3 border-b">
             <div className="flex items-center gap-3">
+              <Button
+                size="icon"
+                variant="ghost"
+                className="md:hidden"
+                onClick={() => setShowChat(false)}
+                data-testid="button-back-to-list"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
               <Avatar className="h-9 w-9">
                 <AvatarFallback className="text-xs bg-primary/10 text-primary">
                   {selected.name.split(" ").map(n => n[0]).join("")}
@@ -100,7 +115,7 @@ export default function InboxPage() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant="secondary" className={stageColors[selected.stage]}>
+              <Badge variant="secondary" className={`hidden sm:inline-flex ${stageColors[selected.stage]}`}>
                 {selected.stage.replace("_", " ")}
               </Badge>
               <Button size="icon" variant="ghost" data-testid="button-call">
@@ -117,7 +132,7 @@ export default function InboxPage() {
                   className={`flex ${msg.direction === "outbound" ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-[75%] rounded-md px-3 py-2 ${
+                    className={`max-w-[85%] sm:max-w-[75%] rounded-md px-3 py-2 ${
                       msg.direction === "outbound"
                         ? "bg-primary text-primary-foreground"
                         : "bg-muted"
