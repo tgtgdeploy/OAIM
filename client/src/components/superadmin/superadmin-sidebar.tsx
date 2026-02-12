@@ -14,23 +14,57 @@ import {
   Building2,
   CreditCard,
   LayoutTemplate,
-  Image,
+  Blocks,
+  BarChart3,
+  Palette,
+  Users,
   ScrollText,
   LifeBuoy,
   Shield,
+  Zap,
 } from "lucide-react";
 
-const items = [
+const platformItems = [
   { title: "Tenants", href: "/superadmin", icon: Building2 },
   { title: "Plans & Flags", href: "/superadmin/plans", icon: CreditCard },
+  { title: "Modules", href: "/superadmin/modules", icon: Blocks },
   { title: "Templates", href: "/superadmin/templates", icon: LayoutTemplate },
-  { title: "Case Library", href: "/superadmin/cases", icon: Image },
-  { title: "Logs", href: "/superadmin/logs", icon: ScrollText },
+];
+
+const marketingItems = [
+  { title: "Ads & Campaigns", href: "/superadmin/ads", icon: BarChart3 },
+  { title: "Design & Pages", href: "/superadmin/design", icon: Palette },
+  { title: "Referral Commission", href: "/superadmin/referral", icon: Users },
+];
+
+const operationsItems = [
+  { title: "Automation", href: "/superadmin/automation", icon: Zap },
   { title: "Support", href: "/superadmin/support", icon: LifeBuoy },
+  { title: "Logs", href: "/superadmin/logs", icon: ScrollText },
 ];
 
 export function SuperAdminSidebar() {
   const [location] = useLocation();
+
+  const renderGroup = (label: string, items: typeof platformItems) => (
+    <SidebarGroup>
+      <SidebarGroupLabel>{label}</SidebarGroupLabel>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          {items.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton asChild isActive={location === item.href}>
+                <Link href={item.href} data-testid={`link-superadmin-${item.title.toLowerCase().replace(/\s/g, "-")}`}>
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.title}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
+  );
 
   return (
     <Sidebar>
@@ -48,23 +82,9 @@ export function SuperAdminSidebar() {
         </Link>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Management</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={location === item.href}>
-                    <Link href={item.href} data-testid={`link-superadmin-${item.title.toLowerCase().replace(/\s/g, "-")}`}>
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {renderGroup("Platform", platformItems)}
+        {renderGroup("Marketing", marketingItems)}
+        {renderGroup("Operations", operationsItems)}
       </SidebarContent>
     </Sidebar>
   );

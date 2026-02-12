@@ -22,12 +22,21 @@ const OrdersPage = lazy(() => import("@/pages/app/orders"));
 const AppProductsPage = lazy(() => import("@/pages/app/products"));
 const FollowUpsPage = lazy(() => import("@/pages/app/follow-ups"));
 const AdsPage = lazy(() => import("@/pages/app/ads"));
+const AppAutomationPage = lazy(() => import("@/pages/app/automation"));
+const AppSupportPage = lazy(() => import("@/pages/app/support"));
+const AppReferralPage = lazy(() => import("@/pages/app/referral"));
+const AppTeamPage = lazy(() => import("@/pages/app/team"));
 const SettingsPage = lazy(() => import("@/pages/app/settings"));
 
 const TenantsPage = lazy(() => import("@/pages/superadmin/tenants"));
 const PlansPage = lazy(() => import("@/pages/superadmin/plans"));
+const ModulesPage = lazy(() => import("@/pages/superadmin/modules"));
 const TemplatesPage = lazy(() => import("@/pages/superadmin/templates"));
 const CaseLibraryPage = lazy(() => import("@/pages/superadmin/case-library"));
+const SuperAdminAdsPage = lazy(() => import("@/pages/superadmin/ads"));
+const DesignPage = lazy(() => import("@/pages/superadmin/design"));
+const SuperAdminReferralPage = lazy(() => import("@/pages/superadmin/referral"));
+const SuperAdminAutomationPage = lazy(() => import("@/pages/superadmin/automation"));
 const LogsPage = lazy(() => import("@/pages/superadmin/logs"));
 const SupportPage = lazy(() => import("@/pages/superadmin/support"));
 
@@ -36,6 +45,7 @@ const MemberOrders = lazy(() => import("@/pages/member/orders"));
 const MemberTrack = lazy(() => import("@/pages/member/track"));
 const MemberProfile = lazy(() => import("@/pages/member/profile"));
 const MemberLoyalty = lazy(() => import("@/pages/member/loyalty"));
+const MemberReferral = lazy(() => import("@/pages/member/referral"));
 
 function LoadingFallback() {
   return (
@@ -67,12 +77,21 @@ function Router() {
         <Route path="/app/products" component={AppProductsPage} />
         <Route path="/app/follow-ups" component={FollowUpsPage} />
         <Route path="/app/ads" component={AdsPage} />
+        <Route path="/app/automation" component={AppAutomationPage} />
+        <Route path="/app/support" component={AppSupportPage} />
+        <Route path="/app/referral" component={AppReferralPage} />
+        <Route path="/app/team" component={AppTeamPage} />
         <Route path="/app/settings" component={SettingsPage} />
 
         <Route path="/superadmin" component={TenantsPage} />
         <Route path="/superadmin/plans" component={PlansPage} />
+        <Route path="/superadmin/modules" component={ModulesPage} />
         <Route path="/superadmin/templates" component={TemplatesPage} />
         <Route path="/superadmin/cases" component={CaseLibraryPage} />
+        <Route path="/superadmin/ads" component={SuperAdminAdsPage} />
+        <Route path="/superadmin/design" component={DesignPage} />
+        <Route path="/superadmin/referral" component={SuperAdminReferralPage} />
+        <Route path="/superadmin/automation" component={SuperAdminAutomationPage} />
         <Route path="/superadmin/logs" component={LogsPage} />
         <Route path="/superadmin/support" component={SupportPage} />
 
@@ -81,6 +100,7 @@ function Router() {
         <Route path="/member/track" component={MemberTrack} />
         <Route path="/member/profile" component={MemberProfile} />
         <Route path="/member/loyalty" component={MemberLoyalty} />
+        <Route path="/member/referral" component={MemberReferral} />
 
         <Route component={NotFound} />
       </Switch>

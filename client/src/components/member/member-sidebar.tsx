@@ -19,14 +19,16 @@ import {
   User,
   Star,
   Zap,
+  Share2,
 } from "lucide-react";
 
 const items = [
   { title: "Dashboard", href: "/member", icon: LayoutDashboard },
   { title: "My Orders", href: "/member/orders", icon: ShoppingBag },
   { title: "Track Order", href: "/member/track", icon: MapPin },
-  { title: "Profile", href: "/member/profile", icon: User },
   { title: "Loyalty", href: "/member/loyalty", icon: Star },
+  { title: "Refer & Earn", href: "/member/referral", icon: Share2 },
+  { title: "Profile", href: "/member/profile", icon: User },
 ];
 
 export function MemberSidebar() {

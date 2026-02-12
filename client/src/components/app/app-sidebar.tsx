@@ -23,6 +23,10 @@ import {
   Settings,
   Zap,
   Lock,
+  Bot,
+  Headphones,
+  Share2,
+  UserCog,
 } from "lucide-react";
 
 const mainItems = [
@@ -34,11 +38,15 @@ const mainItems = [
 ];
 
 const advancedItems = [
+  { title: "Automation", href: "/app/automation", icon: Zap },
   { title: "Follow-ups", href: "/app/follow-ups", icon: Repeat },
+  { title: "Customer Support", href: "/app/support", icon: Headphones },
   { title: "Ads & ROI", href: "/app/ads", icon: BarChart3, locked: true },
+  { title: "Referral", href: "/app/referral", icon: Share2 },
 ];
 
 const settingsItems = [
+  { title: "Team & Roles", href: "/app/team", icon: UserCog },
   { title: "Settings", href: "/app/settings", icon: Settings },
 ];
 
@@ -68,7 +76,7 @@ export function AppSidebar() {
               {mainItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={location === item.href}>
-                    <Link href={item.href} data-testid={`link-app-${item.title.toLowerCase()}`}>
+                    <Link href={item.href} data-testid={`link-app-${item.title.toLowerCase().replace(/\s/g, "-")}`}>
                       <item.icon className="h-4 w-4" />
                       <span className="flex-1">{item.title}</span>
                       {item.badge && (
@@ -106,12 +114,13 @@ export function AppSidebar() {
         </SidebarGroup>
 
         <SidebarGroup>
+          <SidebarGroupLabel>Management</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {settingsItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={location === item.href}>
-                    <Link href={item.href} data-testid={`link-app-${item.title.toLowerCase()}`}>
+                    <Link href={item.href} data-testid={`link-app-${item.title.toLowerCase().replace(/\s/g, "-")}`}>
                       <item.icon className="h-4 w-4" />
                       <span>{item.title}</span>
                     </Link>
