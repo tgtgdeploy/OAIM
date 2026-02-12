@@ -54,7 +54,14 @@ Multi-tenant WhatsApp-first AI sales platform for e-commerce and restaurant busi
 - Primary color: Emerald green (152 76% 36%) for WhatsApp aesthetic
 - Dark mode support via ThemeProvider
 
+### Auth Pages
+- `client/src/pages/auth/login.tsx` — Login page with demo account switcher (superadmin/merchant/member)
+- `client/src/pages/auth/register.tsx` — Registration page with business type selection
+- Demo accounts: click to navigate directly to each panel without real auth
+
 ## Recent Changes (Feb 12, 2026)
+- Created login page (`/auth/login`) with demo account panel switcher
+- Created registration page (`/auth/register`) with WhatsApp number and business type fields
 - Renamed `/admin` to `/superadmin` with dedicated folder and components
 - Created shared reusable module components (ads, support, referral, automation)
 - Updated Super Admin sidebar with 3 groups: Platform, Marketing, Operations

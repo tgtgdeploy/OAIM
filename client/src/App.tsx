@@ -14,6 +14,9 @@ const PricingPage = lazy(() => import("@/pages/marketing/pricing"));
 const CasesPage = lazy(() => import("@/pages/marketing/cases"));
 const ContactPage = lazy(() => import("@/pages/marketing/contact"));
 
+const LoginPage = lazy(() => import("@/pages/auth/login"));
+const RegisterPage = lazy(() => import("@/pages/auth/register"));
+
 const OnboardingPage = lazy(() => import("@/pages/app/onboarding"));
 const InboxPage = lazy(() => import("@/pages/app/inbox"));
 const ContactsPage = lazy(() => import("@/pages/app/contacts"));
@@ -68,6 +71,9 @@ function Router() {
         <Route path="/pricing" component={PricingPage} />
         <Route path="/cases" component={CasesPage} />
         <Route path="/contact" component={ContactPage} />
+
+        <Route path="/auth/login" component={LoginPage} />
+        <Route path="/auth/register" component={RegisterPage} />
 
         <Route path="/app/onboarding" component={OnboardingPage} />
         <Route path="/app" component={InboxPage} />
