@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Plus, Edit } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const plans = [
   { name: "Trial", tier: "trial", price: 0, tenants: 2, features: ["whatsapp_inbox", "ai_sales_script"], limits: { messages: 100, users: 1, products: 10 } },
@@ -34,21 +35,23 @@ const featureFlags = [
 const allTiers = ["trial", "starter", "pro", "business"];
 
 export default function PlansPage() {
+  const { t } = useTranslation("superadmin");
+
   return (
-    <SuperAdminLayout title="Plans & Feature Flags">
+    <SuperAdminLayout title={t("plans.title")}>
       <div className="p-4 md:p-6 space-y-4">
         <Tabs defaultValue="plans">
           <TabsList>
-            <TabsTrigger value="plans" data-testid="tab-plans">Plans</TabsTrigger>
-            <TabsTrigger value="flags" data-testid="tab-flags">Feature Flags</TabsTrigger>
+            <TabsTrigger value="plans" data-testid="tab-plans">{t("plans.tabPlans")}</TabsTrigger>
+            <TabsTrigger value="flags" data-testid="tab-flags">{t("plans.tabFlags")}</TabsTrigger>
           </TabsList>
 
           <TabsContent value="plans" className="space-y-4 mt-4">
             <div className="flex items-center justify-between gap-4">
-              <p className="text-sm text-muted-foreground">{plans.length} plans configured</p>
+              <p className="text-sm text-muted-foreground">{t("plans.plansConfigured", { count: plans.length })}</p>
               <Button data-testid="button-add-plan">
                 <Plus className="h-4 w-4 mr-2" />
-                Add Plan
+                {t("plans.addPlan")}
               </Button>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -62,25 +65,25 @@ export default function PlansPage() {
                       </Button>
                     </div>
                     <div className="text-2xl font-bold mb-1">
-                      {plan.price === 0 ? "Free" : `$${plan.price}`}
-                      {plan.price > 0 && <span className="text-sm text-muted-foreground font-normal">/mo</span>}
+                      {plan.price === 0 ? t("plans.free") : `$${plan.price}`}
+                      {plan.price > 0 && <span className="text-sm text-muted-foreground font-normal">{t("plans.perMonth")}</span>}
                     </div>
-                    <div className="text-xs text-muted-foreground mb-4">{plan.tenants} active tenants</div>
+                    <div className="text-xs text-muted-foreground mb-4">{t("plans.activeTenants", { count: plan.tenants })}</div>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Messages</span>
-                        <span className="font-medium">{plan.limits.messages === -1 ? "Unlimited" : plan.limits.messages.toLocaleString()}</span>
+                        <span className="text-muted-foreground">{t("plans.messages")}</span>
+                        <span className="font-medium">{plan.limits.messages === -1 ? t("plans.unlimited") : plan.limits.messages.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Users</span>
-                        <span className="font-medium">{plan.limits.users === -1 ? "Unlimited" : plan.limits.users}</span>
+                        <span className="text-muted-foreground">{t("plans.users")}</span>
+                        <span className="font-medium">{plan.limits.users === -1 ? t("plans.unlimited") : plan.limits.users}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Products</span>
-                        <span className="font-medium">{plan.limits.products === -1 ? "Unlimited" : plan.limits.products}</span>
+                        <span className="text-muted-foreground">{t("plans.products")}</span>
+                        <span className="font-medium">{plan.limits.products === -1 ? t("plans.unlimited") : plan.limits.products}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-muted-foreground">Modules</span>
+                        <span className="text-muted-foreground">{t("plans.modulesLabel")}</span>
                         <span className="font-medium">{plan.features.length}</span>
                       </div>
                     </div>
@@ -92,10 +95,10 @@ export default function PlansPage() {
 
           <TabsContent value="flags" className="space-y-4 mt-4">
             <div className="flex items-center justify-between gap-4">
-              <p className="text-sm text-muted-foreground">{featureFlags.length} feature flags</p>
+              <p className="text-sm text-muted-foreground">{t("plans.featureFlags", { count: featureFlags.length })}</p>
               <Button data-testid="button-add-flag">
                 <Plus className="h-4 w-4 mr-2" />
-                Add Flag
+                {t("plans.addFlag")}
               </Button>
             </div>
             <Card>
@@ -103,7 +106,7 @@ export default function PlansPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Feature</TableHead>
+                      <TableHead>{t("plans.feature")}</TableHead>
                       {allTiers.map((tier) => (
                         <TableHead key={tier} className="text-center capitalize">{tier}</TableHead>
                       ))}

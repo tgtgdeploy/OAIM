@@ -16,130 +16,133 @@ import {
   Lock,
   Zap,
 } from "lucide-react";
-
-const products = [
-  {
-    id: "whatsapp-ai",
-    icon: MessageSquare,
-    title: "WhatsApp Inbox",
-    badge: "Core",
-    badgeVariant: "default" as const,
-    color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-    description: "A unified inbox that brings all WhatsApp conversations into one place. Smart routing, real-time notifications, and team collaboration built in.",
-    features: [
-      "Multi-agent inbox with conversation assignment",
-      "Real-time message sync via Cloud API",
-      "Quick reply templates",
-      "Media support (images, documents, voice)",
-      "Contact auto-creation from new messages",
-      "Conversation search and filters",
-    ],
-  },
-  {
-    id: "ai-script",
-    icon: Bot,
-    title: "AI Sales Script",
-    badge: "Core",
-    badgeVariant: "default" as const,
-    color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
-    description: "Industry-specific AI scripts that understand your products, pricing, and policies. Automatically respond to customer inquiries and guide them toward a purchase.",
-    features: [
-      "E-commerce: price quoting, stock check, COD handling",
-      "Restaurant: menu sharing, reservation, delivery",
-      "Customizable tone and sales goals",
-      "FAQ auto-answers from your product catalog",
-      "Promotion and discount rule engine",
-      "Script versioning and A/B testing",
-    ],
-  },
-  {
-    id: "crm",
-    icon: Users,
-    title: "CRM Pipeline",
-    badge: "Starter+",
-    badgeVariant: "secondary" as const,
-    color: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
-    description: "Visual sales funnel to track every customer from first inquiry to closed deal. Tag, segment, and manage your contacts effortlessly.",
-    features: [
-      "4-stage pipeline: Inquiry > Quoted > Follow-up > Closed",
-      "Custom tags and contact segmentation",
-      "Contact timeline with full history",
-      "Bulk actions and filters",
-      "Pipeline analytics and conversion rates",
-      "Export contacts to CSV",
-    ],
-  },
-  {
-    id: "followup",
-    icon: Repeat,
-    title: "Auto Follow-up",
-    badge: "Pro+",
-    badgeVariant: "secondary" as const,
-    color: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
-    description: "Never let a hot lead go cold. Schedule automated follow-ups based on time, customer stage, or actions. Re-engage dormant customers at scale.",
-    features: [
-      "Time-based follow-up sequences",
-      "Stage-triggered automations",
-      "Custom message templates per trigger",
-      "Follow-up calendar view",
-      "Overdue alerts and reminders",
-      "Performance tracking per sequence",
-    ],
-  },
-  {
-    id: "erp",
-    icon: ShoppingCart,
-    title: "ERP Lite",
-    badge: "Pro+",
-    badgeVariant: "secondary" as const,
-    color: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
-    description: "Lightweight product, order, and inventory management. Perfect for small businesses that need just enough structure without enterprise complexity.",
-    features: [
-      "Product catalog with categories",
-      "Order creation and status tracking",
-      "Basic inventory management",
-      "CSV import for products",
-      "Order history per contact",
-      "Simple revenue reporting",
-    ],
-  },
-  {
-    id: "ads",
-    icon: BarChart3,
-    title: "Meta Ads & ROI",
-    badge: "Business",
-    badgeVariant: "outline" as const,
-    color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
-    description: "Connect your Meta ad campaigns and track leads all the way to conversion. See real ROI for every dollar spent on advertising.",
-    features: [
-      "Meta ad lead import (Click-to-WhatsApp)",
-      "Lead-to-sale attribution tracking",
-      "Campaign performance dashboard",
-      "Cost per lead and cost per sale metrics",
-      "Ad spend vs revenue reports",
-      "UTM parameter tracking",
-    ],
-  },
-  {
-    id: "team",
-    icon: UsersRound,
-    title: "Team & Permissions",
-    badge: "Business",
-    badgeVariant: "outline" as const,
-    color: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
-    description: "Multi-user access with role-based permissions. Assign agents to conversations, track performance, and manage your team from one place.",
-    features: [
-      "Role-based access control (Owner, Admin, Staff)",
-      "Agent performance metrics",
-      "Conversation assignment and transfer",
-      "Team activity log",
-      "Custom permission sets",
-      "Multi-location support",
-    ],
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export default function ProductsPage() {
+  const { t } = useTranslation("marketing");
+
+  const products = [
+    {
+      id: "whatsapp-ai",
+      icon: MessageSquare,
+      title: t("products.whatsappInbox"),
+      badge: t("products.badgeCore"),
+      badgeVariant: "default" as const,
+      color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+      description: t("products.whatsappInboxDesc"),
+      features: [
+        t("products.whatsappInboxF1"),
+        t("products.whatsappInboxF2"),
+        t("products.whatsappInboxF3"),
+        t("products.whatsappInboxF4"),
+        t("products.whatsappInboxF5"),
+        t("products.whatsappInboxF6"),
+      ],
+    },
+    {
+      id: "ai-script",
+      icon: Bot,
+      title: t("products.aiSalesScript"),
+      badge: t("products.badgeCore"),
+      badgeVariant: "default" as const,
+      color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
+      description: t("products.aiSalesScriptDesc"),
+      features: [
+        t("products.aiSalesScriptF1"),
+        t("products.aiSalesScriptF2"),
+        t("products.aiSalesScriptF3"),
+        t("products.aiSalesScriptF4"),
+        t("products.aiSalesScriptF5"),
+        t("products.aiSalesScriptF6"),
+      ],
+    },
+    {
+      id: "crm",
+      icon: Users,
+      title: t("products.crmPipeline"),
+      badge: t("products.badgeStarter"),
+      badgeVariant: "secondary" as const,
+      color: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+      description: t("products.crmPipelineDesc"),
+      features: [
+        t("products.crmPipelineF1"),
+        t("products.crmPipelineF2"),
+        t("products.crmPipelineF3"),
+        t("products.crmPipelineF4"),
+        t("products.crmPipelineF5"),
+        t("products.crmPipelineF6"),
+      ],
+    },
+    {
+      id: "followup",
+      icon: Repeat,
+      title: t("products.autoFollowUp"),
+      badge: t("products.badgePro"),
+      badgeVariant: "secondary" as const,
+      color: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+      description: t("products.autoFollowUpDesc"),
+      features: [
+        t("products.autoFollowUpF1"),
+        t("products.autoFollowUpF2"),
+        t("products.autoFollowUpF3"),
+        t("products.autoFollowUpF4"),
+        t("products.autoFollowUpF5"),
+        t("products.autoFollowUpF6"),
+      ],
+    },
+    {
+      id: "erp",
+      icon: ShoppingCart,
+      title: t("products.erpLite"),
+      badge: t("products.badgePro"),
+      badgeVariant: "secondary" as const,
+      color: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
+      description: t("products.erpLiteDesc"),
+      features: [
+        t("products.erpLiteF1"),
+        t("products.erpLiteF2"),
+        t("products.erpLiteF3"),
+        t("products.erpLiteF4"),
+        t("products.erpLiteF5"),
+        t("products.erpLiteF6"),
+      ],
+    },
+    {
+      id: "ads",
+      icon: BarChart3,
+      title: t("products.metaAds"),
+      badge: t("products.badgeBusiness"),
+      badgeVariant: "outline" as const,
+      color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
+      description: t("products.metaAdsDesc"),
+      features: [
+        t("products.metaAdsF1"),
+        t("products.metaAdsF2"),
+        t("products.metaAdsF3"),
+        t("products.metaAdsF4"),
+        t("products.metaAdsF5"),
+        t("products.metaAdsF6"),
+      ],
+    },
+    {
+      id: "team",
+      icon: UsersRound,
+      title: t("products.teamPermissions"),
+      badge: t("products.badgeBusiness"),
+      badgeVariant: "outline" as const,
+      color: "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400",
+      description: t("products.teamPermissionsDesc"),
+      features: [
+        t("products.teamPermissionsF1"),
+        t("products.teamPermissionsF2"),
+        t("products.teamPermissionsF3"),
+        t("products.teamPermissionsF4"),
+        t("products.teamPermissionsF5"),
+        t("products.teamPermissionsF6"),
+      ],
+    },
+  ];
+
   return (
     <MarketingLayout>
       <section className="relative overflow-hidden">
@@ -148,14 +151,13 @@ export default function ProductsPage() {
           <div className="text-center mb-16 animate-fade-in-up">
             <Badge variant="secondary" className="mb-4">
               <Lock className="h-3 w-3 mr-1" />
-              Modular & Unlockable
+              {t("products.modularUnlockable")}
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-products-title">
-              Product Modules
+              {t("products.title")}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Start with WhatsApp + AI, unlock more modules as your business grows.
-              Every module integrates seamlessly with the rest.
+              {t("products.subtitle")}
             </p>
           </div>
 
@@ -197,7 +199,7 @@ export default function ProductsPage() {
           <div className="text-center mt-12 animate-fade-in-up">
             <Link href="/pricing">
               <Button size="lg" data-testid="button-view-pricing">
-                View Pricing Plans
+                {t("products.viewPricingPlans")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>

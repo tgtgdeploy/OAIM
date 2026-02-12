@@ -20,6 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Plus, Building2, Users, MoreHorizontal, Ban, RefreshCw, Eye } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import "@/styles/superadmin.css";
 
 const tenants = [
@@ -33,21 +34,23 @@ const tenants = [
 ];
 
 export default function TenantsPage() {
+  const { t } = useTranslation("superadmin");
+
   return (
-    <SuperAdminLayout title="Tenants">
+    <SuperAdminLayout title={t("tenants.title")}>
       <div className="admin-content section-spacing">
         <div className="stats-grid">
-          <StatCard label="Total Tenants" value={tenants.length.toString()} icon={Building2} />
-          <StatCard label="Active" value={tenants.filter(t => t.status === "active").length.toString()} icon={Users} />
-          <StatCard label="Trial" value={tenants.filter(t => t.status === "trial").length.toString()} icon={Users} />
-          <StatCard label="Total Messages" value={tenants.reduce((a, t) => a + t.messages, 0).toLocaleString()} icon={Users} />
+          <StatCard label={t("tenants.totalTenants")} value={tenants.length.toString()} icon={Building2} />
+          <StatCard label={t("tenants.active")} value={tenants.filter(t => t.status === "active").length.toString()} icon={Users} />
+          <StatCard label={t("tenants.trial")} value={tenants.filter(t => t.status === "trial").length.toString()} icon={Users} />
+          <StatCard label={t("tenants.totalMessages")} value={tenants.reduce((a, t) => a + t.messages, 0).toLocaleString()} icon={Users} />
         </div>
 
         <div className="toolbar-row">
-          <SearchInput placeholder="Search tenants..." testId="input-search-tenants" />
+          <SearchInput placeholder={t("tenants.searchPlaceholder")} testId="input-search-tenants" />
           <Button data-testid="button-add-tenant">
             <Plus className="h-4 w-4 mr-2" />
-            Add Tenant
+            {t("tenants.addTenant")}
           </Button>
         </div>
 
@@ -56,13 +59,13 @@ export default function TenantsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Tenant</TableHead>
-                  <TableHead>Industry</TableHead>
-                  <TableHead>Plan</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="hidden md:table-cell">Users</TableHead>
-                  <TableHead className="hidden md:table-cell">Messages</TableHead>
-                  <TableHead className="hidden lg:table-cell">Created</TableHead>
+                  <TableHead>{t("tenants.tenant")}</TableHead>
+                  <TableHead>{t("tenants.industry")}</TableHead>
+                  <TableHead>{t("tenants.plan")}</TableHead>
+                  <TableHead>{t("tenants.status")}</TableHead>
+                  <TableHead className="hidden md:table-cell">{t("tenants.users")}</TableHead>
+                  <TableHead className="hidden md:table-cell">{t("tenants.messages")}</TableHead>
+                  <TableHead className="hidden lg:table-cell">{t("tenants.created")}</TableHead>
                   <TableHead className="w-10"></TableHead>
                 </TableRow>
               </TableHeader>
@@ -90,9 +93,9 @@ export default function TenantsPage() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem><Eye className="h-4 w-4 mr-2" />View Details</DropdownMenuItem>
-                          <DropdownMenuItem><RefreshCw className="h-4 w-4 mr-2" />Reset Data</DropdownMenuItem>
-                          <DropdownMenuItem className="text-destructive"><Ban className="h-4 w-4 mr-2" />Suspend</DropdownMenuItem>
+                          <DropdownMenuItem><Eye className="h-4 w-4 mr-2" />{t("tenants.viewDetails")}</DropdownMenuItem>
+                          <DropdownMenuItem><RefreshCw className="h-4 w-4 mr-2" />{t("tenants.resetData")}</DropdownMenuItem>
+                          <DropdownMenuItem className="text-destructive"><Ban className="h-4 w-4 mr-2" />{t("tenants.suspend")}</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>

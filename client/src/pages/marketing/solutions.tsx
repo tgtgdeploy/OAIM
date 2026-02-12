@@ -25,102 +25,87 @@ import {
   Clock,
   Layers,
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import imgEcommerce from "@/assets/images/marketing-ecommerce.jpg";
 import imgRestaurant from "@/assets/images/marketing-restaurant.jpg";
 import imgBeauty from "@/assets/images/marketing-beauty.jpg";
 
-const solutions = [
-  {
-    id: "ecommerce",
-    label: "E-Commerce",
-    icon: Store,
-    color: "text-emerald-600 dark:text-emerald-400",
-    colorBg: "bg-emerald-500/10 dark:bg-emerald-400/10",
-    gradient: "from-emerald-600 to-teal-700",
-    image: imgEcommerce,
-    tagline: "Turn WhatsApp inquiries into confirmed orders",
-    description: "Transform your online store with AI-powered WhatsApp sales. From product catalog to payment processing and logistics — manage everything in one place.",
-    features: [
-      { icon: MessageSquare, title: "Instant Price Quoting", desc: "AI reads product inquiries and instantly sends price, stock status, and product images." },
-      { icon: ShoppingCart, title: "Order via Chat", desc: "Customers place orders directly in WhatsApp. Auto-create order records with COD or prepaid options." },
-      { icon: Truck, title: "Logistics Tracking", desc: "Send shipping updates and tracking links automatically when order status changes." },
-      { icon: Repeat, title: "Abandoned Cart Recovery", desc: "Re-engage customers who showed interest but didn't complete the purchase." },
-      { icon: CreditCard, title: "COD Management", desc: "Handle cash-on-delivery orders with confirmation flow and delivery coordination." },
-      { icon: Tag, title: "Smart Product Tags", desc: "Auto-tag contacts based on interests, purchase history, and interaction patterns." },
-    ],
-    templateItems: [
-      "Pre-built AI script for product inquiries",
-      "Pipeline: New > Quoted > Confirmed > Shipped > Completed",
-      "Tags: Hot Lead, Repeat Buyer, COD, VIP",
-      "Follow-up sequence: Day 1, Day 3, Day 7",
-      "Product catalog with CSV import",
-      "Order management with status tracking",
-      "Revenue dashboard",
-      "WhatsApp template messages",
-    ],
-  },
-  {
-    id: "restaurant",
-    label: "F&B / Restaurant",
-    icon: UtensilsCrossed,
-    color: "text-orange-600 dark:text-orange-400",
-    colorBg: "bg-orange-500/10 dark:bg-orange-400/10",
-    gradient: "from-orange-600 to-amber-700",
-    image: imgRestaurant,
-    tagline: "Serve more customers with less effort",
-    description: "Digitize your restaurant operations from menu to checkout. Manage reservations, table layouts, delivery orders, and billing — all connected to WhatsApp.",
-    features: [
-      { icon: ChefHat, title: "Digital Menu", desc: "Share your menu via WhatsApp with categories, prices, and photos." },
-      { icon: CalendarDays, title: "Table Reservation", desc: "Accept reservations through WhatsApp with automatic confirmation and reminders." },
-      { icon: Truck, title: "Delivery Orders", desc: "Take delivery orders with address collection, payment options, and ETA updates." },
-      { icon: Star, title: "Loyalty & Re-engagement", desc: "Track visit frequency, send special offers to dormant customers, build loyalty." },
-      { icon: Bot, title: "AI Menu Assistant", desc: "AI answers menu questions, suggests dishes, handles dietary restrictions." },
-      { icon: BarChart3, title: "Revenue Insights", desc: "Track daily orders, popular items, peak hours, and customer patterns." },
-    ],
-    templateItems: [
-      "AI script for menu inquiries & reservations",
-      "Pipeline: Inquiry > Reserved > Dined > Follow-up",
-      "Tags: Regular, VIP, Birthday, Delivery",
-      "Re-engagement: 14-day & 30-day dormant alerts",
-      "Menu items with categories",
-      "Reservation management",
-      "Daily revenue tracking",
-      "Customer preference notes",
-    ],
-  },
-  {
-    id: "beauty",
-    label: "Beauty & Wellness",
-    icon: Sparkles,
-    color: "text-rose-600 dark:text-rose-400",
-    colorBg: "bg-rose-500/10 dark:bg-rose-400/10",
-    gradient: "from-rose-600 to-pink-700",
-    image: imgBeauty,
-    tagline: "Grow your salon with automated WhatsApp booking",
-    description: "Streamline your beauty business with automated booking, therapist scheduling, and session management. Reduce no-shows with WhatsApp reminders.",
-    features: [
-      { icon: CalendarDays, title: "Smart Booking", desc: "Online booking via WhatsApp with available slots, auto-confirmation, and calendar sync." },
-      { icon: UserCheck, title: "Therapist Management", desc: "Therapist profiles, specialties, schedules, availability tracking, and performance stats." },
-      { icon: Scissors, title: "Service Catalog", desc: "Organize services by category with pricing tiers, add-ons, and combo packages." },
-      { icon: Clock, title: "Session & Duration", desc: "Configure service durations, buffer times, room/bed allocation, and daily capacity." },
-      { icon: Star, title: "Client Loyalty", desc: "Track visit history, send birthday offers, build long-term relationships automatically." },
-      { icon: Bot, title: "AI Receptionist", desc: "AI handles booking inquiries, suggests services, and manages cancellations 24/7." },
-    ],
-    templateItems: [
-      "AI script for booking inquiries & slot suggestions",
-      "Pipeline: Inquiry > Booked > Visited > Follow-up",
-      "Tags: Regular, VIP, Birthday, New Client",
-      "Reminders: 24h and 1h before appointments",
-      "Service catalog with pricing tiers",
-      "Therapist scheduling & availability",
-      "Package deals management",
-      "Client history & preferences",
-    ],
-  },
-];
-
 export default function SolutionsPage() {
+  const { t } = useTranslation("marketing");
+
+  const solutions = [
+    {
+      id: "ecommerce",
+      label: t("solutions.ecommerce"),
+      icon: Store,
+      color: "text-emerald-600 dark:text-emerald-400",
+      colorBg: "bg-emerald-500/10 dark:bg-emerald-400/10",
+      gradient: "from-emerald-600 to-teal-700",
+      image: imgEcommerce,
+      tagline: t("solutions.ecommerceTagline"),
+      description: t("solutions.ecommerceDesc"),
+      features: [
+        { icon: MessageSquare, title: t("solutions.ecommerceF1Title"), desc: t("solutions.ecommerceF1Desc") },
+        { icon: ShoppingCart, title: t("solutions.ecommerceF2Title"), desc: t("solutions.ecommerceF2Desc") },
+        { icon: Truck, title: t("solutions.ecommerceF3Title"), desc: t("solutions.ecommerceF3Desc") },
+        { icon: Repeat, title: t("solutions.ecommerceF4Title"), desc: t("solutions.ecommerceF4Desc") },
+        { icon: CreditCard, title: t("solutions.ecommerceF5Title"), desc: t("solutions.ecommerceF5Desc") },
+        { icon: Tag, title: t("solutions.ecommerceF6Title"), desc: t("solutions.ecommerceF6Desc") },
+      ],
+      templateItems: [
+        t("solutions.ecommerceT1"), t("solutions.ecommerceT2"), t("solutions.ecommerceT3"), t("solutions.ecommerceT4"),
+        t("solutions.ecommerceT5"), t("solutions.ecommerceT6"), t("solutions.ecommerceT7"), t("solutions.ecommerceT8"),
+      ],
+    },
+    {
+      id: "restaurant",
+      label: t("solutions.fnb"),
+      icon: UtensilsCrossed,
+      color: "text-orange-600 dark:text-orange-400",
+      colorBg: "bg-orange-500/10 dark:bg-orange-400/10",
+      gradient: "from-orange-600 to-amber-700",
+      image: imgRestaurant,
+      tagline: t("solutions.fnbTagline"),
+      description: t("solutions.fnbDesc"),
+      features: [
+        { icon: ChefHat, title: t("solutions.fnbF1Title"), desc: t("solutions.fnbF1Desc") },
+        { icon: CalendarDays, title: t("solutions.fnbF2Title"), desc: t("solutions.fnbF2Desc") },
+        { icon: Truck, title: t("solutions.fnbF3Title"), desc: t("solutions.fnbF3Desc") },
+        { icon: Star, title: t("solutions.fnbF4Title"), desc: t("solutions.fnbF4Desc") },
+        { icon: Bot, title: t("solutions.fnbF5Title"), desc: t("solutions.fnbF5Desc") },
+        { icon: BarChart3, title: t("solutions.fnbF6Title"), desc: t("solutions.fnbF6Desc") },
+      ],
+      templateItems: [
+        t("solutions.fnbT1"), t("solutions.fnbT2"), t("solutions.fnbT3"), t("solutions.fnbT4"),
+        t("solutions.fnbT5"), t("solutions.fnbT6"), t("solutions.fnbT7"), t("solutions.fnbT8"),
+      ],
+    },
+    {
+      id: "beauty",
+      label: t("solutions.beauty"),
+      icon: Sparkles,
+      color: "text-rose-600 dark:text-rose-400",
+      colorBg: "bg-rose-500/10 dark:bg-rose-400/10",
+      gradient: "from-rose-600 to-pink-700",
+      image: imgBeauty,
+      tagline: t("solutions.beautyTagline"),
+      description: t("solutions.beautyDesc"),
+      features: [
+        { icon: CalendarDays, title: t("solutions.beautyF1Title"), desc: t("solutions.beautyF1Desc") },
+        { icon: UserCheck, title: t("solutions.beautyF2Title"), desc: t("solutions.beautyF2Desc") },
+        { icon: Scissors, title: t("solutions.beautyF3Title"), desc: t("solutions.beautyF3Desc") },
+        { icon: Clock, title: t("solutions.beautyF4Title"), desc: t("solutions.beautyF4Desc") },
+        { icon: Star, title: t("solutions.beautyF5Title"), desc: t("solutions.beautyF5Desc") },
+        { icon: Bot, title: t("solutions.beautyF6Title"), desc: t("solutions.beautyF6Desc") },
+      ],
+      templateItems: [
+        t("solutions.beautyT1"), t("solutions.beautyT2"), t("solutions.beautyT3"), t("solutions.beautyT4"),
+        t("solutions.beautyT5"), t("solutions.beautyT6"), t("solutions.beautyT7"), t("solutions.beautyT8"),
+      ],
+    },
+  ];
+
   return (
     <MarketingLayout>
       <section className="relative overflow-hidden">
@@ -129,13 +114,13 @@ export default function SolutionsPage() {
           <div className="text-center mb-16 animate-fade-in-up">
             <Badge variant="secondary" className="mb-4">
               <Layers className="h-3 w-3 mr-1" />
-              Solutions
+              {t("solutions.badge")}
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-solutions-title">
-              Industry Solutions
+              {t("solutions.title")}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Pre-configured templates with industry-specific AI scripts, tags, pipeline stages, and automated workflows.
+              {t("solutions.subtitle")}
             </p>
           </div>
 
@@ -148,19 +133,19 @@ export default function SolutionsPage() {
                       <sol.icon className="h-3 w-3 mr-1" />
                       {sol.label}
                     </Badge>
-                    <h2 className="text-3xl font-bold mb-3" data-testid={`text-solution-title-${sol.id}`}>{sol.label} Solution</h2>
+                    <h2 className="text-3xl font-bold mb-3" data-testid={`text-solution-title-${sol.id}`}>{sol.label} {t("solutions.solution")}</h2>
                     <p className="text-lg text-muted-foreground mb-2">{sol.tagline}</p>
                     <p className="text-sm text-muted-foreground mb-6 leading-relaxed">{sol.description}</p>
                     <div className="flex gap-3 flex-wrap">
                       <Link href={`/templates/${sol.id === "restaurant" ? "fnb" : sol.id}`}>
                         <Button data-testid={`button-preview-${sol.id}`}>
-                          View Storefront
+                          {t("solutions.viewStorefront")}
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </Button>
                       </Link>
                       <Link href={`/auth/login?role=merchant&industry=${sol.id === "restaurant" ? "fnb" : sol.id}`}>
                         <Button variant="outline" data-testid={`button-try-${sol.id}`}>
-                          Try Backend
+                          {t("solutions.tryBackend")}
                         </Button>
                       </Link>
                     </div>
@@ -187,7 +172,7 @@ export default function SolutionsPage() {
 
                 <Card className={`${sol.colorBg} border-transparent`}>
                   <CardContent className="p-6 md:p-8">
-                    <h3 className="text-base font-semibold mb-4">What's Included in the {sol.label} Template</h3>
+                    <h3 className="text-base font-semibold mb-4">{t("solutions.whatsIncluded", { label: sol.label })}</h3>
                     <div className="grid sm:grid-cols-2 gap-2.5">
                       {sol.templateItems.map((item) => (
                         <div key={item} className="flex items-start gap-2 text-sm">
@@ -207,7 +192,7 @@ export default function SolutionsPage() {
           <div className="text-center mt-16 animate-fade-in-up">
             <Link href="/app/onboarding">
               <Button size="lg" data-testid="button-solutions-trial">
-                Start Free Trial
+                {t("solutions.startFreeTrial")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>

@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SearchInput } from "@/components/shared/search-input";
 import { Plus, Palette, FileText, Image, Globe, Eye, Edit, Copy, Trash2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const landingPages = [
   { id: "1", name: "Summer Sale 2026", status: "published", visits: 1240, conversions: 89, template: "ecommerce", updated: "Feb 10" },
@@ -21,24 +22,26 @@ const designAssets = [
 ];
 
 export default function DesignPage() {
+  const { t } = useTranslation("superadmin");
+
   return (
-    <SuperAdminLayout title="Design & Pages">
+    <SuperAdminLayout title={t("design.title")}>
       <div className="p-4 md:p-6 space-y-4">
         <Tabs defaultValue="pages">
           <TabsList>
             <TabsTrigger value="pages" data-testid="tab-pages">
-              <Globe className="h-4 w-4 mr-1.5" />Landing Pages
+              <Globe className="h-4 w-4 mr-1.5" />{t("design.tabPages")}
             </TabsTrigger>
             <TabsTrigger value="assets" data-testid="tab-assets">
-              <Palette className="h-4 w-4 mr-1.5" />Design Assets
+              <Palette className="h-4 w-4 mr-1.5" />{t("design.tabAssets")}
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="pages" className="space-y-4 mt-4">
             <div className="flex items-center justify-between gap-4 flex-wrap">
-              <SearchInput placeholder="Search pages..." testId="input-search-pages" />
+              <SearchInput placeholder={t("design.searchPlaceholder")} testId="input-search-pages" />
               <Button data-testid="button-create-page">
-                <Plus className="h-4 w-4 mr-2" />New Page
+                <Plus className="h-4 w-4 mr-2" />{t("design.newPage")}
               </Button>
             </div>
 
@@ -58,9 +61,9 @@ export default function DesignPage() {
                       </div>
                       <h3 className="text-sm font-semibold mb-1">{page.name}</h3>
                       <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3">
-                        <span>{page.visits.toLocaleString()} visits</span>
-                        <span>{page.conversions} conversions</span>
-                        <span>Updated {page.updated}</span>
+                        <span>{t("design.visits", { count: page.visits.toLocaleString() })}</span>
+                        <span>{t("design.conversions", { count: page.conversions })}</span>
+                        <span>{t("design.updated", { date: page.updated })}</span>
                       </div>
                       <div className="flex items-center gap-1">
                         <Button size="icon" variant="ghost" data-testid={`button-preview-${page.id}`}>
@@ -82,9 +85,9 @@ export default function DesignPage() {
 
           <TabsContent value="assets" className="space-y-4 mt-4">
             <div className="flex items-center justify-between gap-4 flex-wrap">
-              <p className="text-sm text-muted-foreground">{designAssets.length} design templates</p>
+              <p className="text-sm text-muted-foreground">{t("design.designTemplates", { count: designAssets.length })}</p>
               <Button data-testid="button-upload-asset">
-                <Plus className="h-4 w-4 mr-2" />Upload Asset
+                <Plus className="h-4 w-4 mr-2" />{t("design.uploadAsset")}
               </Button>
             </div>
 
@@ -100,7 +103,7 @@ export default function DesignPage() {
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <Badge variant="outline" className="text-xs">{asset.type}</Badge>
                         <span>{asset.format}</span>
-                        <span>{asset.uses} uses</span>
+                        <span>{t("design.uses", { count: asset.uses })}</span>
                       </div>
                     </div>
                   </CardContent>

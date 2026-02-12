@@ -33,139 +33,133 @@ import {
   Bell,
   Globe,
 } from "lucide-react";
-
-const industries = [
-  {
-    id: "ecommerce",
-    templateHref: "/templates/ecommerce",
-    industry: "E-Commerce",
-    icon: Store,
-    accentColor: "text-emerald-600 dark:text-emerald-400",
-    accentBg: "bg-emerald-500/10 dark:bg-emerald-400/10",
-    badgeColor: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20",
-    borderColor: "border-emerald-500/30 dark:border-emerald-400/30",
-    gradientFrom: "from-emerald-600",
-    gradientTo: "to-teal-700",
-    title: "E-Commerce Solution",
-    tagline: "Complete online sales management powered by WhatsApp AI",
-    description: "Transform your online store with AI-powered WhatsApp sales. From product catalog to payment processing and logistics — manage everything in one place while AI handles customer conversations.",
-    coreModules: [
-      { icon: Package, label: "Product & Catalog", desc: "Full product management with categories, variants, pricing, and inventory tracking" },
-      { icon: CreditCard, label: "Payment Processing", desc: "Multi-gateway payment with FPX, credit card, e-wallet, and bank transfer support" },
-      { icon: Truck, label: "Shipping & Logistics", desc: "Courier integration with J&T, PosLaju, DHL — auto tracking and delivery notifications" },
-      { icon: ShoppingCart, label: "Order Management", desc: "Complete order lifecycle from cart to delivery with real-time status updates" },
-    ],
-    aiFeatures: [
-      "AI auto-replies for product inquiries and pricing",
-      "Smart follow-up for abandoned carts via WhatsApp",
-      "Automated order confirmation and shipping notifications",
-      "Customer segmentation and re-engagement campaigns",
-    ],
-    previewSections: ["Product Grid", "Category Browsing", "Cart & Checkout", "Order Tracking"],
-    successStory: {
-      title: "Fashion Wholesale Supplier",
-      subtitle: "180% increase in order volume with WhatsApp AI",
-      metrics: [
-        { label: "Order Volume", value: "+180%", icon: ShoppingCart },
-        { label: "Response Time", value: "< 30s", icon: MessageSquare },
-        { label: "Conversion", value: "42%", icon: TrendingUp },
-        { label: "Customers", value: "1,200+", icon: Users },
-      ],
-    },
-  },
-  {
-    id: "fnb",
-    templateHref: "/templates/fnb",
-    industry: "F&B / Restaurant",
-    icon: UtensilsCrossed,
-    accentColor: "text-orange-600 dark:text-orange-400",
-    accentBg: "bg-orange-500/10 dark:bg-orange-400/10",
-    badgeColor: "bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/20",
-    borderColor: "border-orange-500/30 dark:border-orange-400/30",
-    gradientFrom: "from-orange-600",
-    gradientTo: "to-amber-700",
-    title: "F&B / Restaurant Solution",
-    tagline: "Full restaurant operations with WhatsApp ordering built in",
-    description: "Digitize your restaurant operations from menu to checkout. Manage reservations, table layouts, delivery orders, and billing — all connected to WhatsApp for seamless customer communication.",
-    coreModules: [
-      { icon: ChefHat, label: "Menu Management", desc: "Digital menu with categories, pricing, add-ons, availability, and seasonal specials" },
-      { icon: CalendarDays, label: "Reservation System", desc: "Online booking via WhatsApp with auto-confirmation, waitlist, and capacity management" },
-      { icon: Bike, label: "Delivery & Takeaway", desc: "Delivery order management with rider assignment, real-time tracking, and ETA updates" },
-      { icon: LayoutGrid, label: "Table Management", desc: "Visual table layout with real-time status, zone grouping, and guest assignment" },
-      { icon: Receipt, label: "Checkout & Billing", desc: "POS-style billing with tax calculation, split bills, and multiple payment methods" },
-    ],
-    aiFeatures: [
-      "WhatsApp ordering with AI menu recommendations",
-      "Automated reservation confirmations and reminders",
-      "Re-engagement messages for dormant customers",
-      "Smart upselling based on order history",
-    ],
-    previewSections: ["Digital Menu", "Reservation Form", "Delivery Tracking", "Table View"],
-    successStory: {
-      title: "Local Restaurant Chain (3 Locations)",
-      subtitle: "3x more delivery orders with automated WhatsApp ordering",
-      metrics: [
-        { label: "Delivery Orders", value: "3x", icon: ShoppingCart },
-        { label: "Repeat Customers", value: "+60%", icon: Users },
-        { label: "Reservations", value: "85%", icon: TrendingUp },
-        { label: "Response", value: "< 10s", icon: MessageSquare },
-      ],
-    },
-  },
-  {
-    id: "beauty",
-    templateHref: "/templates/beauty",
-    industry: "Beauty & Wellness",
-    icon: Sparkles,
-    accentColor: "text-rose-600 dark:text-rose-400",
-    accentBg: "bg-rose-500/10 dark:bg-rose-400/10",
-    badgeColor: "bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/20",
-    borderColor: "border-rose-500/30 dark:border-rose-400/30",
-    gradientFrom: "from-rose-600",
-    gradientTo: "to-pink-700",
-    title: "Beauty & Wellness Solution",
-    tagline: "Salon and spa management with WhatsApp appointment booking",
-    description: "Streamline your beauty business with automated booking, therapist scheduling, and session management. Reduce no-shows with WhatsApp reminders and grow repeat clients with personalized follow-ups.",
-    coreModules: [
-      { icon: CalendarDays, label: "Booking & Appointment", desc: "Online booking via WhatsApp with available slots, auto-confirmation, and calendar sync" },
-      { icon: UserCheck, label: "Therapist Management", desc: "Therapist profiles, specialties, schedules, availability tracking, and performance stats" },
-      { icon: Clock, label: "Session & Duration", desc: "Configure service durations, buffer times, room/bed allocation, and daily capacity" },
-      { icon: Scissors, label: "Service Catalog", desc: "Organize services by category with pricing tiers, add-ons, and combo packages" },
-    ],
-    aiFeatures: [
-      "WhatsApp booking with intelligent slot suggestions",
-      "Automated reminders 24h and 1h before appointments",
-      "Post-visit follow-ups and rebooking prompts",
-      "Personalized treatment recommendations based on history",
-    ],
-    previewSections: ["Service Menu", "Booking Calendar", "Package Deals", "Gallery"],
-    successStory: {
-      title: "Premium Beauty & Spa Studio",
-      subtitle: "110% more bookings with automated WhatsApp management",
-      metrics: [
-        { label: "Bookings", value: "+110%", icon: CalendarDays },
-        { label: "No-Shows", value: "-80%", icon: TrendingUp },
-        { label: "Repeat Clients", value: "72%", icon: Users },
-        { label: "Revenue", value: "+65%", icon: ShoppingCart },
-      ],
-    },
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export default function CasesPage() {
+  const { t } = useTranslation("marketing");
+
+  const industries = [
+    {
+      id: "ecommerce",
+      templateHref: "/templates/ecommerce",
+      industry: t("cases.ecommerce"),
+      icon: Store,
+      accentColor: "text-emerald-600 dark:text-emerald-400",
+      accentBg: "bg-emerald-500/10 dark:bg-emerald-400/10",
+      badgeColor: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/20",
+      borderColor: "border-emerald-500/30 dark:border-emerald-400/30",
+      gradientFrom: "from-emerald-600",
+      gradientTo: "to-teal-700",
+      title: t("cases.ecommerceTitle"),
+      tagline: t("cases.ecommerceTagline"),
+      description: t("cases.ecommerceDesc"),
+      coreModules: [
+        { icon: Package, label: t("cases.ecommerceM1Label"), desc: t("cases.ecommerceM1Desc") },
+        { icon: CreditCard, label: t("cases.ecommerceM2Label"), desc: t("cases.ecommerceM2Desc") },
+        { icon: Truck, label: t("cases.ecommerceM3Label"), desc: t("cases.ecommerceM3Desc") },
+        { icon: ShoppingCart, label: t("cases.ecommerceM4Label"), desc: t("cases.ecommerceM4Desc") },
+      ],
+      aiFeatures: [
+        t("cases.ecommerceAi1"), t("cases.ecommerceAi2"), t("cases.ecommerceAi3"), t("cases.ecommerceAi4"),
+      ],
+      previewSections: [t("cases.ecommercePreview1"), t("cases.ecommercePreview2"), t("cases.ecommercePreview3"), t("cases.ecommercePreview4")],
+      successStory: {
+        title: t("cases.ecommerceStoryTitle"),
+        subtitle: t("cases.ecommerceStorySubtitle"),
+        metrics: [
+          { label: t("cases.ecommerceStoryM1"), value: "+180%", icon: ShoppingCart },
+          { label: t("cases.ecommerceStoryM2"), value: "< 30s", icon: MessageSquare },
+          { label: t("cases.ecommerceStoryM3"), value: "42%", icon: TrendingUp },
+          { label: t("cases.ecommerceStoryM4"), value: "1,200+", icon: Users },
+        ],
+      },
+    },
+    {
+      id: "fnb",
+      templateHref: "/templates/fnb",
+      industry: t("cases.fnb"),
+      icon: UtensilsCrossed,
+      accentColor: "text-orange-600 dark:text-orange-400",
+      accentBg: "bg-orange-500/10 dark:bg-orange-400/10",
+      badgeColor: "bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/20",
+      borderColor: "border-orange-500/30 dark:border-orange-400/30",
+      gradientFrom: "from-orange-600",
+      gradientTo: "to-amber-700",
+      title: t("cases.fnbTitle"),
+      tagline: t("cases.fnbTagline"),
+      description: t("cases.fnbDesc"),
+      coreModules: [
+        { icon: ChefHat, label: t("cases.fnbM1Label"), desc: t("cases.fnbM1Desc") },
+        { icon: CalendarDays, label: t("cases.fnbM2Label"), desc: t("cases.fnbM2Desc") },
+        { icon: Bike, label: t("cases.fnbM3Label"), desc: t("cases.fnbM3Desc") },
+        { icon: LayoutGrid, label: t("cases.fnbM4Label"), desc: t("cases.fnbM4Desc") },
+        { icon: Receipt, label: t("cases.fnbM5Label"), desc: t("cases.fnbM5Desc") },
+      ],
+      aiFeatures: [
+        t("cases.fnbAi1"), t("cases.fnbAi2"), t("cases.fnbAi3"), t("cases.fnbAi4"),
+      ],
+      previewSections: [t("cases.fnbPreview1"), t("cases.fnbPreview2"), t("cases.fnbPreview3"), t("cases.fnbPreview4")],
+      successStory: {
+        title: t("cases.fnbStoryTitle"),
+        subtitle: t("cases.fnbStorySubtitle"),
+        metrics: [
+          { label: t("cases.fnbStoryM1"), value: "3x", icon: ShoppingCart },
+          { label: t("cases.fnbStoryM2"), value: "+60%", icon: Users },
+          { label: t("cases.fnbStoryM3"), value: "85%", icon: TrendingUp },
+          { label: t("cases.fnbStoryM4"), value: "< 10s", icon: MessageSquare },
+        ],
+      },
+    },
+    {
+      id: "beauty",
+      templateHref: "/templates/beauty",
+      industry: t("cases.beauty"),
+      icon: Sparkles,
+      accentColor: "text-rose-600 dark:text-rose-400",
+      accentBg: "bg-rose-500/10 dark:bg-rose-400/10",
+      badgeColor: "bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-500/20",
+      borderColor: "border-rose-500/30 dark:border-rose-400/30",
+      gradientFrom: "from-rose-600",
+      gradientTo: "to-pink-700",
+      title: t("cases.beautyTitle"),
+      tagline: t("cases.beautyTagline"),
+      description: t("cases.beautyDesc"),
+      coreModules: [
+        { icon: CalendarDays, label: t("cases.beautyM1Label"), desc: t("cases.beautyM1Desc") },
+        { icon: UserCheck, label: t("cases.beautyM2Label"), desc: t("cases.beautyM2Desc") },
+        { icon: Clock, label: t("cases.beautyM3Label"), desc: t("cases.beautyM3Desc") },
+        { icon: Scissors, label: t("cases.beautyM4Label"), desc: t("cases.beautyM4Desc") },
+      ],
+      aiFeatures: [
+        t("cases.beautyAi1"), t("cases.beautyAi2"), t("cases.beautyAi3"), t("cases.beautyAi4"),
+      ],
+      previewSections: [t("cases.beautyPreview1"), t("cases.beautyPreview2"), t("cases.beautyPreview3"), t("cases.beautyPreview4")],
+      successStory: {
+        title: t("cases.beautyStoryTitle"),
+        subtitle: t("cases.beautyStorySubtitle"),
+        metrics: [
+          { label: t("cases.beautyStoryM1"), value: "+110%", icon: CalendarDays },
+          { label: t("cases.beautyStoryM2"), value: "-80%", icon: TrendingUp },
+          { label: t("cases.beautyStoryM3"), value: "72%", icon: Users },
+          { label: t("cases.beautyStoryM4"), value: "+65%", icon: ShoppingCart },
+        ],
+      },
+    },
+  ];
+
   return (
     <MarketingLayout>
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         <div className="text-center mb-16 animate-fade-in-up">
           <Badge variant="secondary" className="mb-4">
             <Globe className="h-3 w-3 mr-1" />
-            Industry Templates
+            {t("cases.badge")}
           </Badge>
           <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-cases-title">
-            Choose Your Industry Solution
+            {t("cases.title")}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Each industry comes with a complete management backend, public storefront, and member portal — all connected through WhatsApp AI.
+            {t("cases.subtitle")}
           </p>
         </div>
 
@@ -192,7 +186,7 @@ export default function CasesPage() {
                   <div>
                     <h3 className="text-lg font-bold mb-2 flex items-center gap-2" data-testid={`text-features-heading-${ind.id}`}>
                       <Zap className={`h-4 w-4 ${ind.accentColor}`} />
-                      Core Management Modules
+                      {t("cases.coreManagementModules")}
                     </h3>
                     <p className="text-sm text-muted-foreground mb-4">{ind.description}</p>
                     <div className="grid sm:grid-cols-2 gap-3">
@@ -217,7 +211,7 @@ export default function CasesPage() {
                   <div>
                     <h3 className="text-lg font-bold mb-3 flex items-center gap-2">
                       <MessageSquare className={`h-4 w-4 ${ind.accentColor}`} />
-                      WhatsApp AI Features
+                      {t("cases.whatsappAiFeatures")}
                     </h3>
                     <div className="grid sm:grid-cols-2 gap-2">
                       {ind.aiFeatures.map((feat) => (
@@ -235,7 +229,7 @@ export default function CasesPage() {
                     <CardContent className="p-5">
                       <h3 className="text-sm font-bold mb-3 flex items-center gap-2" data-testid={`text-success-heading-${ind.id}`}>
                         <BarChart3 className={`h-4 w-4 ${ind.accentColor}`} />
-                        Success Story
+                        {t("cases.successStory")}
                       </h3>
                       <p className="text-sm font-semibold mb-1">{ind.successStory.title}</p>
                       <p className="text-xs text-muted-foreground mb-4">{ind.successStory.subtitle}</p>
@@ -254,7 +248,7 @@ export default function CasesPage() {
                   <div>
                     <h3 className="text-sm font-bold mb-3 flex items-center gap-2">
                       <Eye className={`h-4 w-4 ${ind.accentColor}`} />
-                      Storefront Preview Includes
+                      {t("cases.storefrontPreview")}
                     </h3>
                     <div className="flex flex-wrap gap-2">
                       {ind.previewSections.map((s) => (
@@ -269,26 +263,26 @@ export default function CasesPage() {
                 <CardContent className="p-5">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
-                      <h3 className="font-semibold mb-1">Try {ind.industry} Template</h3>
-                      <p className="text-sm text-muted-foreground">Preview the storefront or log in to explore the management backend</p>
+                      <h3 className="font-semibold mb-1">{t("cases.tryTemplate", { industry: ind.industry })}</h3>
+                      <p className="text-sm text-muted-foreground">{t("cases.tryTemplateDesc")}</p>
                     </div>
                     <div className="flex items-center gap-3 flex-wrap">
                       <Link href={ind.templateHref}>
                         <Button variant="outline" data-testid={`button-preview-${ind.id}`}>
                           <ExternalLink className="h-4 w-4 mr-2" />
-                          View Storefront
+                          {t("cases.viewStorefront")}
                         </Button>
                       </Link>
                       <Link href={`/auth/login?role=merchant&industry=${ind.id}`}>
                         <Button data-testid={`button-merchant-login-${ind.id}`}>
                           <Store className="h-4 w-4 mr-2" />
-                          Merchant Login
+                          {t("cases.merchantLogin")}
                         </Button>
                       </Link>
                       <Link href={`/auth/login?role=member`}>
                         <Button variant="outline" data-testid={`button-member-login-${ind.id}`}>
                           <Users className="h-4 w-4 mr-2" />
-                          Member Login
+                          {t("cases.memberLogin")}
                         </Button>
                       </Link>
                     </div>
@@ -304,10 +298,10 @@ export default function CasesPage() {
         </div>
 
         <div className="text-center mt-16">
-          <p className="text-muted-foreground mb-4">Not sure which template is right for you?</p>
+          <p className="text-muted-foreground mb-4">{t("cases.notSure")}</p>
           <Link href="/contact">
             <Button size="lg" variant="outline" data-testid="button-contact-us">
-              Contact Us for a Demo
+              {t("cases.contactForDemo")}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>

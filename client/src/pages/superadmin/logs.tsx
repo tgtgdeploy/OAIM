@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Search, RefreshCw, Download, Webhook, Bot, AlertTriangle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const webhookLogs = [
   { id: "1", tenant: "Fashion Hub KL", event: "message.received", status: "success", time: "2026-02-12 14:32:05" },
@@ -39,20 +40,22 @@ const failedLogs = [
 ];
 
 export default function LogsPage() {
+  const { t } = useTranslation("superadmin");
+
   return (
-    <SuperAdminLayout title="Logs">
+    <SuperAdminLayout title={t("logs.title")}>
       <div className="p-4 md:p-6 space-y-4">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search logs..." className="pl-9 w-64" data-testid="input-search-logs" />
+            <Input placeholder={t("logs.searchPlaceholder")} className="pl-9 w-64" data-testid="input-search-logs" />
           </div>
           <div className="flex gap-2">
             <Button variant="outline" data-testid="button-refresh-logs">
-              <RefreshCw className="h-4 w-4 mr-2" />Refresh
+              <RefreshCw className="h-4 w-4 mr-2" />{t("logs.refresh")}
             </Button>
             <Button variant="outline" data-testid="button-export-logs">
-              <Download className="h-4 w-4 mr-2" />Export
+              <Download className="h-4 w-4 mr-2" />{t("logs.export")}
             </Button>
           </div>
         </div>
@@ -60,13 +63,13 @@ export default function LogsPage() {
         <Tabs defaultValue="webhook">
           <TabsList>
             <TabsTrigger value="webhook" data-testid="tab-webhook">
-              <Webhook className="h-4 w-4 mr-1.5" />Webhook
+              <Webhook className="h-4 w-4 mr-1.5" />{t("logs.tabWebhook")}
             </TabsTrigger>
             <TabsTrigger value="ai" data-testid="tab-ai">
-              <Bot className="h-4 w-4 mr-1.5" />AI Calls
+              <Bot className="h-4 w-4 mr-1.5" />{t("logs.tabAiCalls")}
             </TabsTrigger>
             <TabsTrigger value="failed" data-testid="tab-failed">
-              <AlertTriangle className="h-4 w-4 mr-1.5" />Failed
+              <AlertTriangle className="h-4 w-4 mr-1.5" />{t("logs.tabFailed")}
               <Badge variant="destructive" className="ml-1.5 text-xs px-1.5 min-w-5 h-5 justify-center">{failedLogs.length}</Badge>
             </TabsTrigger>
           </TabsList>
@@ -77,10 +80,10 @@ export default function LogsPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Tenant</TableHead>
-                      <TableHead>Event</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Time</TableHead>
+                      <TableHead>{t("logs.tenant")}</TableHead>
+                      <TableHead>{t("logs.event")}</TableHead>
+                      <TableHead>{t("logs.status")}</TableHead>
+                      <TableHead>{t("logs.time")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -108,12 +111,12 @@ export default function LogsPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Tenant</TableHead>
-                      <TableHead>Model</TableHead>
-                      <TableHead>Tokens</TableHead>
-                      <TableHead>Latency</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead>Time</TableHead>
+                      <TableHead>{t("logs.tenant")}</TableHead>
+                      <TableHead>{t("logs.model")}</TableHead>
+                      <TableHead>{t("logs.tokens")}</TableHead>
+                      <TableHead>{t("logs.latency")}</TableHead>
+                      <TableHead>{t("logs.status")}</TableHead>
+                      <TableHead>{t("logs.time")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -152,7 +155,7 @@ export default function LogsPage() {
                         <p className="text-sm text-destructive">{log.error}</p>
                         <p className="text-xs text-muted-foreground mt-1 font-mono">{log.time}</p>
                       </div>
-                      <Button variant="outline" size="sm" data-testid={`button-retry-${log.id}`}>Retry</Button>
+                      <Button variant="outline" size="sm" data-testid={`button-retry-${log.id}`}>{t("logs.retry")}</Button>
                     </div>
                   </CardContent>
                 </Card>

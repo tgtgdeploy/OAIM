@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Users, DollarSign, TrendingUp, Gift, Copy, Settings, Share2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const superadminReferrals = [
   { id: "1", tenant: "Fashion Hub KL", referrals: 12, conversions: 8, commission: "RM 640", status: "active" },
@@ -34,6 +35,8 @@ interface ReferralModuleProps {
 }
 
 export function ReferralModule({ context }: ReferralModuleProps) {
+  const { t } = useTranslation("superadmin");
+
   if (context === "member") {
     return (
       <div className="space-y-4">
@@ -42,8 +45,8 @@ export function ReferralModule({ context }: ReferralModuleProps) {
             <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 mx-auto mb-3">
               <Share2 className="h-7 w-7 text-primary" />
             </div>
-            <h3 className="font-bold text-lg mb-1">Refer & Earn</h3>
-            <p className="text-sm text-muted-foreground mb-4">Share your referral code and earn 50 points for every friend who makes a purchase</p>
+            <h3 className="font-bold text-lg mb-1">{t("referral.referEarn")}</h3>
+            <p className="text-sm text-muted-foreground mb-4">{t("referral.referEarnDesc")}</p>
             <div className="flex items-center gap-2 justify-center max-w-sm mx-auto">
               <div className="flex-1 p-3 bg-muted rounded-md font-mono text-sm" data-testid="text-referral-code">REF-SARAH2026</div>
               <Button size="icon" variant="outline" data-testid="button-copy-code">
@@ -54,13 +57,13 @@ export function ReferralModule({ context }: ReferralModuleProps) {
         </Card>
 
         <div className="stats-grid">
-          <StatCard label="Total Referred" value={memberReferrals.length.toString()} icon={Users} />
-          <StatCard label="Points Earned" value="100" icon={Gift} iconColor="text-primary" />
+          <StatCard label={t("referral.totalReferred")} value={memberReferrals.length.toString()} icon={Users} />
+          <StatCard label={t("referral.pointsEarned")} value="100" icon={Gift} iconColor="text-primary" />
         </div>
 
         <Card>
           <CardContent className="p-5">
-            <h3 className="font-semibold mb-4">Your Referrals</h3>
+            <h3 className="font-semibold mb-4">{t("referral.yourReferrals")}</h3>
             <div className="space-y-3">
               {memberReferrals.map((r) => (
                 <div key={r.id} className="flex items-center justify-between gap-3 p-3 rounded-md bg-muted/50" data-testid={`referral-${r.id}`}>
@@ -90,16 +93,16 @@ export function ReferralModule({ context }: ReferralModuleProps) {
     return (
       <div className="space-y-4">
         <div className="stats-grid">
-          <StatCard label="Total Referrals" value="50" icon={Users} />
-          <StatCard label="Conversions" value="34" icon={TrendingUp} />
-          <StatCard label="Total Commission" value="RM 2,562" icon={DollarSign} />
-          <StatCard label="Conversion Rate" value="68%" icon={TrendingUp} iconColor="text-green-500" />
+          <StatCard label={t("referral.totalReferrals")} value="50" icon={Users} />
+          <StatCard label={t("referral.conversions")} value="34" icon={TrendingUp} />
+          <StatCard label={t("referral.totalCommission")} value="RM 2,562" icon={DollarSign} />
+          <StatCard label={t("referral.conversionRate")} value="68%" icon={TrendingUp} iconColor="text-green-500" />
         </div>
 
         <div className="flex items-center justify-between gap-4 flex-wrap">
-          <p className="text-sm text-muted-foreground">Commission settings per plan</p>
+          <p className="text-sm text-muted-foreground">{t("referral.commissionSettingsDesc")}</p>
           <Button variant="outline" data-testid="button-commission-settings">
-            <Settings className="h-4 w-4 mr-2" />Commission Settings
+            <Settings className="h-4 w-4 mr-2" />{t("referral.commissionSettings")}
           </Button>
         </div>
 
@@ -108,11 +111,11 @@ export function ReferralModule({ context }: ReferralModuleProps) {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Tenant</TableHead>
-                  <TableHead>Referrals</TableHead>
-                  <TableHead>Conversions</TableHead>
-                  <TableHead>Commission</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>{t("referral.tenant")}</TableHead>
+                  <TableHead>{t("referral.referrals")}</TableHead>
+                  <TableHead>{t("referral.conversions")}</TableHead>
+                  <TableHead>{t("referral.commission")}</TableHead>
+                  <TableHead>{t("referral.status")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -136,16 +139,16 @@ export function ReferralModule({ context }: ReferralModuleProps) {
   return (
     <div className="space-y-4">
       <div className="stats-grid">
-        <StatCard label="Total Referrals" value={merchantReferrals.reduce((a, r) => a + r.referred, 0).toString()} icon={Users} />
-        <StatCard label="Total Earned" value="RM 165" icon={DollarSign} />
-        <StatCard label="Active Referrers" value={merchantReferrals.filter(r => r.status === "active").length.toString()} icon={TrendingUp} />
-        <StatCard label="Avg per Referrer" value="2.75" icon={Gift} />
+        <StatCard label={t("referral.totalReferrals")} value={merchantReferrals.reduce((a, r) => a + r.referred, 0).toString()} icon={Users} />
+        <StatCard label={t("referral.totalEarned")} value="RM 165" icon={DollarSign} />
+        <StatCard label={t("referral.activeReferrers")} value={merchantReferrals.filter(r => r.status === "active").length.toString()} icon={TrendingUp} />
+        <StatCard label={t("referral.avgPerReferrer")} value="2.75" icon={Gift} />
       </div>
 
       <div className="flex items-center justify-between gap-4 flex-wrap">
-        <p className="text-sm text-muted-foreground">Customer referral program</p>
+        <p className="text-sm text-muted-foreground">{t("referral.customerReferralProgram")}</p>
         <Button data-testid="button-referral-settings">
-          <Settings className="h-4 w-4 mr-2" />Program Settings
+          <Settings className="h-4 w-4 mr-2" />{t("referral.programSettings")}
         </Button>
       </div>
 
@@ -154,10 +157,10 @@ export function ReferralModule({ context }: ReferralModuleProps) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Customer</TableHead>
-                <TableHead>Referred</TableHead>
-                <TableHead>Earned</TableHead>
-                <TableHead>Status</TableHead>
+                <TableHead>{t("referral.customer")}</TableHead>
+                <TableHead>{t("referral.referred")}</TableHead>
+                <TableHead>{t("referral.earned")}</TableHead>
+                <TableHead>{t("referral.status")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

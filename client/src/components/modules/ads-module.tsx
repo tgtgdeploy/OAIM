@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, BarChart3, TrendingUp, DollarSign, Users, Eye, Pause, Play } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const campaigns = [
   { id: "1", name: "Summer Fashion Sale", platform: "Meta", status: "active", budget: "RM 500", spent: "RM 320", leads: 45, cost_per_lead: "RM 7.11", roas: "4.2x" },
@@ -21,22 +22,23 @@ interface AdsModuleProps {
 }
 
 export function AdsModule({ context }: AdsModuleProps) {
+  const { t } = useTranslation("superadmin");
   const filteredCampaigns = context === "superadmin" ? campaigns : campaigns.filter(c => c.status !== "draft" || true);
 
   return (
     <div className="space-y-4">
       <div className="stats-grid">
-        <StatCard label="Active Campaigns" value={campaigns.filter(c => c.status === "active").length.toString()} icon={BarChart3} />
-        <StatCard label="Total Leads" value={campaigns.reduce((a, c) => a + c.leads, 0).toString()} icon={Users} />
-        <StatCard label="Total Spent" value="RM 1,450" icon={DollarSign} />
-        <StatCard label="Avg ROAS" value="4.4x" icon={TrendingUp} iconColor="text-green-500" />
+        <StatCard label={t("ads.activeCampaigns")} value={campaigns.filter(c => c.status === "active").length.toString()} icon={BarChart3} />
+        <StatCard label={t("ads.totalLeads")} value={campaigns.reduce((a, c) => a + c.leads, 0).toString()} icon={Users} />
+        <StatCard label={t("ads.totalSpent")} value="RM 1,450" icon={DollarSign} />
+        <StatCard label={t("ads.avgRoas")} value="4.4x" icon={TrendingUp} iconColor="text-green-500" />
       </div>
 
       <div className="flex items-center justify-between gap-4 flex-wrap">
-        <p className="text-sm text-muted-foreground">{campaigns.length} campaigns</p>
+        <p className="text-sm text-muted-foreground">{t("ads.campaignsCount", { count: campaigns.length })}</p>
         <Button data-testid="button-create-campaign">
           <Plus className="h-4 w-4 mr-2" />
-          {context === "superadmin" ? "Create Template" : "New Campaign"}
+          {context === "superadmin" ? t("ads.createTemplate") : t("ads.newCampaign")}
         </Button>
       </div>
 
@@ -45,13 +47,13 @@ export function AdsModule({ context }: AdsModuleProps) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Campaign</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="hidden md:table-cell">Budget</TableHead>
-                <TableHead className="hidden md:table-cell">Spent</TableHead>
-                <TableHead>Leads</TableHead>
-                <TableHead className="hidden lg:table-cell">CPL</TableHead>
-                <TableHead className="hidden lg:table-cell">ROAS</TableHead>
+                <TableHead>{t("ads.campaign")}</TableHead>
+                <TableHead>{t("ads.status")}</TableHead>
+                <TableHead className="hidden md:table-cell">{t("ads.budget")}</TableHead>
+                <TableHead className="hidden md:table-cell">{t("ads.spent")}</TableHead>
+                <TableHead>{t("ads.leads")}</TableHead>
+                <TableHead className="hidden lg:table-cell">{t("ads.cpl")}</TableHead>
+                <TableHead className="hidden lg:table-cell">{t("ads.roas")}</TableHead>
                 <TableHead className="w-10"></TableHead>
               </TableRow>
             </TableHeader>

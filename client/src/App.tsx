@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/lib/theme-provider";
 import { IndustryProvider } from "@/lib/industry-context";
 import { lazy, Suspense } from "react";
+import "@/i18n";
 import NotFound from "@/pages/not-found";
 
 const HomePage = lazy(() => import("@/pages/marketing/home"));

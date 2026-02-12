@@ -4,91 +4,98 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MarketingLayout } from "./layout";
 import { CheckCircle2, X, ArrowRight, Crown, Zap } from "lucide-react";
-
-const plans = [
-  {
-    name: "Trial",
-    price: "Free",
-    period: "14 days",
-    description: "Try OAIM with basic WhatsApp + AI",
-    features: [
-      { name: "WhatsApp Inbox", included: true },
-      { name: "AI Sales Script (Basic)", included: true },
-      { name: "Up to 100 messages/month", included: true },
-      { name: "1 user", included: true },
-      { name: "CRM Pipeline", included: false },
-      { name: "Auto Follow-up", included: false },
-      { name: "ERP Lite", included: false },
-      { name: "Meta Ads & ROI", included: false },
-      { name: "Team & Permissions", included: false },
-    ],
-    cta: "Start Free Trial",
-    popular: false,
-    gradient: "",
-  },
-  {
-    name: "Starter",
-    price: "$29",
-    period: "/month",
-    description: "Add CRM to manage your sales pipeline",
-    features: [
-      { name: "WhatsApp Inbox", included: true },
-      { name: "AI Sales Script (Full)", included: true },
-      { name: "Up to 1,000 messages/month", included: true },
-      { name: "2 users", included: true },
-      { name: "CRM Pipeline", included: true },
-      { name: "Auto Follow-up", included: false },
-      { name: "ERP Lite", included: false },
-      { name: "Meta Ads & ROI", included: false },
-      { name: "Team & Permissions", included: false },
-    ],
-    cta: "Get Started",
-    popular: false,
-    gradient: "",
-  },
-  {
-    name: "Pro",
-    price: "$79",
-    period: "/month",
-    description: "Full automation with follow-ups and orders",
-    features: [
-      { name: "WhatsApp Inbox", included: true },
-      { name: "AI Sales Script (Full)", included: true },
-      { name: "Up to 5,000 messages/month", included: true },
-      { name: "5 users", included: true },
-      { name: "CRM Pipeline", included: true },
-      { name: "Auto Follow-up", included: true },
-      { name: "ERP Lite", included: true },
-      { name: "Meta Ads & ROI", included: false },
-      { name: "Team & Permissions", included: false },
-    ],
-    cta: "Upgrade to Pro",
-    popular: true,
-    gradient: "gradient-border",
-  },
-  {
-    name: "Business",
-    price: "$149",
-    period: "/month",
-    description: "Everything + ads tracking and team management",
-    features: [
-      { name: "WhatsApp Inbox", included: true },
-      { name: "AI Sales Script (Full)", included: true },
-      { name: "Unlimited messages", included: true },
-      { name: "Unlimited users", included: true },
-      { name: "CRM Pipeline", included: true },
-      { name: "Auto Follow-up", included: true },
-      { name: "ERP Lite", included: true },
-      { name: "Meta Ads & ROI", included: true },
-      { name: "Team & Permissions", included: true },
-    ],
-    cta: "Contact Sales",
-    popular: false,
-    gradient: "",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 export default function PricingPage() {
+  const { t } = useTranslation("marketing");
+
+  const plans = [
+    {
+      name: t("pricing.trial"),
+      price: t("pricing.trialPrice"),
+      period: t("pricing.trialPeriod"),
+      description: t("pricing.trialDesc"),
+      features: [
+        { name: t("pricing.featureWhatsappInbox"), included: true },
+        { name: t("pricing.featureAiBasic"), included: true },
+        { name: t("pricing.feature100Msg"), included: true },
+        { name: t("pricing.feature1User"), included: true },
+        { name: t("pricing.featureCrm"), included: false },
+        { name: t("pricing.featureFollowUp"), included: false },
+        { name: t("pricing.featureErp"), included: false },
+        { name: t("pricing.featureAds"), included: false },
+        { name: t("pricing.featureTeam"), included: false },
+      ],
+      cta: t("pricing.trialCta"),
+      popular: false,
+      gradient: "",
+      link: "/app/onboarding",
+    },
+    {
+      name: t("pricing.starter"),
+      price: t("pricing.starterPrice"),
+      period: t("pricing.starterPeriod"),
+      description: t("pricing.starterDesc"),
+      features: [
+        { name: t("pricing.featureWhatsappInbox"), included: true },
+        { name: t("pricing.featureAiFull"), included: true },
+        { name: t("pricing.feature1000Msg"), included: true },
+        { name: t("pricing.feature2Users"), included: true },
+        { name: t("pricing.featureCrm"), included: true },
+        { name: t("pricing.featureFollowUp"), included: false },
+        { name: t("pricing.featureErp"), included: false },
+        { name: t("pricing.featureAds"), included: false },
+        { name: t("pricing.featureTeam"), included: false },
+      ],
+      cta: t("pricing.starterCta"),
+      popular: false,
+      gradient: "",
+      link: "/app/onboarding",
+    },
+    {
+      name: t("pricing.pro"),
+      price: t("pricing.proPrice"),
+      period: t("pricing.proPeriod"),
+      description: t("pricing.proDesc"),
+      features: [
+        { name: t("pricing.featureWhatsappInbox"), included: true },
+        { name: t("pricing.featureAiFull"), included: true },
+        { name: t("pricing.feature5000Msg"), included: true },
+        { name: t("pricing.feature5Users"), included: true },
+        { name: t("pricing.featureCrm"), included: true },
+        { name: t("pricing.featureFollowUp"), included: true },
+        { name: t("pricing.featureErp"), included: true },
+        { name: t("pricing.featureAds"), included: false },
+        { name: t("pricing.featureTeam"), included: false },
+      ],
+      cta: t("pricing.proCta"),
+      popular: true,
+      gradient: "gradient-border",
+      link: "/app/onboarding",
+    },
+    {
+      name: t("pricing.business"),
+      price: t("pricing.businessPrice"),
+      period: t("pricing.businessPeriod"),
+      description: t("pricing.businessDesc"),
+      features: [
+        { name: t("pricing.featureWhatsappInbox"), included: true },
+        { name: t("pricing.featureAiFull"), included: true },
+        { name: t("pricing.featureUnlimitedMsg"), included: true },
+        { name: t("pricing.featureUnlimitedUsers"), included: true },
+        { name: t("pricing.featureCrm"), included: true },
+        { name: t("pricing.featureFollowUp"), included: true },
+        { name: t("pricing.featureErp"), included: true },
+        { name: t("pricing.featureAds"), included: true },
+        { name: t("pricing.featureTeam"), included: true },
+      ],
+      cta: t("pricing.businessCta"),
+      popular: false,
+      gradient: "",
+      link: "/contact",
+    },
+  ];
+
   return (
     <MarketingLayout>
       <section className="relative overflow-hidden">
@@ -97,28 +104,28 @@ export default function PricingPage() {
           <div className="text-center mb-16 animate-fade-in-up">
             <Badge variant="secondary" className="mb-4">
               <Crown className="h-3 w-3 mr-1" />
-              Pricing
+              {t("pricing.badge")}
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-pricing-title">
-              Simple, Transparent Pricing
+              {t("pricing.title")}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Start free, upgrade when you're ready. All plans include WhatsApp integration and AI-powered sales scripts.
+              {t("pricing.subtitle")}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {plans.map((plan, idx) => (
               <Card
-                key={plan.name}
+                key={idx}
                 className={`relative overflow-visible ${plan.popular ? "border-primary" : ""} ${plan.gradient} animate-fade-in-up delay-${(idx + 1) * 100}`}
-                data-testid={`card-plan-${plan.name.toLowerCase()}`}
+                data-testid={`card-plan-${idx}`}
               >
                 {plan.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                     <Badge className="animate-pulse-glow">
                       <Zap className="h-3 w-3 mr-1" />
-                      Most Popular
+                      {t("pricing.mostPopular")}
                     </Badge>
                   </div>
                 )}
@@ -129,7 +136,7 @@ export default function PricingPage() {
                     <span className={`text-3xl font-bold ${plan.popular ? "gradient-text" : ""}`}>{plan.price}</span>
                     <span className="text-sm text-muted-foreground">{plan.period}</span>
                   </div>
-                  <Link href={plan.name === "Business" ? "/contact" : "/app/onboarding"}>
+                  <Link href={plan.link}>
                     <Button className="w-full mb-6" variant={plan.popular ? "default" : "outline"}>
                       {plan.cta}
                     </Button>
@@ -156,13 +163,13 @@ export default function PricingPage() {
           <div className="text-center mt-16 animate-fade-in-up">
             <Card className="max-w-2xl mx-auto glass-card">
               <CardContent className="p-8">
-                <h3 className="text-xl font-bold mb-2">Need a custom plan?</h3>
+                <h3 className="text-xl font-bold mb-2">{t("pricing.needCustomPlan")}</h3>
                 <p className="text-muted-foreground mb-4 leading-relaxed">
-                  For larger teams or specific requirements, we offer tailored solutions with custom pricing and dedicated support.
+                  {t("pricing.customPlanDesc")}
                 </p>
                 <Link href="/contact">
                   <Button variant="outline">
-                    Contact Sales
+                    {t("pricing.contactSales")}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>

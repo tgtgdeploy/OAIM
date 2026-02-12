@@ -6,6 +6,7 @@ import { StatCard } from "@/components/shared/stat-card";
 import { SearchInput } from "@/components/shared/search-input";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { MessageSquare, Clock, CheckCircle2, AlertCircle, Bot, Headphones } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface Ticket {
   id: string;
@@ -37,36 +38,37 @@ interface SupportModuleProps {
 }
 
 export function SupportModule({ context }: SupportModuleProps) {
+  const { t } = useTranslation("superadmin");
   const tickets = context === "superadmin" ? superadminTickets : merchantTickets;
 
   return (
     <div className="space-y-4">
       <div className="stats-grid">
-        <StatCard label="Open" value={tickets.filter(t => t.status === "open").length.toString()} icon={MessageSquare} iconColor="text-blue-500" />
-        <StatCard label="In Progress" value={tickets.filter(t => t.status === "in_progress").length.toString()} icon={Clock} iconColor="text-yellow-500" />
-        <StatCard label="Resolved" value={tickets.filter(t => t.status === "resolved").length.toString()} icon={CheckCircle2} iconColor="text-green-500" />
-        <StatCard label="Urgent" value={tickets.filter(t => t.priority === "urgent").length.toString()} icon={AlertCircle} iconColor="text-red-500" />
+        <StatCard label={t("support.open")} value={tickets.filter(t => t.status === "open").length.toString()} icon={MessageSquare} iconColor="text-blue-500" />
+        <StatCard label={t("support.inProgress")} value={tickets.filter(t => t.status === "in_progress").length.toString()} icon={Clock} iconColor="text-yellow-500" />
+        <StatCard label={t("support.resolved")} value={tickets.filter(t => t.status === "resolved").length.toString()} icon={CheckCircle2} iconColor="text-green-500" />
+        <StatCard label={t("support.urgent")} value={tickets.filter(t => t.priority === "urgent").length.toString()} icon={AlertCircle} iconColor="text-red-500" />
       </div>
 
       {context === "merchant" && (
         <div className="flex items-center gap-3 p-3 rounded-md bg-primary/5 border border-primary/10">
           <Bot className="h-5 w-5 text-primary flex-shrink-0" />
           <div className="flex-1 min-w-0">
-            <div className="text-sm font-medium">AI Auto-Reply Active</div>
-            <div className="text-xs text-muted-foreground">Handling 80% of common inquiries automatically</div>
+            <div className="text-sm font-medium">{t("support.aiAutoReplyActive")}</div>
+            <div className="text-xs text-muted-foreground">{t("support.aiAutoReplyDesc")}</div>
           </div>
-          <Button variant="outline" size="sm" data-testid="button-configure-ai-support">Configure</Button>
+          <Button variant="outline" size="sm" data-testid="button-configure-ai-support">{t("support.configure")}</Button>
         </div>
       )}
 
-      <SearchInput placeholder={`Search ${context === "superadmin" ? "tickets" : "customer inquiries"}...`} testId="input-search-support" />
+      <SearchInput placeholder={context === "superadmin" ? t("support.searchTickets") : t("support.searchInquiries")} testId="input-search-support" />
 
       <Tabs defaultValue="all">
         <TabsList>
-          <TabsTrigger value="all" data-testid="tab-all-support">All</TabsTrigger>
-          <TabsTrigger value="open" data-testid="tab-open-support">Open</TabsTrigger>
-          <TabsTrigger value="in_progress" data-testid="tab-progress-support">In Progress</TabsTrigger>
-          <TabsTrigger value="resolved" data-testid="tab-resolved-support">Resolved</TabsTrigger>
+          <TabsTrigger value="all" data-testid="tab-all-support">{t("support.tabAll")}</TabsTrigger>
+          <TabsTrigger value="open" data-testid="tab-open-support">{t("support.tabOpen")}</TabsTrigger>
+          <TabsTrigger value="in_progress" data-testid="tab-progress-support">{t("support.tabInProgress")}</TabsTrigger>
+          <TabsTrigger value="resolved" data-testid="tab-resolved-support">{t("support.tabResolved")}</TabsTrigger>
         </TabsList>
 
         {["all", "open", "in_progress", "resolved"].map((tab) => (
@@ -91,12 +93,12 @@ export function SupportModule({ context }: SupportModuleProps) {
                         <h3 className="text-sm font-medium">{ticket.subject}</h3>
                         <div className="flex items-center gap-2 mt-1 text-xs text-muted-foreground">
                           <span>{ticket.from}</span>
-                          <span>via {ticket.channel}</span>
+                          <span>{t("support.via", { channel: ticket.channel })}</span>
                           <span>{ticket.created}</span>
                         </div>
                       </div>
                       <Button variant="outline" size="sm" data-testid={`button-view-support-${ticket.id}`}>
-                        {context === "merchant" ? "Reply" : "View"}
+                        {context === "merchant" ? t("support.reply") : t("support.view")}
                       </Button>
                     </div>
                   </CardContent>

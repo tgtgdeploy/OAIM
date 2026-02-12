@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Search, Plus, Store, UtensilsCrossed, Eye, Edit, Trash2, Image } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const cases = [
   { id: "1", title: "Fashion Wholesale Supplier", industry: "ecommerce", published: true, screenshots: 4, metrics: 4, date: "2026-02-05" },
@@ -14,17 +15,19 @@ const cases = [
 ];
 
 export default function CaseLibraryPage() {
+  const { t } = useTranslation("superadmin");
+
   return (
-    <SuperAdminLayout title="Case Library">
+    <SuperAdminLayout title={t("caseLibrary.title")}>
       <div className="p-4 md:p-6 space-y-4">
         <div className="flex items-center justify-between gap-3 flex-wrap">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Search cases..." className="pl-9 w-64" data-testid="input-search-cases" />
+            <Input placeholder={t("caseLibrary.searchPlaceholder")} className="pl-9 w-64" data-testid="input-search-cases" />
           </div>
           <Button data-testid="button-add-case">
             <Plus className="h-4 w-4 mr-2" />
-            Add Case Study
+            {t("caseLibrary.addCaseStudy")}
           </Button>
         </div>
 
@@ -39,18 +42,18 @@ export default function CaseLibraryPage() {
                   <div className="flex items-center gap-2 mb-2 flex-wrap">
                     <Badge variant="outline" className="text-xs">
                       {c.industry === "ecommerce" ? (
-                        <><Store className="h-3 w-3 mr-1" />Ecom</>
+                        <><Store className="h-3 w-3 mr-1" />{t("caseLibrary.ecom")}</>
                       ) : (
-                        <><UtensilsCrossed className="h-3 w-3 mr-1" />Restaurant</>
+                        <><UtensilsCrossed className="h-3 w-3 mr-1" />{t("caseLibrary.restaurant")}</>
                       )}
                     </Badge>
                     <Badge variant={c.published ? "default" : "secondary"} className="text-xs">
-                      {c.published ? "Published" : "Draft"}
+                      {c.published ? t("caseLibrary.published") : t("caseLibrary.draft")}
                     </Badge>
                   </div>
                   <h3 className="text-sm font-semibold mb-1">{c.title}</h3>
                   <p className="text-xs text-muted-foreground mb-3">
-                    {c.screenshots} screenshots, {c.metrics} metrics
+                    {t("caseLibrary.screenshotsMetrics", { screenshots: c.screenshots, metrics: c.metrics })}
                   </p>
                   <div className="flex items-center gap-1">
                     <Button size="icon" variant="ghost" data-testid={`button-view-${c.id}`}>

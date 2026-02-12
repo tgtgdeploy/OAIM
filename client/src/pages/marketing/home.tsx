@@ -29,6 +29,7 @@ import {
   Send,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
+import { useTranslation } from "react-i18next";
 
 import heroAiBg from "@/assets/images/hero-ai-bg.png";
 import heroPhoneMockup from "@/assets/images/hero-phone-mockup.png";
@@ -36,42 +37,44 @@ import imgEcommerce from "@/assets/images/marketing-ecommerce.jpg";
 import imgRestaurant from "@/assets/images/marketing-restaurant.jpg";
 import imgBeauty from "@/assets/images/marketing-beauty.jpg";
 
-const modules = [
-  { icon: MessageSquare, title: "WhatsApp Inbox", desc: "Unified inbox for all customer conversations with smart routing and team collaboration.", color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400", accent: "from-emerald-500 to-green-600" },
-  { icon: BrainCircuit, title: "AI Sales Script", desc: "Industry-specific AI that understands your products and closes deals automatically.", color: "bg-violet-500/10 text-violet-600 dark:text-violet-400", accent: "from-violet-500 to-purple-600" },
-  { icon: Target, title: "CRM Pipeline", desc: "Visual sales funnel from first inquiry to closed deal with smart tags and segmentation.", color: "bg-blue-500/10 text-blue-600 dark:text-blue-400", accent: "from-blue-500 to-indigo-600" },
-  { icon: Workflow, title: "Auto Follow-up", desc: "Scheduled follow-ups that never let a lead go cold. Re-engage at the perfect moment.", color: "bg-amber-500/10 text-amber-600 dark:text-amber-400", accent: "from-amber-500 to-orange-600" },
-  { icon: ShoppingCart, title: "ERP Lite", desc: "Products, orders, and inventory management — simple, effective, and fully integrated.", color: "bg-rose-500/10 text-rose-600 dark:text-rose-400", accent: "from-rose-500 to-red-600" },
-  { icon: BarChart3, title: "Meta Ads & ROI", desc: "Track ad leads and measure real return on every marketing dollar you spend.", color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400", accent: "from-cyan-500 to-teal-600" },
-];
-
-const stats = [
-  { value: "3x", label: "Faster Response Time", icon: Zap },
-  { value: "67%", label: "Higher Conversion Rate", icon: TrendingUp },
-  { value: "< 5min", label: "Setup Time", icon: Clock },
-  { value: "99.9%", label: "Platform Uptime", icon: Shield },
-];
-
-const industries = [
-  { icon: Store, label: "E-Commerce", desc: "Product catalog, payments, shipping, order tracking — all powered by WhatsApp AI", image: imgEcommerce, href: "/templates/ecommerce", gradient: "from-emerald-600 to-teal-700" },
-  { icon: UtensilsCrossed, label: "F&B / Restaurant", desc: "Menu, reservations, delivery, table management — digitize your restaurant operations", image: imgRestaurant, href: "/templates/fnb", gradient: "from-orange-600 to-amber-700" },
-  { icon: Sparkles, label: "Beauty & Wellness", desc: "Booking, therapist scheduling, services, packages — grow your salon business", image: imgBeauty, href: "/templates/beauty", gradient: "from-rose-600 to-pink-700" },
-];
-
-const testimonials = [
-  { name: "Ahmad Razak", role: "Owner, Fashion Hub KL", text: "OAIM transformed our WhatsApp sales. We went from manually replying to 50+ daily messages to having AI handle 80% automatically. Revenue doubled in 3 months.", rating: 5 },
-  { name: "Lisa Chen", role: "Manager, The Noodle House", text: "Our reservations are now fully automated through WhatsApp. Customers love it, and we reduced no-shows by 60%. The delivery integration is seamless.", rating: 5 },
-  { name: "Priya Kaur", role: "Founder, Glow Beauty Studio", text: "Booking management used to be a nightmare. Now clients book via WhatsApp, get automatic reminders, and we've grown our repeat customer base by 40%.", rating: 5 },
-];
-
-const workflow = [
-  { step: "01", icon: SiWhatsapp, title: "Customer Messages", desc: "A customer sends a WhatsApp message asking about your product or service." },
-  { step: "02", icon: BrainCircuit, title: "AI Processes", desc: "OAIM's AI understands the intent, checks your catalog, and generates a personalized response." },
-  { step: "03", icon: Send, title: "Auto Reply", desc: "Instant reply with pricing, availability, and a call-to-action — all within seconds." },
-  { step: "04", icon: CheckCircle2, title: "Deal Closed", desc: "Customer confirms, order is created, follow-up scheduled. All automated." },
-];
-
 export default function HomePage() {
+  const { t } = useTranslation("marketing");
+
+  const modules = [
+    { icon: MessageSquare, title: t("home.moduleWhatsappInbox"), desc: t("home.moduleWhatsappInboxDesc"), color: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400", accent: "from-emerald-500 to-green-600" },
+    { icon: BrainCircuit, title: t("home.moduleAiSalesScript"), desc: t("home.moduleAiSalesScriptDesc"), color: "bg-violet-500/10 text-violet-600 dark:text-violet-400", accent: "from-violet-500 to-purple-600" },
+    { icon: Target, title: t("home.moduleCrmPipeline"), desc: t("home.moduleCrmPipelineDesc"), color: "bg-blue-500/10 text-blue-600 dark:text-blue-400", accent: "from-blue-500 to-indigo-600" },
+    { icon: Workflow, title: t("home.moduleAutoFollowUp"), desc: t("home.moduleAutoFollowUpDesc"), color: "bg-amber-500/10 text-amber-600 dark:text-amber-400", accent: "from-amber-500 to-orange-600" },
+    { icon: ShoppingCart, title: t("home.moduleErpLite"), desc: t("home.moduleErpLiteDesc"), color: "bg-rose-500/10 text-rose-600 dark:text-rose-400", accent: "from-rose-500 to-red-600" },
+    { icon: BarChart3, title: t("home.moduleMetaAds"), desc: t("home.moduleMetaAdsDesc"), color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400", accent: "from-cyan-500 to-teal-600" },
+  ];
+
+  const stats = [
+    { value: "3x", label: t("home.statFasterResponse"), icon: Zap },
+    { value: "67%", label: t("home.statHigherConversion"), icon: TrendingUp },
+    { value: "< 5min", label: t("home.statSetupTime"), icon: Clock },
+    { value: "99.9%", label: t("home.statUptime"), icon: Shield },
+  ];
+
+  const industries = [
+    { icon: Store, label: t("home.industryEcommerce"), desc: t("home.industryEcommerceDesc"), image: imgEcommerce, href: "/templates/ecommerce", gradient: "from-emerald-600 to-teal-700" },
+    { icon: UtensilsCrossed, label: t("home.industryFnb"), desc: t("home.industryFnbDesc"), image: imgRestaurant, href: "/templates/fnb", gradient: "from-orange-600 to-amber-700" },
+    { icon: Sparkles, label: t("home.industryBeauty"), desc: t("home.industryBeautyDesc"), image: imgBeauty, href: "/templates/beauty", gradient: "from-rose-600 to-pink-700" },
+  ];
+
+  const testimonials = [
+    { name: "Ahmad Razak", role: "Owner, Fashion Hub KL", text: "OAIM transformed our WhatsApp sales. We went from manually replying to 50+ daily messages to having AI handle 80% automatically. Revenue doubled in 3 months.", rating: 5 },
+    { name: "Lisa Chen", role: "Manager, The Noodle House", text: "Our reservations are now fully automated through WhatsApp. Customers love it, and we reduced no-shows by 60%. The delivery integration is seamless.", rating: 5 },
+    { name: "Priya Kaur", role: "Founder, Glow Beauty Studio", text: "Booking management used to be a nightmare. Now clients book via WhatsApp, get automatic reminders, and we've grown our repeat customer base by 40%.", rating: 5 },
+  ];
+
+  const workflow = [
+    { step: "01", icon: SiWhatsapp, title: t("home.workflowStep1Title"), desc: t("home.workflowStep1Desc") },
+    { step: "02", icon: BrainCircuit, title: t("home.workflowStep2Title"), desc: t("home.workflowStep2Desc") },
+    { step: "03", icon: Send, title: t("home.workflowStep3Title"), desc: t("home.workflowStep3Desc") },
+    { step: "04", icon: CheckCircle2, title: t("home.workflowStep4Title"), desc: t("home.workflowStep4Desc") },
+  ];
+
   return (
     <MarketingLayout>
       <section className="relative overflow-hidden" data-testid="section-hero">
@@ -93,29 +96,29 @@ export default function HomePage() {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                 </span>
-                <span className="text-xs font-medium text-white/90">Powered by AI + WhatsApp Cloud API</span>
+                <span className="text-xs font-medium text-white/90">{t("home.heroBadge")}</span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-[3.5rem] font-bold tracking-tight mb-6 leading-[1.08] text-white animate-fade-in-up" data-testid="text-hero-title">
-                Your AI Sales Team
+                {t("home.heroTitle1")}
                 <br />
                 <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-violet-400 bg-clip-text text-transparent">
-                  on WhatsApp
+                  {t("home.heroTitle2")}
                 </span>
               </h1>
               <p className="text-base md:text-lg text-white/65 mb-8 leading-relaxed max-w-lg animate-fade-in-up delay-200" data-testid="text-hero-subtitle">
-                OAIM automates customer conversations, manages your sales pipeline, and closes deals 24/7 — so you can focus on growing your business.
+                {t("home.heroSubtitle")}
               </p>
               <div className="flex flex-col sm:flex-row items-start gap-3 animate-fade-in-up delay-300">
                 <Link href="/app/onboarding">
                   <Button size="lg" className="text-base bg-gradient-to-r from-primary to-emerald-500 border-primary-border" data-testid="button-hero-trial">
-                    Start Free — No Card Needed
+                    {t("home.startFree")}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
                 <Link href="/contact">
                   <Button size="lg" variant="outline" className="text-base border-white/15 text-white bg-white/5 backdrop-blur-sm" data-testid="button-hero-demo">
                     <Play className="mr-2 h-4 w-4" />
-                    Watch Demo
+                    {t("home.watchDemo")}
                   </Button>
                 </Link>
               </div>
@@ -130,14 +133,14 @@ export default function HomePage() {
                     ))}
                   </div>
                   <div className="text-sm text-white/60">
-                    <span className="font-semibold text-white">500+</span> businesses
+                    <span className="font-semibold text-white">500+</span> {t("home.businesses")}
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} className="h-3.5 w-3.5 text-amber-400 fill-amber-400" />
                   ))}
-                  <span className="text-xs text-white/50 ml-1.5">4.9/5 rating</span>
+                  <span className="text-xs text-white/50 ml-1.5">{t("home.rating")}</span>
                 </div>
               </div>
             </div>
@@ -157,7 +160,7 @@ export default function HomePage() {
                       <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />
                     </div>
                     <div>
-                      <div className="text-[10px] text-white/50">Revenue Today</div>
+                      <div className="text-[10px] text-white/50">{t("home.revenueToday")}</div>
                       <div className="text-sm font-bold text-white">RM 12,840</div>
                     </div>
                   </div>
@@ -169,8 +172,8 @@ export default function HomePage() {
                       <BrainCircuit className="h-3.5 w-3.5 text-violet-400" />
                     </div>
                     <div>
-                      <div className="text-[10px] text-white/50">AI Replies</div>
-                      <div className="text-sm font-bold text-white">128 today</div>
+                      <div className="text-[10px] text-white/50">{t("home.aiReplies")}</div>
+                      <div className="text-sm font-bold text-white">{t("home.today")}</div>
                     </div>
                   </div>
                 </div>
@@ -178,7 +181,7 @@ export default function HomePage() {
                 <div className="absolute top-1/2 -right-16 -translate-y-1/2 bg-black/60 backdrop-blur-xl border border-white/10 rounded-lg p-2.5 animate-float" style={{ animationDelay: "2s" }}>
                   <div className="flex items-center gap-1.5">
                     <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                    <span className="text-[10px] text-white/80 font-medium">Order #1247 confirmed</span>
+                    <span className="text-[10px] text-white/80 font-medium">{t("home.orderConfirmed")}</span>
                   </div>
                 </div>
               </div>
@@ -215,14 +218,14 @@ export default function HomePage() {
           <div className="text-center mb-14 animate-fade-in-up">
             <Badge variant="secondary" className="mb-4">
               <Workflow className="h-3 w-3 mr-1" />
-              How It Works
+              {t("home.howItWorks")}
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-workflow-title">
-              From Message to Money in{" "}
-              <span className="gradient-text">Seconds</span>
+              {t("home.workflowTitle1")}{" "}
+              <span className="gradient-text">{t("home.workflowTitle2")}</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Watch how OAIM turns a simple WhatsApp message into a closed deal — fully automated.
+              {t("home.workflowSubtitle")}
             </p>
           </div>
           <div className="grid md:grid-cols-4 gap-4">
@@ -258,14 +261,14 @@ export default function HomePage() {
           <div className="text-center mb-14 animate-fade-in-up">
             <Badge variant="secondary" className="mb-4">
               <Layers className="h-3 w-3 mr-1" />
-              Modular Platform
+              {t("home.modularPlatform")}
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-modules-title">
-              Everything You Need to{" "}
-              <span className="gradient-text">Sell on WhatsApp</span>
+              {t("home.modulesTitle1")}{" "}
+              <span className="gradient-text">{t("home.modulesTitle2")}</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Modular tools you can unlock as your business grows. Start free, scale when ready.
+              {t("home.modulesSubtitle")}
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -286,7 +289,7 @@ export default function HomePage() {
           <div className="text-center mt-10">
             <Link href="/products">
               <Button variant="outline" data-testid="button-view-modules">
-                Explore All Modules
+                {t("home.exploreAllModules")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
@@ -299,14 +302,14 @@ export default function HomePage() {
           <div className="text-center mb-14 animate-fade-in-up">
             <Badge variant="secondary" className="mb-4">
               <Globe className="h-3 w-3 mr-1" />
-              Industry Solutions
+              {t("home.industrySolutions")}
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-industries-title">
-              Built for{" "}
-              <span className="gradient-text">Your Industry</span>
+              {t("home.industriesTitle1")}{" "}
+              <span className="gradient-text">{t("home.industriesTitle2")}</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Pre-configured templates with AI scripts, workflows, and storefronts tailored to your business type.
+              {t("home.industriesSubtitle")}
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
@@ -323,7 +326,7 @@ export default function HomePage() {
                       </div>
                       <div>
                         <span className="text-white font-semibold text-sm block">{ind.label}</span>
-                        <span className="text-white/50 text-[10px]">AI-Powered Template</span>
+                        <span className="text-white/50 text-[10px]">{t("home.aiPoweredTemplate")}</span>
                       </div>
                     </div>
                   </div>
@@ -331,7 +334,7 @@ export default function HomePage() {
                     <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{ind.desc}</p>
                     <Link href={ind.href}>
                       <Button variant="outline" className="w-full" data-testid={`button-view-${ind.label.toLowerCase().replace(/[\s\/&]/g, "-")}`}>
-                        View Template
+                        {t("home.viewTemplate")}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </Link>
@@ -349,33 +352,33 @@ export default function HomePage() {
           <div className="text-center mb-14 animate-fade-in-up">
             <Badge variant="secondary" className="mb-4">
               <Star className="h-3 w-3 mr-1" />
-              Testimonials
+              {t("home.testimonials")}
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-testimonials-title">
-              Trusted by{" "}
-              <span className="gradient-text">Growing Businesses</span>
+              {t("home.testimonialsTitle1")}{" "}
+              <span className="gradient-text">{t("home.testimonialsTitle2")}</span>
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              See how businesses across Southeast Asia are scaling with OAIM.
+              {t("home.testimonialsSubtitle")}
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-5">
-            {testimonials.map((t, idx) => (
-              <Card key={t.name} className={`overflow-visible animate-fade-in-up delay-${(idx + 1) * 200}`} data-testid={`card-testimonial-${idx}`}>
+            {testimonials.map((item, idx) => (
+              <Card key={item.name} className={`overflow-visible animate-fade-in-up delay-${(idx + 1) * 200}`} data-testid={`card-testimonial-${idx}`}>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-0.5 mb-4">
-                    {Array.from({ length: t.rating }).map((_, i) => (
+                    {Array.from({ length: item.rating }).map((_, i) => (
                       <Star key={i} className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
                     ))}
                   </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-5">"{t.text}"</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-5">"{item.text}"</p>
                   <div className="flex items-center gap-3 pt-4 border-t">
                     <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-cyan-500/20 flex-shrink-0">
-                      <span className="text-xs font-bold text-primary">{t.name.split(" ").map(w => w[0]).join("")}</span>
+                      <span className="text-xs font-bold text-primary">{item.name.split(" ").map(w => w[0]).join("")}</span>
                     </div>
                     <div>
-                      <p className="text-sm font-semibold">{t.name}</p>
-                      <p className="text-xs text-muted-foreground">{t.role}</p>
+                      <p className="text-sm font-semibold">{item.name}</p>
+                      <p className="text-xs text-muted-foreground">{item.role}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -398,26 +401,26 @@ export default function HomePage() {
               <Zap className="h-7 w-7 text-white" />
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white" data-testid="text-cta-title">
-              Ready to Transform Your Sales?
+              {t("home.ctaTitle")}
             </h2>
             <p className="text-white/60 text-lg max-w-xl mx-auto mb-8 leading-relaxed">
-              Join hundreds of businesses using OAIM to automate their WhatsApp sales. Start free today — no credit card required.
+              {t("home.ctaSubtitle")}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link href="/app/onboarding">
                 <Button size="lg" className="text-base bg-gradient-to-r from-primary to-emerald-500 border-primary-border" data-testid="button-cta-trial">
-                  Start Free Trial
+                  {t("home.startFreeTrial")}
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
               <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer">
                 <Button size="lg" variant="outline" className="text-base border-white/15 text-white bg-white/5 backdrop-blur-sm" data-testid="button-cta-whatsapp">
                   <SiWhatsapp className="mr-2 h-4 w-4" />
-                  WhatsApp Us
+                  {t("home.whatsappUs")}
                 </Button>
               </a>
             </div>
-            <p className="text-xs text-white/30 mt-6">14-day free trial. No credit card. Cancel anytime.</p>
+            <p className="text-xs text-white/30 mt-6">{t("home.ctaDisclaimer")}</p>
           </div>
         </div>
       </section>

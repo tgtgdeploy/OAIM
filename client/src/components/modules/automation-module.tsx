@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { StatCard } from "@/components/shared/stat-card";
 import { Plus, Bot, Repeat, Clock, Zap, MessageSquare, Settings, CheckCircle2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const superadminAutomations = [
   { id: "1", name: "Welcome Message", type: "trigger", enabled: true, tenants: 7, desc: "Auto-reply to first message from new contact" },
@@ -27,6 +28,7 @@ interface AutomationModuleProps {
 }
 
 export function AutomationModule({ context }: AutomationModuleProps) {
+  const { t } = useTranslation("superadmin");
   const automations = context === "superadmin" ? superadminAutomations : merchantAutomations;
   const typeConfig: Record<string, { color: string; icon: typeof Bot }> = {
     trigger: { color: "bg-blue-500/10 text-blue-700 dark:text-blue-300", icon: Zap },
@@ -40,28 +42,28 @@ export function AutomationModule({ context }: AutomationModuleProps) {
       <div className="stats-grid">
         {context === "superadmin" ? (
           <>
-            <StatCard label="Total Automations" value={automations.length.toString()} icon={Zap} />
-            <StatCard label="Active" value={automations.filter(a => a.enabled).length.toString()} icon={CheckCircle2} iconColor="text-green-500" />
-            <StatCard label="Tenants Using" value="7" icon={MessageSquare} />
-            <StatCard label="Templates" value="5" icon={Bot} />
+            <StatCard label={t("automation.totalAutomations")} value={automations.length.toString()} icon={Zap} />
+            <StatCard label={t("automation.active")} value={automations.filter(a => a.enabled).length.toString()} icon={CheckCircle2} iconColor="text-green-500" />
+            <StatCard label={t("automation.tenantsUsing")} value="7" icon={MessageSquare} />
+            <StatCard label={t("automation.templatesLabel")} value="5" icon={Bot} />
           </>
         ) : (
           <>
-            <StatCard label="Active Automations" value={automations.filter(a => a.enabled).length.toString()} icon={Zap} />
-            <StatCard label="Messages Sent" value={merchantAutomations.reduce((a, m) => a + m.fired, 0).toLocaleString()} icon={MessageSquare} />
-            <StatCard label="AI Handled" value="1,200" icon={Bot} iconColor="text-green-500" />
-            <StatCard label="Response Rate" value="94%" icon={CheckCircle2} />
+            <StatCard label={t("automation.activeAutomations")} value={automations.filter(a => a.enabled).length.toString()} icon={Zap} />
+            <StatCard label={t("automation.messagesSent")} value={merchantAutomations.reduce((a, m) => a + m.fired, 0).toLocaleString()} icon={MessageSquare} />
+            <StatCard label={t("automation.aiHandled")} value="1,200" icon={Bot} iconColor="text-green-500" />
+            <StatCard label={t("automation.responseRate")} value="94%" icon={CheckCircle2} />
           </>
         )}
       </div>
 
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <p className="text-sm text-muted-foreground">
-          {context === "superadmin" ? "Automation templates for all tenants" : "Your active automations"}
+          {context === "superadmin" ? t("automation.templateDesc") : t("automation.activeDesc")}
         </p>
         <Button data-testid="button-create-automation">
           <Plus className="h-4 w-4 mr-2" />
-          {context === "superadmin" ? "New Template" : "New Automation"}
+          {context === "superadmin" ? t("automation.newTemplate") : t("automation.newAutomation")}
         </Button>
       </div>
 
@@ -83,10 +85,10 @@ export function AutomationModule({ context }: AutomationModuleProps) {
                     <p className="text-sm text-muted-foreground">{auto.desc}</p>
                     <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
                       {context === "superadmin" && "tenants" in auto && (
-                        <span>{(auto as any).tenants} tenants using</span>
+                        <span>{t("automation.tenantsUsingCount", { count: (auto as any).tenants })}</span>
                       )}
                       {context === "merchant" && "fired" in auto && (
-                        <span>{(auto as any).fired.toLocaleString()} messages sent</span>
+                        <span>{t("automation.messagesSentCount", { count: (auto as any).fired.toLocaleString() })}</span>
                       )}
                     </div>
                   </div>
