@@ -8,6 +8,12 @@ import {
   Smartphone,
   Home,
   HeartPulse,
+  Package,
+  CreditCard,
+  BarChart3,
+  Tags,
+  Warehouse,
+  Receipt,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 import {
@@ -18,6 +24,7 @@ import {
   ProductGrid,
   FeatureHighlights,
   CTABanner,
+  ManagementShowcase,
 } from "@/components/storefront";
 
 const navLinks = ["Home", "Products", "Categories", "About", "Contact"];
@@ -40,6 +47,17 @@ const features = [
   { icon: ShieldCheck, title: "Secure Payment", desc: "All transactions are encrypted and secured for your safety" },
   { icon: MessageCircle, title: "WhatsApp Support", desc: "Chat with us anytime for instant help and product inquiries" },
   { icon: RotateCcw, title: "Easy Returns", desc: "Hassle-free returns within 14 days of purchase" },
+];
+
+const managementFeatures = [
+  { icon: Package, title: "Product Management", desc: "Add, edit, and organize products with variants, SKUs, images, and inventory tracking", badge: "Core", color: "bg-blue-500/10 dark:bg-blue-400/10 text-blue-600 dark:text-blue-400" },
+  { icon: CreditCard, title: "Payment Processing", desc: "Accept multiple payment methods including FPX, credit cards, and e-wallets", badge: "Core", color: "bg-emerald-500/10 dark:bg-emerald-400/10 text-emerald-600 dark:text-emerald-400" },
+  { icon: Truck, title: "Shipping & Logistics", desc: "Manage delivery zones, shipping rates, and courier integration with real-time tracking", badge: "Core", color: "bg-amber-500/10 dark:bg-amber-400/10 text-amber-600 dark:text-amber-400" },
+  { icon: Receipt, title: "Order Management", desc: "Track orders from placement to delivery with automated status updates via WhatsApp", color: "bg-violet-500/10 dark:bg-violet-400/10 text-violet-600 dark:text-violet-400" },
+  { icon: Tags, title: "Promotions & Discounts", desc: "Create voucher codes, flash sales, bundle deals, and loyalty rewards for customers", color: "bg-pink-500/10 dark:bg-pink-400/10 text-pink-600 dark:text-pink-400" },
+  { icon: Warehouse, title: "Inventory Control", desc: "Real-time stock levels, low stock alerts, and automatic reorder point notifications", color: "bg-orange-500/10 dark:bg-orange-400/10 text-orange-600 dark:text-orange-400" },
+  { icon: BarChart3, title: "Sales Analytics", desc: "Dashboards showing revenue, top products, conversion rates, and customer insights", color: "bg-cyan-500/10 dark:bg-cyan-400/10 text-cyan-600 dark:text-cyan-400" },
+  { icon: MessageCircle, title: "WhatsApp Catalog", desc: "Sync products to WhatsApp catalog for customers to browse and order in-chat", badge: "WhatsApp", color: "bg-green-500/10 dark:bg-green-400/10 text-green-600 dark:text-green-400" },
 ];
 
 export default function EcommerceTemplate() {
@@ -77,6 +95,14 @@ export default function EcommerceTemplate() {
           placeholderIcon={ShoppingBag}
           actionLabel="Add to Cart"
           whatsappLabel="Ask"
+        />
+
+        <ManagementShowcase
+          title="E-Commerce Management"
+          subtitle="Everything you need to run your online store — from products to payments to delivery"
+          features={managementFeatures}
+          columns={4}
+          bgSection
         />
 
         <FeatureHighlights

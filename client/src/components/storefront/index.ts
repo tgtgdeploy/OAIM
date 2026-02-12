@@ -12,3 +12,4 @@ export { SpecialOffer } from "./special-offer";
 export { ReservationCard } from "./reservation-card";
 export { PackageGrid } from "./package-grid";
 export { GalleryGrid } from "./gallery-grid";
+export { ManagementShowcase } from "./management-showcase";
