@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Search, Plus, Upload, Package, Grid3X3, List } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const products = [
   { id: "1", name: "Blue Floral Dress", category: "Dresses", price: "RM 89.00", stock: 45, active: true },
@@ -19,17 +20,18 @@ const products = [
 ];
 
 export default function ProductsPage() {
+  const { t } = useTranslation("app");
   const [view, setView] = useState<"grid" | "list">("grid");
 
   return (
-    <AppLayout title="Products">
+    <AppLayout title={t("products.title")}>
       <div className="p-4 md:p-6 space-y-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <p className="text-sm text-muted-foreground">{products.length} products</p>
+          <p className="text-sm text-muted-foreground">{t("products.countProducts", { count: products.length })}</p>
           <div className="flex items-center gap-2 flex-wrap">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search products..." className="pl-9 w-56" data-testid="input-search-products" />
+              <Input placeholder={t("products.searchProducts")} className="pl-9 w-56" data-testid="input-search-products" />
             </div>
             <div className="flex border rounded-md">
               <Button
@@ -51,11 +53,11 @@ export default function ProductsPage() {
             </div>
             <Button variant="outline" data-testid="button-import">
               <Upload className="h-4 w-4 mr-2" />
-              Import
+              {t("common.import")}
             </Button>
             <Button data-testid="button-add-product">
               <Plus className="h-4 w-4 mr-2" />
-              Add Product
+              {t("products.addProduct")}
             </Button>
           </div>
         </div>
@@ -79,7 +81,7 @@ export default function ProductsPage() {
                     <div className="flex items-center justify-between gap-2 mt-3">
                       <span className="text-sm font-bold">{product.price}</span>
                       <Badge variant={product.stock > 0 ? "secondary" : "destructive"} className="text-xs">
-                        {product.stock > 0 ? `${product.stock} in stock` : "Out of stock"}
+                        {product.stock > 0 ? t("products.inStock", { count: product.stock }) : t("products.outOfStock")}
                       </Badge>
                     </div>
                   </div>
@@ -102,7 +104,7 @@ export default function ProductsPage() {
                     </div>
                     <div className="text-sm font-bold">{product.price}</div>
                     <Badge variant={product.stock > 0 ? "secondary" : "destructive"} className="text-xs">
-                      {product.stock > 0 ? `${product.stock}` : "OOS"}
+                      {product.stock > 0 ? `${product.stock}` : t("products.oos")}
                     </Badge>
                     <Switch checked={product.active} />
                   </div>

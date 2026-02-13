@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Filter, Receipt, CreditCard, Wallet, DollarSign } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import "@/styles/dashboard.css";
 
 const bills = [
@@ -24,34 +25,35 @@ const bills = [
   { id: "BILL-006", table: "Takeaway", items: 2, subtotal: "RM 29.90", tax: "RM 1.79", total: "RM 31.69", method: "Cash", status: "paid", time: "5:55 PM" },
 ];
 
-function getStatusBadge(status: string) {
-  if (status === "paid") return <Badge variant="secondary" className="text-xs bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Paid</Badge>;
-  return <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 dark:text-amber-400">Open</Badge>;
-}
-
 export default function CheckoutPage() {
+  const { t } = useTranslation("app");
   const totalRevenue = bills.filter(b => b.status === "paid").reduce((sum, b) => sum + parseFloat(b.total.replace("RM ", "").replace(",", "")), 0);
 
+  function getStatusBadge(status: string) {
+    if (status === "paid") return <Badge variant="secondary" className="text-xs bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">{t("checkout.statusPaid")}</Badge>;
+    return <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 dark:text-amber-400">{t("checkout.statusOpen")}</Badge>;
+  }
+
   return (
-    <AppLayout title="Checkout & Billing">
+    <AppLayout title={t("checkout.title")}>
       <div className="dashboard-page-padding section-spacing">
         <div className="stats-grid">
-          <StatCard label="Today's Revenue" value={`RM ${totalRevenue.toFixed(2)}`} icon={DollarSign} change="+12% vs yesterday" testId="card-stat-revenue" />
-          <StatCard label="Bills Paid" value={`${bills.filter(b => b.status === "paid").length}`} icon={Receipt} testId="card-stat-paid" />
-          <StatCard label="Open Bills" value={`${bills.filter(b => b.status === "open").length}`} icon={CreditCard} testId="card-stat-open" />
-          <StatCard label="Avg Bill Size" value="RM 65.80" icon={Wallet} testId="card-stat-avg" />
+          <StatCard label={t("checkout.todaysRevenue")} value={`RM ${totalRevenue.toFixed(2)}`} icon={DollarSign} change="+12% vs yesterday" testId="card-stat-revenue" />
+          <StatCard label={t("checkout.billsPaid")} value={`${bills.filter(b => b.status === "paid").length}`} icon={Receipt} testId="card-stat-paid" />
+          <StatCard label={t("checkout.openBills")} value={`${bills.filter(b => b.status === "open").length}`} icon={CreditCard} testId="card-stat-open" />
+          <StatCard label={t("checkout.avgBillSize")} value="RM 65.80" icon={Wallet} testId="card-stat-avg" />
         </div>
 
         <div className="toolbar-row">
-          <SearchInput placeholder="Search bills..." testId="input-search-bills" />
+          <SearchInput placeholder={t("checkout.searchBills")} testId="input-search-bills" />
           <div className="toolbar-actions">
             <Button variant="outline" data-testid="button-filter-bills">
               <Filter className="h-4 w-4 mr-2" />
-              Filter
+              {t("common.filter")}
             </Button>
             <Button data-testid="button-daily-report">
               <Receipt className="h-4 w-4 mr-2" />
-              Daily Report
+              {t("checkout.dailyReport")}
             </Button>
           </div>
         </div>
@@ -61,14 +63,14 @@ export default function CheckoutPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Bill ID</TableHead>
-                  <TableHead>Table/Order</TableHead>
-                  <TableHead className="hidden sm:table-cell">Items</TableHead>
-                  <TableHead className="hidden md:table-cell">Subtotal</TableHead>
-                  <TableHead>Total</TableHead>
-                  <TableHead className="hidden sm:table-cell">Payment</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="hidden lg:table-cell">Time</TableHead>
+                  <TableHead>{t("checkout.thBillId")}</TableHead>
+                  <TableHead>{t("checkout.thTableOrder")}</TableHead>
+                  <TableHead className="hidden sm:table-cell">{t("checkout.thItems")}</TableHead>
+                  <TableHead className="hidden md:table-cell">{t("checkout.thSubtotal")}</TableHead>
+                  <TableHead>{t("checkout.thTotal")}</TableHead>
+                  <TableHead className="hidden sm:table-cell">{t("checkout.thPayment")}</TableHead>
+                  <TableHead>{t("checkout.thStatus")}</TableHead>
+                  <TableHead className="hidden lg:table-cell">{t("checkout.thTime")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

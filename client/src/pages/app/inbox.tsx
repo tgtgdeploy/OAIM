@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { AppLayout } from "./layout";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -33,9 +34,18 @@ const stageColors: Record<string, string> = {
 };
 
 export default function InboxPage() {
+  const { t } = useTranslation("app");
   const [selected, setSelected] = useState(conversations[0]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showChat, setShowChat] = useState(false);
+
+  const stageLabels: Record<string, string> = {
+    new_inquiry: t("inbox.stageNewInquiry"),
+    quoted: t("inbox.stageQuoted"),
+    follow_up: t("inbox.stageFollowUp"),
+    closed_won: t("inbox.stageClosedWon"),
+    closed_lost: t("inbox.stageClosedLost"),
+  };
 
   const filtered = conversations.filter(c =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -54,7 +64,7 @@ export default function InboxPage() {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search conversations..."
+                placeholder={t("inbox.searchConversations")}
                 className="pl-9"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -116,7 +126,7 @@ export default function InboxPage() {
             </div>
             <div className="flex items-center gap-2">
               <Badge variant="secondary" className={`hidden sm:inline-flex ${stageColors[selected.stage]}`}>
-                {selected.stage.replace("_", " ")}
+                {stageLabels[selected.stage]}
               </Badge>
               <Button size="icon" variant="ghost" data-testid="button-call">
                 <Phone className="h-4 w-4" />
@@ -158,7 +168,7 @@ export default function InboxPage() {
                 <Paperclip className="h-4 w-4" />
               </Button>
               <Input
-                placeholder="Type a message..."
+                placeholder={t("inbox.typeMessage")}
                 className="flex-1"
                 data-testid="input-message"
               />
@@ -181,24 +191,24 @@ export default function InboxPage() {
           </div>
           <div className="space-y-3">
             <div>
-              <div className="text-xs font-medium text-muted-foreground mb-1">Stage</div>
+              <div className="text-xs font-medium text-muted-foreground mb-1">{t("inbox.stage")}</div>
               <Badge variant="secondary" className={stageColors[selected.stage]}>
-                {selected.stage.replace("_", " ")}
+                {stageLabels[selected.stage]}
               </Badge>
             </div>
             <div>
-              <div className="text-xs font-medium text-muted-foreground mb-1">Tags</div>
+              <div className="text-xs font-medium text-muted-foreground mb-1">{t("inbox.tags")}</div>
               <div className="flex flex-wrap gap-1">
                 <Badge variant="outline">VIP</Badge>
                 <Badge variant="outline">Repeat Buyer</Badge>
               </div>
             </div>
             <div>
-              <div className="text-xs font-medium text-muted-foreground mb-1">Orders</div>
+              <div className="text-xs font-medium text-muted-foreground mb-1">{t("inbox.orders")}</div>
               <div className="text-sm">3 orders (RM 456.00)</div>
             </div>
             <div>
-              <div className="text-xs font-medium text-muted-foreground mb-1">Notes</div>
+              <div className="text-xs font-medium text-muted-foreground mb-1">{t("inbox.notes")}</div>
               <p className="text-sm text-muted-foreground">Prefers COD payment. Usually orders in bulk.</p>
             </div>
           </div>

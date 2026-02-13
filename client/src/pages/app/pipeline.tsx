@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { AppLayout } from "./layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -6,10 +7,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
-const stages = [
+const stagesData = [
   {
     id: "new_inquiry",
-    title: "New Inquiry",
     color: "bg-blue-500",
     deals: [
       { id: "1", name: "Mei Ling", value: "RM 450", product: "Blue Dress x3", time: "2h ago" },
@@ -19,7 +19,6 @@ const stages = [
   },
   {
     id: "quoted",
-    title: "Quoted",
     color: "bg-yellow-500",
     deals: [
       { id: "4", name: "Ahmad Razak", value: "RM 1,200", product: "Wholesale x50", time: "15m ago" },
@@ -28,7 +27,6 @@ const stages = [
   },
   {
     id: "follow_up",
-    title: "Follow-up",
     color: "bg-orange-500",
     deals: [
       { id: "6", name: "Lisa Tan", value: "RM 150", product: "Accessories", time: "1h ago" },
@@ -39,7 +37,6 @@ const stages = [
   },
   {
     id: "closed_won",
-    title: "Closed Won",
     color: "bg-green-500",
     deals: [
       { id: "10", name: "Sarah Ahmad", value: "RM 890", product: "Blue Dress x5", time: "1h ago" },
@@ -49,22 +46,35 @@ const stages = [
 ];
 
 export default function PipelinePage() {
+  const { t } = useTranslation("app");
   const totalValue = "RM 7,720";
-  const totalDeals = stages.reduce((acc, s) => acc + s.deals.length, 0);
+  const totalDeals = stagesData.reduce((acc, s) => acc + s.deals.length, 0);
+
+  const stageTitles: Record<string, string> = {
+    new_inquiry: t("pipeline.stageNewInquiry"),
+    quoted: t("pipeline.stageQuoted"),
+    follow_up: t("pipeline.stageFollowUp"),
+    closed_won: t("pipeline.stageClosedWon"),
+  };
+
+  const stages = stagesData.map((s) => ({
+    ...s,
+    title: stageTitles[s.id] || s.id,
+  }));
 
   return (
-    <AppLayout title="Pipeline">
+    <AppLayout title={t("pipeline.title")}>
       <div className="p-4 md:p-6">
         <div className="flex items-center justify-between gap-4 mb-4 flex-wrap">
           <div className="flex items-center gap-4">
             <div>
-              <div className="text-sm text-muted-foreground">{totalDeals} active deals</div>
+              <div className="text-sm text-muted-foreground">{t("pipeline.activeDeals", { count: totalDeals })}</div>
             </div>
-            <Badge variant="secondary" className="text-sm">{totalValue} pipeline value</Badge>
+            <Badge variant="secondary" className="text-sm">{t("pipeline.pipelineValue", { value: totalValue })}</Badge>
           </div>
           <Button data-testid="button-add-deal">
             <Plus className="h-4 w-4 mr-2" />
-            Add Deal
+            {t("pipeline.addDeal")}
           </Button>
         </div>
 
@@ -100,7 +110,7 @@ export default function PipelinePage() {
                     </Card>
                   ))}
                   <Button variant="ghost" className="w-full border border-dashed text-muted-foreground" data-testid={`button-add-deal-${stage.id}`}>
-                    <Plus className="h-4 w-4 mr-1" /> Add
+                    <Plus className="h-4 w-4 mr-1" /> {t("common.add")}
                   </Button>
                 </div>
               </div>

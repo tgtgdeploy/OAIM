@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/table";
 import { Filter, DollarSign, CreditCard, Wallet, TrendingUp } from "lucide-react";
 import "@/styles/dashboard.css";
+import { useTranslation } from "react-i18next";
 
 const transactions = [
   { id: "TXN-001", order: "ORD-001", customer: "Sarah Ahmad", amount: "RM 267.00", method: "FPX", status: "success", date: "2026-02-12 14:23" },
@@ -24,36 +25,38 @@ const transactions = [
   { id: "TXN-006", order: "ORD-006", customer: "David Ooi", amount: "RM 320.00", method: "Credit Card", status: "failed", date: "2026-02-09 20:10" },
 ];
 
-function getStatusBadge(status: string) {
-  switch (status) {
-    case "success": return <Badge variant="secondary" className="text-xs bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Success</Badge>;
-    case "pending": return <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 dark:text-amber-400">Pending</Badge>;
-    case "failed": return <Badge variant="secondary" className="text-xs bg-red-500/10 text-red-600 dark:text-red-400">Failed</Badge>;
-    default: return null;
-  }
-}
-
 export default function PaymentsPage() {
+  const { t } = useTranslation("app");
+
+  function getStatusBadge(status: string) {
+    switch (status) {
+      case "success": return <Badge variant="secondary" className="text-xs bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">{t("payments.statusSuccess")}</Badge>;
+      case "pending": return <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 dark:text-amber-400">{t("payments.statusPending")}</Badge>;
+      case "failed": return <Badge variant="secondary" className="text-xs bg-red-500/10 text-red-600 dark:text-red-400">{t("payments.statusFailed")}</Badge>;
+      default: return null;
+    }
+  }
+
   return (
-    <AppLayout title="Payment Management">
+    <AppLayout title={t("payments.title")}>
       <div className="dashboard-page-padding section-spacing">
         <div className="stats-grid">
-          <StatCard label="Total Revenue" value="RM 24,560" icon={DollarSign} change="+8% this month" testId="card-stat-revenue" />
-          <StatCard label="Transactions" value="156" icon={CreditCard} testId="card-stat-transactions" />
-          <StatCard label="Pending" value="3" icon={Wallet} testId="card-stat-pending" />
-          <StatCard label="Success Rate" value="96.5%" icon={TrendingUp} testId="card-stat-rate" />
+          <StatCard label={t("payments.totalRevenue")} value="RM 24,560" icon={DollarSign} change="+8% this month" testId="card-stat-revenue" />
+          <StatCard label={t("payments.transactions")} value="156" icon={CreditCard} testId="card-stat-transactions" />
+          <StatCard label={t("payments.pending")} value="3" icon={Wallet} testId="card-stat-pending" />
+          <StatCard label={t("payments.successRate")} value="96.5%" icon={TrendingUp} testId="card-stat-rate" />
         </div>
 
         <div className="toolbar-row">
-          <SearchInput placeholder="Search transactions..." testId="input-search-transactions" />
+          <SearchInput placeholder={t("payments.searchTransactions")} testId="input-search-transactions" />
           <div className="toolbar-actions">
             <Button variant="outline" data-testid="button-filter-payments">
               <Filter className="h-4 w-4 mr-2" />
-              Filter
+              {t("common.filter")}
             </Button>
             <Button variant="outline" data-testid="button-payout">
               <DollarSign className="h-4 w-4 mr-2" />
-              Request Payout
+              {t("payments.requestPayout")}
             </Button>
           </div>
         </div>
@@ -63,13 +66,13 @@ export default function PaymentsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Transaction</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead className="hidden md:table-cell">Order</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
-                  <TableHead className="hidden sm:table-cell">Method</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="hidden lg:table-cell">Date</TableHead>
+                  <TableHead>{t("payments.thTransaction")}</TableHead>
+                  <TableHead>{t("payments.thCustomer")}</TableHead>
+                  <TableHead className="hidden md:table-cell">{t("payments.thOrder")}</TableHead>
+                  <TableHead className="text-right">{t("payments.thAmount")}</TableHead>
+                  <TableHead className="hidden sm:table-cell">{t("payments.thMethod")}</TableHead>
+                  <TableHead>{t("payments.thStatus")}</TableHead>
+                  <TableHead className="hidden lg:table-cell">{t("payments.thDate")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Plus, Filter, CalendarDays, Clock, CheckCircle2, XCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import "@/styles/dashboard.css";
 
 const appointments = [
@@ -27,26 +28,28 @@ const appointments = [
 ];
 
 export default function BookingPage() {
+  const { t } = useTranslation("app");
+
   return (
-    <AppLayout title="Booking & Appointments">
+    <AppLayout title={t("booking.title")}>
       <div className="dashboard-page-padding section-spacing">
         <div className="stats-grid">
-          <StatCard label="Today's Appointments" value="3" icon={CalendarDays} testId="card-stat-today" />
-          <StatCard label="Pending Confirmation" value="2" icon={Clock} testId="card-stat-pending" />
-          <StatCard label="Completed (Week)" value="18" icon={CheckCircle2} change="+20% vs last week" testId="card-stat-completed" />
-          <StatCard label="No-Shows (Month)" value="2" icon={XCircle} change="-60% vs last month" testId="card-stat-noshow" />
+          <StatCard label={t("booking.todaysAppointments")} value="3" icon={CalendarDays} testId="card-stat-today" />
+          <StatCard label={t("booking.pendingConfirmation")} value="2" icon={Clock} testId="card-stat-pending" />
+          <StatCard label={t("booking.completedWeek")} value="18" icon={CheckCircle2} change="+20% vs last week" testId="card-stat-completed" />
+          <StatCard label={t("booking.noShowsMonth")} value="2" icon={XCircle} change="-60% vs last month" testId="card-stat-noshow" />
         </div>
 
         <div className="toolbar-row">
-          <SearchInput placeholder="Search appointments..." testId="input-search-appointments" />
+          <SearchInput placeholder={t("booking.searchAppointments")} testId="input-search-appointments" />
           <div className="toolbar-actions">
             <Button variant="outline" data-testid="button-filter-appointments">
               <Filter className="h-4 w-4 mr-2" />
-              Filter
+              {t("common.filter")}
             </Button>
             <Button data-testid="button-new-appointment">
               <Plus className="h-4 w-4 mr-2" />
-              New Booking
+              {t("booking.newBooking")}
             </Button>
           </div>
         </div>
@@ -56,14 +59,14 @@ export default function BookingPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Client</TableHead>
-                  <TableHead>Service</TableHead>
-                  <TableHead className="hidden md:table-cell">Therapist</TableHead>
-                  <TableHead className="hidden sm:table-cell">Date</TableHead>
-                  <TableHead className="hidden sm:table-cell">Time</TableHead>
-                  <TableHead className="hidden lg:table-cell">Duration</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>{t("booking.thId")}</TableHead>
+                  <TableHead>{t("booking.thClient")}</TableHead>
+                  <TableHead>{t("booking.thService")}</TableHead>
+                  <TableHead className="hidden md:table-cell">{t("booking.thTherapist")}</TableHead>
+                  <TableHead className="hidden sm:table-cell">{t("booking.thDate")}</TableHead>
+                  <TableHead className="hidden sm:table-cell">{t("booking.thTime")}</TableHead>
+                  <TableHead className="hidden lg:table-cell">{t("booking.thDuration")}</TableHead>
+                  <TableHead>{t("booking.thStatus")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

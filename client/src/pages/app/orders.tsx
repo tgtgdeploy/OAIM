@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { AppLayout } from "./layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,26 +27,28 @@ const orders = [
 ];
 
 export default function OrdersPage() {
+  const { t } = useTranslation("app");
+
   return (
-    <AppLayout title="Orders">
+    <AppLayout title={t("orders.title")}>
       <div className="dashboard-page-padding section-spacing">
         <div className="stats-grid">
-          <StatCard label="Total Orders" value="156" icon={ShoppingCart} change="+12% this month" testId="card-summary-total-orders" />
-          <StatCard label="Revenue" value="RM 24,560" icon={Package} change="+8% this month" testId="card-summary-revenue" />
-          <StatCard label="In Transit" value="23" icon={Truck} testId="card-summary-in-transit" />
-          <StatCard label="Completed" value="128" icon={CheckCircle2} change="+15% this month" testId="card-summary-completed" />
+          <StatCard label={t("orders.totalOrders")} value="156" icon={ShoppingCart} change="+12% this month" testId="card-summary-total-orders" />
+          <StatCard label={t("orders.revenue")} value="RM 24,560" icon={Package} change="+8% this month" testId="card-summary-revenue" />
+          <StatCard label={t("orders.inTransit")} value="23" icon={Truck} testId="card-summary-in-transit" />
+          <StatCard label={t("orders.completed")} value="128" icon={CheckCircle2} change="+15% this month" testId="card-summary-completed" />
         </div>
 
         <div className="toolbar-row">
-          <SearchInput placeholder="Search orders..." testId="input-search-orders" />
+          <SearchInput placeholder={t("orders.searchOrders")} testId="input-search-orders" />
           <div className="toolbar-actions">
             <Button variant="outline" data-testid="button-filter-orders">
               <Filter className="h-4 w-4 mr-2" />
-              Filter
+              {t("common.filter")}
             </Button>
             <Button data-testid="button-create-order">
               <Plus className="h-4 w-4 mr-2" />
-              Create Order
+              {t("orders.createOrder")}
             </Button>
           </div>
         </div>
@@ -55,12 +58,12 @@ export default function OrdersPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Order ID</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead className="hidden md:table-cell">Items</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Total</TableHead>
-                  <TableHead className="hidden sm:table-cell">Date</TableHead>
+                  <TableHead>{t("orders.thOrderId")}</TableHead>
+                  <TableHead>{t("orders.thCustomer")}</TableHead>
+                  <TableHead className="hidden md:table-cell">{t("orders.thItems")}</TableHead>
+                  <TableHead>{t("orders.thStatus")}</TableHead>
+                  <TableHead className="text-right">{t("orders.thTotal")}</TableHead>
+                  <TableHead className="hidden sm:table-cell">{t("orders.thDate")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

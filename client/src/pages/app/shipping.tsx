@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/table";
 import { Filter, Truck, Package, MapPin, CheckCircle2 } from "lucide-react";
 import "@/styles/dashboard.css";
+import { useTranslation } from "react-i18next";
 
 const shipments = [
   { id: "SHP-001", order: "ORD-001", customer: "Sarah Ahmad", courier: "J&T Express", tracking: "JT2026021200123", destination: "Kuala Lumpur", status: "shipped", date: "2026-02-12" },
@@ -25,26 +26,28 @@ const shipments = [
 ];
 
 export default function ShippingPage() {
+  const { t } = useTranslation("app");
+
   return (
-    <AppLayout title="Shipping & Logistics">
+    <AppLayout title={t("shipping.title")}>
       <div className="dashboard-page-padding section-spacing">
         <div className="stats-grid">
-          <StatCard label="Active Shipments" value="2" icon={Truck} testId="card-stat-active" />
-          <StatCard label="Pending Pickup" value="2" icon={Package} testId="card-stat-pending" />
-          <StatCard label="Delivery Zones" value="8" icon={MapPin} testId="card-stat-zones" />
-          <StatCard label="Delivered (Month)" value="45" icon={CheckCircle2} change="+18% vs last month" testId="card-stat-delivered" />
+          <StatCard label={t("shipping.activeShipments")} value="2" icon={Truck} testId="card-stat-active" />
+          <StatCard label={t("shipping.pendingPickup")} value="2" icon={Package} testId="card-stat-pending" />
+          <StatCard label={t("shipping.deliveryZones")} value="8" icon={MapPin} testId="card-stat-zones" />
+          <StatCard label={t("shipping.deliveredMonth")} value="45" icon={CheckCircle2} change="+18% vs last month" testId="card-stat-delivered" />
         </div>
 
         <div className="toolbar-row">
-          <SearchInput placeholder="Search shipments..." testId="input-search-shipments" />
+          <SearchInput placeholder={t("shipping.searchShipments")} testId="input-search-shipments" />
           <div className="toolbar-actions">
             <Button variant="outline" data-testid="button-filter-shipments">
               <Filter className="h-4 w-4 mr-2" />
-              Filter
+              {t("common.filter")}
             </Button>
             <Button variant="outline" data-testid="button-manage-zones">
               <MapPin className="h-4 w-4 mr-2" />
-              Delivery Zones
+              {t("shipping.deliveryZones")}
             </Button>
           </div>
         </div>
@@ -54,13 +57,13 @@ export default function ShippingPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Shipment</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead className="hidden md:table-cell">Courier</TableHead>
-                  <TableHead className="hidden lg:table-cell">Tracking</TableHead>
-                  <TableHead className="hidden sm:table-cell">Destination</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="hidden sm:table-cell">Date</TableHead>
+                  <TableHead>{t("shipping.thShipment")}</TableHead>
+                  <TableHead>{t("shipping.thCustomer")}</TableHead>
+                  <TableHead className="hidden md:table-cell">{t("shipping.thCourier")}</TableHead>
+                  <TableHead className="hidden lg:table-cell">{t("shipping.thTracking")}</TableHead>
+                  <TableHead className="hidden sm:table-cell">{t("shipping.thDestination")}</TableHead>
+                  <TableHead>{t("shipping.thStatus")}</TableHead>
+                  <TableHead className="hidden sm:table-cell">{t("shipping.thDate")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

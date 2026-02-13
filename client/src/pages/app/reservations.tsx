@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/table";
 import { SearchInput } from "@/components/shared/search-input";
 import { Plus, Filter, CalendarDays, Users, Clock, CheckCircle2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import "@/styles/dashboard.css";
 
 const reservations = [
@@ -26,26 +27,28 @@ const reservations = [
 ];
 
 export default function ReservationsPage() {
+  const { t } = useTranslation("app");
+
   return (
-    <AppLayout title="Reservations">
+    <AppLayout title={t("reservations.title")}>
       <div className="dashboard-page-padding section-spacing">
         <div className="stats-grid">
-          <StatCard label="Today's Bookings" value="3" icon={CalendarDays} testId="card-stat-today" />
-          <StatCard label="Total Guests Today" value="14" icon={Users} testId="card-stat-guests" />
-          <StatCard label="Pending" value="3" icon={Clock} testId="card-stat-pending" />
-          <StatCard label="This Week" value="12" icon={CheckCircle2} change="+25% vs last week" testId="card-stat-week" />
+          <StatCard label={t("reservations.todaysBookings")} value="3" icon={CalendarDays} testId="card-stat-today" />
+          <StatCard label={t("reservations.totalGuestsToday")} value="14" icon={Users} testId="card-stat-guests" />
+          <StatCard label={t("reservations.pending")} value="3" icon={Clock} testId="card-stat-pending" />
+          <StatCard label={t("reservations.thisWeek")} value="12" icon={CheckCircle2} change="+25% vs last week" testId="card-stat-week" />
         </div>
 
         <div className="toolbar-row">
-          <SearchInput placeholder="Search reservations..." testId="input-search-reservations" />
+          <SearchInput placeholder={t("reservations.searchReservations")} testId="input-search-reservations" />
           <div className="toolbar-actions">
             <Button variant="outline" data-testid="button-filter-reservations">
               <Filter className="h-4 w-4 mr-2" />
-              Filter
+              {t("common.filter")}
             </Button>
             <Button data-testid="button-add-reservation">
               <Plus className="h-4 w-4 mr-2" />
-              Add Booking
+              {t("reservations.addBooking")}
             </Button>
           </div>
         </div>
@@ -55,14 +58,14 @@ export default function ReservationsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Guest</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead className="hidden sm:table-cell">Time</TableHead>
-                  <TableHead>Pax</TableHead>
-                  <TableHead className="hidden md:table-cell">Table</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="hidden lg:table-cell">Note</TableHead>
+                  <TableHead>{t("reservations.thId")}</TableHead>
+                  <TableHead>{t("reservations.thGuest")}</TableHead>
+                  <TableHead>{t("reservations.thDate")}</TableHead>
+                  <TableHead className="hidden sm:table-cell">{t("reservations.thTime")}</TableHead>
+                  <TableHead>{t("reservations.thPax")}</TableHead>
+                  <TableHead className="hidden md:table-cell">{t("reservations.thTable")}</TableHead>
+                  <TableHead>{t("reservations.thStatus")}</TableHead>
+                  <TableHead className="hidden lg:table-cell">{t("reservations.thNote")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Plus, Star, Clock, CalendarCheck } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const therapists = [
   {
@@ -63,46 +64,48 @@ const therapists = [
   },
 ];
 
-function getStatusBadge(status: string) {
-  switch (status) {
-    case "available": return <Badge variant="secondary" className="text-xs bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Available</Badge>;
-    case "busy": return <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 dark:text-amber-400">In Session</Badge>;
-    case "off": return <Badge variant="secondary" className="text-xs bg-muted text-muted-foreground">Day Off</Badge>;
-    default: return null;
-  }
-}
-
 export default function TherapistsPage() {
+  const { t } = useTranslation("app");
+
+  function getStatusBadge(status: string) {
+    switch (status) {
+      case "available": return <Badge variant="secondary" className="text-xs bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">{t("therapists.statusAvailable")}</Badge>;
+      case "busy": return <Badge variant="secondary" className="text-xs bg-amber-500/10 text-amber-600 dark:text-amber-400">{t("therapists.statusInSession")}</Badge>;
+      case "off": return <Badge variant="secondary" className="text-xs bg-muted text-muted-foreground">{t("therapists.statusDayOff")}</Badge>;
+      default: return null;
+    }
+  }
+
   return (
-    <AppLayout title="Therapist Management">
+    <AppLayout title={t("therapists.title")}>
       <div className="p-4 md:p-6 space-y-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <p className="text-sm text-muted-foreground">{therapists.length} therapists on your team</p>
+          <p className="text-sm text-muted-foreground">{t("therapists.countTherapists", { count: therapists.length })}</p>
           <Button data-testid="button-add-therapist">
             <Plus className="h-4 w-4 mr-2" />
-            Add Therapist
+            {t("therapists.addTherapist")}
           </Button>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {therapists.map((t) => (
-            <Card key={t.id} className="hover-elevate overflow-visible cursor-pointer" data-testid={`card-therapist-${t.id}`}>
+          {therapists.map((therapist) => (
+            <Card key={therapist.id} className="hover-elevate overflow-visible cursor-pointer" data-testid={`card-therapist-${therapist.id}`}>
               <CardContent className="p-5">
                 <div className="flex items-start gap-4 mb-4">
-                  <Avatar className="h-12 w-12" data-testid={`avatar-therapist-${t.id}`}>
-                    <AvatarFallback className="bg-rose-500/10 text-rose-600 dark:text-rose-400 text-sm font-medium">{t.initials}</AvatarFallback>
+                  <Avatar className="h-12 w-12" data-testid={`avatar-therapist-${therapist.id}`}>
+                    <AvatarFallback className="bg-rose-500/10 text-rose-600 dark:text-rose-400 text-sm font-medium">{therapist.initials}</AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2 flex-wrap">
-                      <h3 className="font-semibold text-sm" data-testid={`text-therapist-name-${t.id}`}>{t.name}</h3>
-                      {getStatusBadge(t.status)}
+                      <h3 className="font-semibold text-sm" data-testid={`text-therapist-name-${therapist.id}`}>{therapist.name}</h3>
+                      {getStatusBadge(therapist.status)}
                     </div>
-                    <p className="text-xs text-muted-foreground">{t.role}</p>
+                    <p className="text-xs text-muted-foreground">{therapist.role}</p>
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-1.5 mb-4">
-                  {t.specialties.map((s) => (
+                  {therapist.specialties.map((s) => (
                     <Badge key={s} variant="outline" className="text-[10px] px-1.5 py-0">{s}</Badge>
                   ))}
                 </div>
@@ -111,23 +114,23 @@ export default function TherapistsPage() {
                   <div>
                     <div className="flex items-center justify-center gap-1 text-amber-500 mb-0.5">
                       <Star className="h-3 w-3 fill-amber-500" />
-                      <span className="text-sm font-bold">{t.rating}</span>
+                      <span className="text-sm font-bold">{therapist.rating}</span>
                     </div>
-                    <p className="text-[10px] text-muted-foreground">Rating</p>
+                    <p className="text-[10px] text-muted-foreground">{t("therapists.rating")}</p>
                   </div>
                   <div>
                     <div className="flex items-center justify-center gap-1 mb-0.5">
                       <CalendarCheck className="h-3 w-3 text-muted-foreground" />
-                      <span className="text-sm font-bold">{t.todayBookings}</span>
+                      <span className="text-sm font-bold">{therapist.todayBookings}</span>
                     </div>
-                    <p className="text-[10px] text-muted-foreground">Today</p>
+                    <p className="text-[10px] text-muted-foreground">{t("therapists.today")}</p>
                   </div>
                   <div>
                     <div className="flex items-center justify-center gap-1 mb-0.5">
                       <Clock className="h-3 w-3 text-muted-foreground" />
-                      <span className="text-sm font-bold">{t.weeklyHours}h</span>
+                      <span className="text-sm font-bold">{therapist.weeklyHours}h</span>
                     </div>
-                    <p className="text-[10px] text-muted-foreground">This Week</p>
+                    <p className="text-[10px] text-muted-foreground">{t("therapists.thisWeek")}</p>
                   </div>
                 </div>
               </CardContent>

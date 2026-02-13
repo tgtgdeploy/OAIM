@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Clock, CheckCircle2, AlertCircle, Calendar } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const followUps = [
   { id: "1", contact: "Lisa Tan", message: "Hi Lisa! Just checking in on your order. Would you like to confirm?", scheduled: "Today 3:00 PM", status: "pending", type: "automated" },
@@ -17,45 +18,47 @@ const followUps = [
   { id: "8", contact: "Siti Aminah", message: "Hi Siti, your scarves bundle inquiry is still open.", scheduled: "Feb 7, 10:00 AM", status: "overdue", type: "automated" },
 ];
 
-const statusConfig: Record<string, { label: string; color: string; icon: typeof Clock }> = {
-  pending: { label: "Pending", color: "bg-blue-500/10 text-blue-700 dark:text-blue-300", icon: Clock },
-  completed: { label: "Completed", color: "bg-green-500/10 text-green-700 dark:text-green-300", icon: CheckCircle2 },
-  overdue: { label: "Overdue", color: "bg-red-500/10 text-red-700 dark:text-red-300", icon: AlertCircle },
-};
-
 export default function FollowUpsPage() {
+  const { t } = useTranslation("app");
+
+  const statusConfig: Record<string, { label: string; color: string; icon: typeof Clock }> = {
+    pending: { label: t("followUps.statusPending"), color: "bg-blue-500/10 text-blue-700 dark:text-blue-300", icon: Clock },
+    completed: { label: t("followUps.statusCompleted"), color: "bg-green-500/10 text-green-700 dark:text-green-300", icon: CheckCircle2 },
+    overdue: { label: t("followUps.statusOverdue"), color: "bg-red-500/10 text-red-700 dark:text-red-300", icon: AlertCircle },
+  };
+
   return (
-    <AppLayout title="Follow-ups">
+    <AppLayout title={t("followUps.title")}>
       <div className="p-4 md:p-6 space-y-4">
         <div className="flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 text-sm">
               <Clock className="h-4 w-4 text-blue-500" />
-              <span>{followUps.filter(f => f.status === "pending").length} pending</span>
+              <span>{t("followUps.pending", { count: followUps.filter(f => f.status === "pending").length })}</span>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <AlertCircle className="h-4 w-4 text-red-500" />
-              <span>{followUps.filter(f => f.status === "overdue").length} overdue</span>
+              <span>{t("followUps.overdue", { count: followUps.filter(f => f.status === "overdue").length })}</span>
             </div>
           </div>
           <div className="flex gap-2">
             <Button variant="outline" data-testid="button-calendar-view">
               <Calendar className="h-4 w-4 mr-2" />
-              Calendar
+              {t("followUps.calendar")}
             </Button>
             <Button data-testid="button-create-followup">
               <Plus className="h-4 w-4 mr-2" />
-              New Follow-up
+              {t("followUps.newFollowUp")}
             </Button>
           </div>
         </div>
 
         <Tabs defaultValue="all">
           <TabsList>
-            <TabsTrigger value="all" data-testid="tab-all">All</TabsTrigger>
-            <TabsTrigger value="pending" data-testid="tab-pending">Pending</TabsTrigger>
-            <TabsTrigger value="overdue" data-testid="tab-overdue">Overdue</TabsTrigger>
-            <TabsTrigger value="completed" data-testid="tab-completed">Completed</TabsTrigger>
+            <TabsTrigger value="all" data-testid="tab-all">{t("followUps.tabAll")}</TabsTrigger>
+            <TabsTrigger value="pending" data-testid="tab-pending">{t("followUps.tabPending")}</TabsTrigger>
+            <TabsTrigger value="overdue" data-testid="tab-overdue">{t("followUps.tabOverdue")}</TabsTrigger>
+            <TabsTrigger value="completed" data-testid="tab-completed">{t("followUps.tabCompleted")}</TabsTrigger>
           </TabsList>
 
           {["all", "pending", "overdue", "completed"].map((tab) => (
@@ -91,7 +94,7 @@ export default function FollowUpsPage() {
                           </div>
                           {followUp.status === "pending" && (
                             <Button variant="outline" size="sm" data-testid={`button-send-${followUp.id}`}>
-                              Send Now
+                              {t("followUps.sendNow")}
                             </Button>
                           )}
                         </div>

@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Plus, LayoutGrid, Users } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const tables = [
   { id: "T-01", seats: 2, status: "available", zone: "Indoor" },
@@ -49,37 +50,52 @@ const counts = {
 };
 
 export default function TablesPage() {
+  const { t } = useTranslation("app");
+
+  const statusLabels: Record<string, string> = {
+    available: t("tables.available"),
+    occupied: t("tables.occupied"),
+    reserved: t("tables.reserved"),
+    cleaning: t("tables.cleaning"),
+  };
+
+  const zoneLabels: Record<string, string> = {
+    Indoor: t("tables.zoneIndoor"),
+    Outdoor: t("tables.zoneOutdoor"),
+    VIP: t("tables.zoneVip"),
+  };
+
   return (
-    <AppLayout title="Table Management">
+    <AppLayout title={t("tables.title")}>
       <div className="p-4 md:p-6 space-y-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-center gap-4 flex-wrap">
             <div className="flex items-center gap-1.5">
               <div className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
-              <span className="text-xs text-muted-foreground">Available ({counts.available})</span>
+              <span className="text-xs text-muted-foreground">{t("tables.available")} ({counts.available})</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="h-2.5 w-2.5 rounded-full bg-red-500" />
-              <span className="text-xs text-muted-foreground">Occupied ({counts.occupied})</span>
+              <span className="text-xs text-muted-foreground">{t("tables.occupied")} ({counts.occupied})</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="h-2.5 w-2.5 rounded-full bg-blue-500" />
-              <span className="text-xs text-muted-foreground">Reserved ({counts.reserved})</span>
+              <span className="text-xs text-muted-foreground">{t("tables.reserved")} ({counts.reserved})</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="h-2.5 w-2.5 rounded-full bg-amber-500" />
-              <span className="text-xs text-muted-foreground">Cleaning ({counts.cleaning})</span>
+              <span className="text-xs text-muted-foreground">{t("tables.cleaning")} ({counts.cleaning})</span>
             </div>
           </div>
           <Button data-testid="button-add-table">
             <Plus className="h-4 w-4 mr-2" />
-            Add Table
+            {t("tables.addTable")}
           </Button>
         </div>
 
         {zones.map((zone) => (
           <div key={zone}>
-            <h3 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wider">{zone}</h3>
+            <h3 className="text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wider">{zoneLabels[zone] ?? zone}</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
               {tables.filter((t) => t.zone === zone).map((table) => (
                 <Card
@@ -91,18 +107,18 @@ export default function TablesPage() {
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-sm font-bold" data-testid={`text-table-id-${table.id}`}>{table.id}</span>
                       <Badge variant="outline" className={`text-[10px] px-1.5 py-0 ${getStatusColor(table.status)}`}>
-                        {table.status}
+                        {statusLabels[table.status] ?? table.status}
                       </Badge>
                     </div>
                     <div className="flex items-center justify-center gap-1 mb-2">
                       <Users className="h-3.5 w-3.5 text-muted-foreground" />
-                      <span className="text-xs text-muted-foreground">{table.seats} seats</span>
+                      <span className="text-xs text-muted-foreground">{t("tables.seats", { count: table.seats })}</span>
                     </div>
                     {(table.status === "occupied" || table.status === "reserved") && (
                       <div className="text-[11px] text-muted-foreground truncate">
                         {table.guest}
-                        {table.since && <span className="block">Since {table.since}</span>}
-                        {table.time && <span className="block">At {table.time}</span>}
+                        {table.since && <span className="block">{t("tables.since", { time: table.since })}</span>}
+                        {table.time && <span className="block">{t("tables.at", { time: table.time })}</span>}
                       </div>
                     )}
                   </CardContent>

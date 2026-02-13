@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Plus, Filter, Bike, Package, Clock, CheckCircle2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import "@/styles/dashboard.css";
 
 const deliveries = [
@@ -26,26 +27,28 @@ const deliveries = [
 ];
 
 export default function DeliveryPage() {
+  const { t } = useTranslation("app");
+
   return (
-    <AppLayout title="Delivery & Takeaway">
+    <AppLayout title={t("delivery.title")}>
       <div className="dashboard-page-padding section-spacing">
         <div className="stats-grid">
-          <StatCard label="Active Deliveries" value="2" icon={Bike} testId="card-stat-active" />
-          <StatCard label="Pending Pickup" value="2" icon={Package} testId="card-stat-pickup" />
-          <StatCard label="Avg Delivery Time" value="22 min" icon={Clock} testId="card-stat-avg-time" />
-          <StatCard label="Completed Today" value="18" icon={CheckCircle2} change="+30% vs yesterday" testId="card-stat-completed" />
+          <StatCard label={t("delivery.activeDeliveries")} value="2" icon={Bike} testId="card-stat-active" />
+          <StatCard label={t("delivery.pendingPickup")} value="2" icon={Package} testId="card-stat-pickup" />
+          <StatCard label={t("delivery.avgDeliveryTime")} value="22 min" icon={Clock} testId="card-stat-avg-time" />
+          <StatCard label={t("delivery.completedToday")} value="18" icon={CheckCircle2} change="+30% vs yesterday" testId="card-stat-completed" />
         </div>
 
         <div className="toolbar-row">
-          <SearchInput placeholder="Search deliveries..." testId="input-search-deliveries" />
+          <SearchInput placeholder={t("delivery.searchDeliveries")} testId="input-search-deliveries" />
           <div className="toolbar-actions">
             <Button variant="outline" data-testid="button-filter-deliveries">
               <Filter className="h-4 w-4 mr-2" />
-              Filter
+              {t("common.filter")}
             </Button>
             <Button data-testid="button-new-delivery">
               <Plus className="h-4 w-4 mr-2" />
-              New Delivery
+              {t("delivery.newDelivery")}
             </Button>
           </div>
         </div>
@@ -55,12 +58,12 @@ export default function DeliveryPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead className="hidden md:table-cell">Address</TableHead>
-                  <TableHead className="hidden sm:table-cell">Rider</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="hidden sm:table-cell">ETA</TableHead>
+                  <TableHead>{t("delivery.thId")}</TableHead>
+                  <TableHead>{t("delivery.thCustomer")}</TableHead>
+                  <TableHead className="hidden md:table-cell">{t("delivery.thAddress")}</TableHead>
+                  <TableHead className="hidden sm:table-cell">{t("delivery.thRider")}</TableHead>
+                  <TableHead>{t("delivery.thStatus")}</TableHead>
+                  <TableHead className="hidden sm:table-cell">{t("delivery.thEta")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

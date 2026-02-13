@@ -2,26 +2,31 @@ import { AppLayout } from "./layout";
 import { AdsModule } from "@/components/modules/ads-module";
 import { LockedFeature } from "@/components/shared/locked-feature";
 import { BarChart3, TrendingUp, DollarSign, Users } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const isUnlocked = false;
 
 export default function AdsPage() {
+  const { t } = useTranslation("app");
+
+  const features = [
+    { icon: BarChart3, title: t("ads.feat1Title"), desc: t("ads.feat1Desc") },
+    { icon: TrendingUp, title: t("ads.feat2Title"), desc: t("ads.feat2Desc") },
+    { icon: DollarSign, title: t("ads.feat3Title"), desc: t("ads.feat3Desc") },
+    { icon: Users, title: t("ads.feat4Title"), desc: t("ads.feat4Desc") },
+  ];
+
   return (
-    <AppLayout title="Meta Ads & ROI">
+    <AppLayout title={t("ads.title")}>
       <div className="p-4 md:p-6">
         {isUnlocked ? (
           <AdsModule context="merchant" />
         ) : (
           <LockedFeature
-            title="Meta Ads & ROI Tracking"
-            description="This module is available on the Business plan. Track your Meta ad campaigns, import leads, and measure real ROI."
-            upgradePlan="Business"
-            features={[
-              { icon: BarChart3, title: "Campaign Dashboard", desc: "See all your Meta campaigns in one place" },
-              { icon: TrendingUp, title: "Lead Attribution", desc: "Track leads from ad click to sale" },
-              { icon: DollarSign, title: "ROI Reports", desc: "Cost per lead, cost per sale, ROAS" },
-              { icon: Users, title: "Lead Import", desc: "Auto-import Click-to-WhatsApp leads" },
-            ]}
+            title={t("ads.lockedTitle")}
+            description={t("ads.lockedDesc")}
+            upgradePlan={t("ads.lockedPlan")}
+            features={features}
             testId="locked-ads"
           />
         )}

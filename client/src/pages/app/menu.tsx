@@ -14,6 +14,7 @@ import {
   Flame,
 } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const categories = [
   { id: "1", name: "Rice & Noodles", count: 8, active: true },
@@ -36,28 +37,29 @@ const menuItems = [
 ];
 
 export default function MenuPage() {
+  const { t } = useTranslation("app");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const filtered = activeCategory
     ? menuItems.filter((m) => m.category === activeCategory)
     : menuItems;
 
   return (
-    <AppLayout title="Menu Management">
+    <AppLayout title={t("menu.title")}>
       <div className="p-4 md:p-6 space-y-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <p className="text-sm text-muted-foreground">{menuItems.length} items across {categories.length} categories</p>
+          <p className="text-sm text-muted-foreground">{t("menu.itemsAcross", { items: menuItems.length, categories: categories.length })}</p>
           <div className="flex items-center gap-2 flex-wrap">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search menu..." className="pl-9 w-56" data-testid="input-search-menu" />
+              <Input placeholder={t("menu.searchMenu")} className="pl-9 w-56" data-testid="input-search-menu" />
             </div>
             <Button variant="outline" data-testid="button-add-category">
               <Plus className="h-4 w-4 mr-2" />
-              Category
+              {t("menu.category")}
             </Button>
             <Button data-testid="button-add-item">
               <Plus className="h-4 w-4 mr-2" />
-              Add Item
+              {t("menu.addItem")}
             </Button>
           </div>
         </div>
@@ -69,7 +71,7 @@ export default function MenuPage() {
             onClick={() => setActiveCategory(null)}
             data-testid="filter-all"
           >
-            All
+            {t("menu.all")}
           </Button>
           {categories.map((cat) => (
             <Button
@@ -100,7 +102,7 @@ export default function MenuPage() {
                       {item.popular && (
                         <Badge variant="secondary" className="text-[10px] px-1.5 py-0 gap-0.5">
                           <Flame className="h-2.5 w-2.5" />
-                          Popular
+                          {t("menu.popular")}
                         </Badge>
                       )}
                     </div>

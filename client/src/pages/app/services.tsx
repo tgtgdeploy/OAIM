@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Search, Plus, Clock, MoreVertical, GripVertical } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const serviceCategories = [
   { id: "1", name: "Facial", count: 4 },
@@ -28,23 +29,25 @@ const serviceItems = [
 ];
 
 export default function ServicesPage() {
+  const { t } = useTranslation("app");
+
   return (
-    <AppLayout title="Service Catalog">
+    <AppLayout title={t("services.title")}>
       <div className="p-4 md:p-6 space-y-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <p className="text-sm text-muted-foreground">{serviceItems.length} services in {serviceCategories.length} categories</p>
+          <p className="text-sm text-muted-foreground">{t("services.countServices", { services: serviceItems.length, categories: serviceCategories.length })}</p>
           <div className="flex items-center gap-2 flex-wrap">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input placeholder="Search services..." className="pl-9 w-56" data-testid="input-search-services" />
+              <Input placeholder={t("services.searchServices")} className="pl-9 w-56" data-testid="input-search-services" />
             </div>
             <Button variant="outline" data-testid="button-add-category">
               <Plus className="h-4 w-4 mr-2" />
-              Category
+              {t("services.category")}
             </Button>
             <Button data-testid="button-add-service">
               <Plus className="h-4 w-4 mr-2" />
-              Add Service
+              {t("services.addService")}
             </Button>
           </div>
         </div>

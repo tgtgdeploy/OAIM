@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { AppLayout } from "./layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -26,14 +27,6 @@ const contacts = [
   { id: "8", name: "James Wong", phone: "+60 18-901-2345", email: "james@email.com", tags: ["New"], stage: "new_inquiry", orders: 0, value: "RM 0" },
 ];
 
-const stageLabels: Record<string, string> = {
-  new_inquiry: "New",
-  quoted: "Quoted",
-  follow_up: "Follow-up",
-  closed_won: "Won",
-  closed_lost: "Lost",
-};
-
 const stageColors: Record<string, string> = {
   new_inquiry: "bg-blue-500/10 text-blue-700 dark:text-blue-300",
   quoted: "bg-yellow-500/10 text-yellow-700 dark:text-yellow-300",
@@ -43,24 +36,33 @@ const stageColors: Record<string, string> = {
 };
 
 export default function ContactsPage() {
+  const { t } = useTranslation("app");
   const [searchQuery, setSearchQuery] = useState("");
+
+  const stageLabels: Record<string, string> = {
+    new_inquiry: t("contacts.stageNew"),
+    quoted: t("contacts.stageQuoted"),
+    follow_up: t("contacts.stageFollowUp"),
+    closed_won: t("contacts.stageWon"),
+    closed_lost: t("contacts.stageLost"),
+  };
   const filtered = contacts.filter(c =>
     c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     c.phone.includes(searchQuery)
   );
 
   return (
-    <AppLayout title="Contacts">
+    <AppLayout title={t("contacts.title")}>
       <div className="p-4 md:p-6 space-y-4">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div>
-            <p className="text-sm text-muted-foreground">{contacts.length} total contacts</p>
+            <p className="text-sm text-muted-foreground">{t("contacts.totalContacts", { count: contacts.length })}</p>
           </div>
           <div className="flex items-center gap-2 flex-wrap">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search contacts..."
+                placeholder={t("contacts.searchContacts")}
                 className="pl-9 w-64"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -69,15 +71,15 @@ export default function ContactsPage() {
             </div>
             <Button variant="outline" data-testid="button-filter">
               <Filter className="h-4 w-4 mr-2" />
-              Filter
+              {t("common.filter")}
             </Button>
             <Button variant="outline" data-testid="button-export">
               <Download className="h-4 w-4 mr-2" />
-              Export
+              {t("common.export")}
             </Button>
             <Button data-testid="button-add-contact">
               <Plus className="h-4 w-4 mr-2" />
-              Add Contact
+              {t("contacts.addContact")}
             </Button>
           </div>
         </div>
@@ -87,12 +89,12 @@ export default function ContactsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Contact</TableHead>
-                  <TableHead className="hidden md:table-cell">Phone</TableHead>
-                  <TableHead className="hidden lg:table-cell">Tags</TableHead>
-                  <TableHead>Stage</TableHead>
-                  <TableHead className="hidden sm:table-cell text-right">Orders</TableHead>
-                  <TableHead className="hidden sm:table-cell text-right">Value</TableHead>
+                  <TableHead>{t("contacts.thContact")}</TableHead>
+                  <TableHead className="hidden md:table-cell">{t("contacts.thPhone")}</TableHead>
+                  <TableHead className="hidden lg:table-cell">{t("contacts.thTags")}</TableHead>
+                  <TableHead>{t("contacts.thStage")}</TableHead>
+                  <TableHead className="hidden sm:table-cell text-right">{t("contacts.thOrders")}</TableHead>
+                  <TableHead className="hidden sm:table-cell text-right">{t("contacts.thValue")}</TableHead>
                   <TableHead className="w-10"></TableHead>
                 </TableRow>
               </TableHeader>
