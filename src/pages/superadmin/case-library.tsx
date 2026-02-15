@@ -1,0 +1,88 @@
+import { SuperAdminLayout } from "./layout";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Search, Plus, Store, UtensilsCrossed, Eye, Edit, Trash2, Image } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { useCaseStudies } from "@/hooks/use-case-studies";
+
+export default function CaseLibraryPage() {
+  const { t } = useTranslation("superadmin");
+  const { data: cases = [], isLoading } = useCaseStudies();
+
+  return (
+    <SuperAdminLayout title={t("caseLibrary.title")}>
+      <div className="p-4 md:p-6 space-y-4">
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input placeholder={t("caseLibrary.searchPlaceholder")} className="pl-9 w-64" data-testid="input-search-cases" />
+          </div>
+          <Button data-testid="button-add-case">
+            <Plus className="h-4 w-4 mr-2" />
+            {t("caseLibrary.addCaseStudy")}
+          </Button>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {isLoading
+            ? Array.from({ length: 3 }, (_, i) => (
+                <Card key={i} className="overflow-visible">
+                  <CardContent className="p-0">
+                    <Skeleton className="aspect-video rounded-t-md" />
+                    <div className="p-4 space-y-2">
+                      <Skeleton className="h-5 w-24" />
+                      <Skeleton className="h-4 w-48" />
+                      <Skeleton className="h-3 w-32" />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
+            : cases.map((c) => (
+                <Card key={c.id} className="hover-elevate overflow-visible" data-testid={`card-case-${c.id}`}>
+                  <CardContent className="p-0">
+                    <div className="aspect-video bg-muted rounded-t-md flex items-center justify-center">
+                      <Image className="h-10 w-10 text-muted-foreground/20" />
+                    </div>
+                    <div className="p-4">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
+                        <Badge variant="outline" className="text-xs">
+                          {c.industry === "ecommerce" ? (
+                            <><Store className="h-3 w-3 mr-1" />{t("caseLibrary.ecom")}</>
+                          ) : (
+                            <><UtensilsCrossed className="h-3 w-3 mr-1" />{t("caseLibrary.restaurant")}</>
+                          )}
+                        </Badge>
+                        <Badge variant={c.is_published ? "default" : "secondary"} className="text-xs">
+                          {c.is_published ? t("caseLibrary.published") : t("caseLibrary.draft")}
+                        </Badge>
+                      </div>
+                      <h3 className="text-sm font-semibold mb-1">{c.title}</h3>
+                      <p className="text-xs text-muted-foreground mb-3">
+                        {t("caseLibrary.screenshotsMetrics", {
+                          screenshots: c.screenshots.length,
+                          metrics: Object.keys(c.metrics).length,
+                        })}
+                      </p>
+                      <div className="flex items-center gap-1">
+                        <Button size="icon" variant="ghost" data-testid={`button-view-${c.id}`}>
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                        <Button size="icon" variant="ghost" data-testid={`button-edit-${c.id}`}>
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button size="icon" variant="ghost" data-testid={`button-delete-${c.id}`}>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+        </div>
+      </div>
+    </SuperAdminLayout>
+  );
+}
