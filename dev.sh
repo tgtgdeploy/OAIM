@@ -1,2 +1,2 @@
 #!/bin/bash
-npx vite --host 0.0.0.0 --port 5000
+npx vite --host 0.0.0.0 --port 5173
