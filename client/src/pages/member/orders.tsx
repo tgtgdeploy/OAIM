@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ShoppingBag, Eye, MessageSquare, RotateCcw } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const orders = [
   { id: "ORD-005", items: ["Blue Dress x3"], total: "RM 267.00", status: "confirmed", date: "Feb 10, 2026", payment: "COD" },
@@ -14,14 +15,15 @@ const orders = [
 ];
 
 export default function MemberOrders() {
+  const { t } = useTranslation("member");
   return (
-    <MemberLayout title="My Orders">
+    <MemberLayout title={t("orders.title")}>
       <div className="p-4 md:p-6 space-y-4">
         <Tabs defaultValue="all">
           <TabsList>
-            <TabsTrigger value="all" data-testid="tab-all-orders">All</TabsTrigger>
-            <TabsTrigger value="active" data-testid="tab-active-orders">Active</TabsTrigger>
-            <TabsTrigger value="completed" data-testid="tab-completed-orders">Completed</TabsTrigger>
+            <TabsTrigger value="all" data-testid="tab-all-orders">{t("orders.tabAll")}</TabsTrigger>
+            <TabsTrigger value="active" data-testid="tab-active-orders">{t("orders.tabActive")}</TabsTrigger>
+            <TabsTrigger value="completed" data-testid="tab-completed-orders">{t("orders.tabCompleted")}</TabsTrigger>
           </TabsList>
 
           {["all", "active", "completed"].map((tab) => (

@@ -31,5 +31,48 @@
     "myOrders": "My Orders",
     "myProfile": "My Profile",
     "chatWithUs": "Chat with Us"
+  },
+  "track": {
+    "title": "Track Order",
+    "searchPlaceholder": "Enter order ID (e.g. ORD-005)",
+    "inTransit": "In Transit",
+    "contactSeller": "Contact Seller",
+    "stepOrderPlaced": "Order Placed",
+    "stepConfirmed": "Confirmed by Seller",
+    "stepShipped": "Shipped",
+    "stepOutForDelivery": "Out for Delivery",
+    "stepDelivered": "Delivered"
+  },
+  "profile": {
+    "title": "My Profile",
+    "goldMember": "Gold Member",
+    "memberSince": "Member since {{date}}",
+    "fullName": "Full Name",
+    "phone": "Phone (WhatsApp)",
+    "email": "Email",
+    "deliveryAddress": "Delivery Address",
+    "saveChanges": "Save Changes"
+  },
+  "orders": {
+    "title": "My Orders",
+    "tabAll": "All",
+    "tabActive": "Active",
+    "tabCompleted": "Completed"
+  },
+  "loyalty": {
+    "title": "Loyalty & Rewards",
+    "pointsBalance": "Points Balance",
+    "tier": "Tier",
+    "availableRewards": "Available Rewards",
+    "pointsEarnedMonth": "Points Earned (Month)",
+    "goldMember": "Gold Member",
+    "pointsToTier": "{{current}} / {{target}} points to {{tier}}",
+    "points": "{{count}} points",
+    "redeem": "Redeem",
+    "morePoints": "{{count}} more",
+    "pointsHistory": "Points History"
+  },
+  "referral": {
+    "title": "Refer & Earn"
   }
 }

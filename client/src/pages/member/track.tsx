@@ -4,22 +4,25 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Search, Package, Truck, CheckCircle2, MapPin, Clock } from "lucide-react";
-
-const trackingSteps = [
-  { label: "Order Placed", time: "Feb 10, 10:30 AM", done: true, icon: Package },
-  { label: "Confirmed by Seller", time: "Feb 10, 11:15 AM", done: true, icon: CheckCircle2 },
-  { label: "Shipped", time: "Feb 11, 2:00 PM", done: true, icon: Truck },
-  { label: "Out for Delivery", time: "Estimated Feb 13", done: false, icon: MapPin },
-  { label: "Delivered", time: "-", done: false, icon: CheckCircle2 },
-];
+import { useTranslation } from "react-i18next";
 
 export default function MemberTrack() {
+  const { t } = useTranslation("member");
+
+  const trackingSteps = [
+    { label: t("track.stepOrderPlaced"), time: "Feb 10, 10:30 AM", done: true, icon: Package },
+    { label: t("track.stepConfirmed"), time: "Feb 10, 11:15 AM", done: true, icon: CheckCircle2 },
+    { label: t("track.stepShipped"), time: "Feb 11, 2:00 PM", done: true, icon: Truck },
+    { label: t("track.stepOutForDelivery"), time: "Estimated Feb 13", done: false, icon: MapPin },
+    { label: t("track.stepDelivered"), time: "-", done: false, icon: CheckCircle2 },
+  ];
+
   return (
-    <MemberLayout title="Track Order">
+    <MemberLayout title={t("track.title")}>
       <div className="p-4 md:p-6 space-y-4">
         <div className="relative max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input placeholder="Enter order ID (e.g. ORD-005)" className="pl-9" data-testid="input-track-order" />
+          <Input placeholder={t("track.searchPlaceholder")} className="pl-9" data-testid="input-track-order" />
         </div>
 
         <Card>
@@ -28,18 +31,18 @@ export default function MemberTrack() {
               <div>
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
                   <h3 className="font-bold">ORD-005</h3>
-                  <Badge className="text-xs">In Transit</Badge>
+                  <Badge className="text-xs">{t("track.inTransit")}</Badge>
                 </div>
                 <p className="text-sm text-muted-foreground">Blue Dress x3 — RM 267.00</p>
               </div>
               <Button variant="outline" size="sm" data-testid="button-contact-seller">
-                Contact Seller
+                {t("track.contactSeller")}
               </Button>
             </div>
 
             <div className="relative pl-8">
               {trackingSteps.map((step, i) => (
-                <div key={step.label} className="relative pb-8 last:pb-0" data-testid={`tracking-step-${i}`}>
+                <div key={i} className="relative pb-8 last:pb-0" data-testid={`tracking-step-${i}`}>
                   {i < trackingSteps.length - 1 && (
                     <div className={`absolute left-[-20px] top-8 w-0.5 h-full ${step.done ? "bg-primary" : "bg-muted"}`} />
                   )}

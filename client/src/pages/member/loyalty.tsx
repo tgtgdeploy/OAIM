@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { StatCard } from "@/components/shared/stat-card";
 import { Star, Gift, TrendingUp, Clock, ArrowRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const rewards = [
   { id: "1", name: "RM 10 Voucher", points: 200, available: true },
@@ -21,14 +22,15 @@ const history = [
 ];
 
 export default function MemberLoyalty() {
+  const { t } = useTranslation("member");
   return (
-    <MemberLayout title="Loyalty & Rewards">
+    <MemberLayout title={t("loyalty.title")}>
       <div className="p-4 md:p-6 space-y-4">
         <div className="stats-grid">
-          <StatCard label="Points Balance" value="450" icon={Star} iconColor="text-primary" />
-          <StatCard label="Tier" value="Gold" icon={TrendingUp} />
-          <StatCard label="Available Rewards" value="2" icon={Gift} />
-          <StatCard label="Points Earned (Month)" value="125" icon={TrendingUp} />
+          <StatCard label={t("loyalty.pointsBalance")} value="450" icon={Star} iconColor="text-primary" />
+          <StatCard label={t("loyalty.tier")} value="Gold" icon={TrendingUp} />
+          <StatCard label={t("loyalty.availableRewards")} value="2" icon={Gift} />
+          <StatCard label={t("loyalty.pointsEarnedMonth")} value="125" icon={TrendingUp} />
         </div>
 
         <Card>
@@ -37,8 +39,8 @@ export default function MemberLoyalty() {
               <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 mx-auto mb-3">
                 <Star className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="font-bold text-lg mb-1">Gold Member</h3>
-              <p className="text-sm text-muted-foreground mb-3">450 / 1,000 points to Platinum</p>
+              <h3 className="font-bold text-lg mb-1">{t("loyalty.goldMember")}</h3>
+              <p className="text-sm text-muted-foreground mb-3">{t("loyalty.pointsToTier", { current: "450", target: "1,000", tier: "Platinum" })}</p>
               <div className="h-3 rounded-full bg-muted overflow-hidden max-w-sm mx-auto">
                 <div className="h-full bg-primary rounded-full transition-all" style={{ width: "45%" }} />
               </div>
@@ -49,7 +51,7 @@ export default function MemberLoyalty() {
         <div className="grid lg:grid-cols-2 gap-4">
           <Card>
             <CardContent className="p-5">
-              <h3 className="font-semibold mb-4">Available Rewards</h3>
+              <h3 className="font-semibold mb-4">{t("loyalty.availableRewards")}</h3>
               <div className="space-y-3">
                 {rewards.map((reward) => (
                   <div key={reward.id} className="flex items-center justify-between gap-3 p-3 rounded-md bg-muted/50" data-testid={`reward-${reward.id}`}>
@@ -57,7 +59,7 @@ export default function MemberLoyalty() {
                       <Gift className="h-5 w-5 text-primary flex-shrink-0" />
                       <div>
                         <div className="text-sm font-medium">{reward.name}</div>
-                        <div className="text-xs text-muted-foreground">{reward.points} points</div>
+                        <div className="text-xs text-muted-foreground">{t("loyalty.points", { count: reward.points })}</div>
                       </div>
                     </div>
                     <Button
@@ -66,7 +68,7 @@ export default function MemberLoyalty() {
                       disabled={!reward.available}
                       data-testid={`button-redeem-${reward.id}`}
                     >
-                      {reward.available ? "Redeem" : `${reward.points - 450} more`}
+                      {reward.available ? t("loyalty.redeem") : t("loyalty.morePoints", { count: reward.points - 450 })}
                     </Button>
                   </div>
                 ))}
@@ -76,7 +78,7 @@ export default function MemberLoyalty() {
 
           <Card>
             <CardContent className="p-5">
-              <h3 className="font-semibold mb-4">Points History</h3>
+              <h3 className="font-semibold mb-4">{t("loyalty.pointsHistory")}</h3>
               <div className="space-y-3">
                 {history.map((item, i) => (
                   <div key={i} className="flex items-center justify-between gap-3" data-testid={`history-${i}`}>

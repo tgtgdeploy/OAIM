@@ -31,5 +31,48 @@
     "myOrders": "我的订单",
     "myProfile": "个人资料",
     "chatWithUs": "联系客服"
+  },
+  "track": {
+    "title": "追踪订单",
+    "searchPlaceholder": "输入订单号 (例如 ORD-005)",
+    "inTransit": "运输中",
+    "contactSeller": "联系卖家",
+    "stepOrderPlaced": "已下单",
+    "stepConfirmed": "卖家已确认",
+    "stepShipped": "已发货",
+    "stepOutForDelivery": "派送中",
+    "stepDelivered": "已送达"
+  },
+  "profile": {
+    "title": "个人资料",
+    "goldMember": "金牌会员",
+    "memberSince": "自 {{date}} 起成为会员",
+    "fullName": "姓名",
+    "phone": "手机号 (WhatsApp)",
+    "email": "邮箱",
+    "deliveryAddress": "收货地址",
+    "saveChanges": "保存更改"
+  },
+  "orders": {
+    "title": "我的订单",
+    "tabAll": "全部",
+    "tabActive": "进行中",
+    "tabCompleted": "已完成"
+  },
+  "loyalty": {
+    "title": "积分与奖励",
+    "pointsBalance": "积分余额",
+    "tier": "等级",
+    "availableRewards": "可用奖励",
+    "pointsEarnedMonth": "本月获得积分",
+    "goldMember": "金牌会员",
+    "pointsToTier": "{{current}} / {{target}} 积分升级{{tier}}",
+    "points": "{{count}} 积分",
+    "redeem": "兑换",
+    "morePoints": "还差 {{count}}",
+    "pointsHistory": "积分记录"
+  },
+  "referral": {
+    "title": "推荐赚积分"
   }
 }
