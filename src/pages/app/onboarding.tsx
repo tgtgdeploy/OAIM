@@ -12,6 +12,8 @@ import {
   Store,
   UtensilsCrossed,
   Sparkles,
+  Briefcase,
+  TrendingUp,
   ArrowRight,
   ArrowLeft,
   CheckCircle2,
@@ -22,19 +24,58 @@ import {
   Moon,
   Sun,
 } from "lucide-react";
-import { SiWhatsapp } from "react-icons/si";
+import { SiWhatsapp, SiTelegram } from "react-icons/si";
 
-const stepIcons = [Store, Zap, MessageSquare, Upload, Bot];
+const stepIcons = [Store, Zap, MessageSquare, Bot, Upload, Bot];
+
+type IndustryId = "ecommerce" | "restaurant" | "beauty" | "service" | "quant";
+type Platform = "whatsapp" | "telegram";
 
 export default function OnboardingPage() {
   const [step, setStep] = useState(0);
-  const [industry, setIndustry] = useState<"ecommerce" | "restaurant" | "beauty" | null>(null);
+  const [industry, setIndustry] = useState<IndustryId | null>(null);
+  const [platform, setPlatform] = useState<Platform>("whatsapp");
   const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation("app");
-  const totalSteps = 5;
+  const totalSteps = 6;
   const progress = ((step + 1) / totalSteps) * 100;
 
-  const stepLabels = [t("onboarding.stepBusiness"), t("onboarding.stepIndustry"), t("onboarding.stepWhatsApp"), t("onboarding.stepProducts"), t("onboarding.stepAiScript")];
+  const stepLabels = [
+    t("onboarding.stepBusiness"),
+    t("onboarding.stepIndustry"),
+    t("onboarding.stepPlatform"),
+    t("onboarding.stepWhatsApp"),
+    t("onboarding.stepProducts"),
+    t("onboarding.stepAiScript"),
+  ];
+
+  const industries = [
+    { id: "ecommerce" as const, icon: Store, label: t("onboarding.industryEcommerce"), desc: t("onboarding.industryEcommerceDesc"), color: "bg-blue-500/10 dark:bg-blue-400/10", iconColor: "text-blue-600 dark:text-blue-400" },
+    { id: "restaurant" as const, label: t("onboarding.industryRestaurant"), icon: UtensilsCrossed, desc: t("onboarding.industryRestaurantDesc"), color: "bg-orange-500/10 dark:bg-orange-400/10", iconColor: "text-orange-600 dark:text-orange-400" },
+    { id: "beauty" as const, label: t("onboarding.industryBeauty"), icon: Sparkles, desc: t("onboarding.industryBeautyDesc"), color: "bg-rose-500/10 dark:bg-rose-400/10", iconColor: "text-rose-600 dark:text-rose-400" },
+    { id: "service" as const, label: t("onboarding.industryService"), icon: Briefcase, desc: t("onboarding.industryServiceDesc"), color: "bg-violet-500/10 dark:bg-violet-400/10", iconColor: "text-violet-600 dark:text-violet-400" },
+    { id: "quant" as const, label: t("onboarding.industryQuant"), icon: TrendingUp, desc: t("onboarding.industryQuantDesc"), color: "bg-cyan-500/10 dark:bg-cyan-400/10", iconColor: "text-cyan-600 dark:text-cyan-400" },
+  ];
+
+  const getAiScriptLabel = () => {
+    switch (industry) {
+      case "restaurant": return t("onboarding.aiScriptRestaurant");
+      case "beauty": return t("onboarding.aiScriptBeauty");
+      case "service": return t("onboarding.aiScriptService");
+      case "quant": return t("onboarding.aiScriptQuant");
+      default: return t("onboarding.aiScriptEcommerce");
+    }
+  };
+
+  const getGoalLabel = () => {
+    switch (industry) {
+      case "restaurant": return t("onboarding.goalRestaurant");
+      case "beauty": return t("onboarding.goalBeauty");
+      case "service": return t("onboarding.goalService");
+      case "quant": return t("onboarding.goalQuant");
+      default: return t("onboarding.goalEcommerce");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -62,7 +103,6 @@ export default function OnboardingPage() {
             </div>
           </div>
 
-          {/* Progress bar */}
           <div className="h-1 rounded-full bg-muted overflow-hidden">
             <div
               className="h-full bg-primary rounded-full transition-all duration-500"
@@ -70,7 +110,6 @@ export default function OnboardingPage() {
             />
           </div>
 
-          {/* Step indicators — horizontal, compact for mobile */}
           <div className="flex items-center justify-between mt-2.5 gap-1">
             {stepLabels.map((label, i) => {
               const Icon = stepIcons[i];
@@ -78,7 +117,7 @@ export default function OnboardingPage() {
               const isDone = i < step;
               return (
                 <div
-                  key={label}
+                  key={i}
                   className={`flex items-center gap-1 text-[11px] sm:text-xs transition-colors ${
                     isDone
                       ? "text-primary"
@@ -135,34 +174,27 @@ export default function OnboardingPage() {
                 <h2 className="text-xl sm:text-2xl font-bold mb-1.5" data-testid="text-step-title">{t("onboarding.chooseIndustry")}</h2>
                 <p className="text-sm text-muted-foreground">{t("onboarding.chooseIndustryDesc")}</p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {[
-                  { id: "ecommerce" as const, icon: Store, label: t("onboarding.industryEcommerce"), desc: t("onboarding.industryEcommerceDesc"), color: "bg-blue-500/10 dark:bg-blue-400/10", iconColor: "text-blue-600 dark:text-blue-400" },
-                  { id: "restaurant" as const, label: t("onboarding.industryRestaurant"), icon: UtensilsCrossed, desc: t("onboarding.industryRestaurantDesc"), color: "bg-orange-500/10 dark:bg-orange-400/10", iconColor: "text-orange-600 dark:text-orange-400" },
-                  { id: "beauty" as const, label: t("onboarding.industryBeauty"), icon: Sparkles, desc: t("onboarding.industryBeautyDesc"), color: "bg-rose-500/10 dark:bg-rose-400/10", iconColor: "text-rose-600 dark:text-rose-400" },
-                ].map((item) => (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {industries.map((item) => (
                   <Card
                     key={item.id}
                     className={`cursor-pointer transition-all overflow-visible hover-elevate ${industry === item.id ? "border-primary ring-1 ring-primary" : ""}`}
                     onClick={() => setIndustry(item.id)}
                     data-testid={`card-industry-${item.id}`}
                   >
-                    <CardContent className="p-4 sm:p-5 sm:text-center">
-                      <div className="flex sm:flex-col items-center gap-3 sm:gap-0">
-                        <div className={`flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-md ${item.color} shrink-0 sm:mx-auto sm:mb-3`}>
-                          <item.icon className={`h-6 w-6 sm:h-7 sm:w-7 ${item.iconColor}`} />
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className={`flex h-10 w-10 items-center justify-center rounded-md ${item.color} shrink-0`}>
+                          <item.icon className={`h-5 w-5 ${item.iconColor}`} />
                         </div>
-                        <div className="flex-1 sm:flex-none min-w-0">
-                          <h3 className="font-semibold text-sm sm:text-base sm:mb-1">{item.label}</h3>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold text-sm">{item.label}</h3>
                           <p className="text-xs text-muted-foreground">{item.desc}</p>
                         </div>
                         {industry === item.id && (
-                          <CheckCircle2 className="h-5 w-5 text-primary shrink-0 sm:hidden" />
+                          <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />
                         )}
                       </div>
-                      {industry === item.id && (
-                        <Badge className="mt-2 hidden sm:inline-flex">{t("onboarding.selected")}</Badge>
-                      )}
                     </CardContent>
                   </Card>
                 ))}
@@ -170,45 +202,118 @@ export default function OnboardingPage() {
             </div>
           )}
 
-          {/* Step 2: WhatsApp */}
+          {/* Step 2: Platform Selection */}
           {step === 2 && (
             <div className="space-y-6">
               <div>
-                <h2 className="text-xl sm:text-2xl font-bold mb-1.5" data-testid="text-step-title">{t("onboarding.connectWhatsApp")}</h2>
-                <p className="text-sm text-muted-foreground">{t("onboarding.connectWhatsAppDesc")}</p>
+                <h2 className="text-xl sm:text-2xl font-bold mb-1.5" data-testid="text-step-title">{t("onboarding.choosePlatform")}</h2>
+                <p className="text-sm text-muted-foreground">{t("onboarding.choosePlatformDesc")}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <Card
+                  className={`cursor-pointer transition-all overflow-visible hover-elevate ${platform === "whatsapp" ? "border-primary ring-1 ring-primary" : ""}`}
+                  onClick={() => setPlatform("whatsapp")}
+                  data-testid="card-platform-whatsapp"
+                >
+                  <CardContent className="p-5 text-center">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-md bg-green-500/10 mx-auto mb-3">
+                      <SiWhatsapp className="h-7 w-7 text-green-600 dark:text-green-400" />
+                    </div>
+                    <h3 className="font-semibold text-sm">WhatsApp</h3>
+                    <p className="text-xs text-muted-foreground mt-1">{t("onboarding.platformWhatsAppDesc")}</p>
+                    {platform === "whatsapp" && <Badge className="mt-2">{t("onboarding.selected")}</Badge>}
+                  </CardContent>
+                </Card>
+                <Card
+                  className={`cursor-pointer transition-all overflow-visible hover-elevate ${platform === "telegram" ? "border-primary ring-1 ring-primary" : ""}`}
+                  onClick={() => setPlatform("telegram")}
+                  data-testid="card-platform-telegram"
+                >
+                  <CardContent className="p-5 text-center">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-md bg-blue-500/10 mx-auto mb-3">
+                      <SiTelegram className="h-7 w-7 text-blue-600 dark:text-blue-400" />
+                    </div>
+                    <h3 className="font-semibold text-sm">Telegram</h3>
+                    <p className="text-xs text-muted-foreground mt-1">{t("onboarding.platformTelegramDesc")}</p>
+                    {platform === "telegram" && <Badge className="mt-2">{t("onboarding.selected")}</Badge>}
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          )}
+
+          {/* Step 3: Platform Credentials */}
+          {step === 3 && (
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold mb-1.5" data-testid="text-step-title">
+                  {platform === "whatsapp" ? t("onboarding.connectWhatsApp") : t("onboarding.connectTelegram")}
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  {platform === "whatsapp" ? t("onboarding.connectWhatsAppDesc") : t("onboarding.connectTelegramDesc")}
+                </p>
               </div>
               <Card>
                 <CardContent className="p-5 sm:p-6">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-md bg-green-500/10 dark:bg-green-400/10 mx-auto mb-4">
-                    <SiWhatsapp className="h-7 w-7 text-green-600 dark:text-green-400" />
+                  <div className="flex h-14 w-14 items-center justify-center rounded-md mx-auto mb-4"
+                    style={{ background: platform === "whatsapp" ? "rgba(34,197,94,0.1)" : "rgba(59,130,246,0.1)" }}
+                  >
+                    {platform === "whatsapp"
+                      ? <SiWhatsapp className="h-7 w-7 text-green-600 dark:text-green-400" />
+                      : <SiTelegram className="h-7 w-7 text-blue-600 dark:text-blue-400" />
+                    }
                   </div>
                   <div className="text-center mb-5">
-                    <h3 className="font-semibold mb-1">{t("onboarding.waBusinessApi")}</h3>
-                    <p className="text-xs sm:text-sm text-muted-foreground">{t("onboarding.waCredentials")}</p>
+                    <h3 className="font-semibold mb-1">
+                      {platform === "whatsapp" ? t("onboarding.waBusinessApi") : t("onboarding.telegramBot")}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">
+                      {platform === "whatsapp" ? t("onboarding.waCredentials") : t("onboarding.telegramCredentials")}
+                    </p>
                   </div>
-                  <div className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="phone-id">{t("onboarding.phoneNumberId")}</Label>
-                      <Input id="phone-id" placeholder={t("onboarding.phoneNumberIdPlaceholder")} data-testid="input-phone-id" />
+                  {platform === "whatsapp" ? (
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="phone-id">{t("onboarding.phoneNumberId")}</Label>
+                        <Input id="phone-id" placeholder={t("onboarding.phoneNumberIdPlaceholder")} data-testid="input-phone-id" />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="wa-token">{t("onboarding.accessToken")}</Label>
+                        <Input id="wa-token" type="password" placeholder={t("onboarding.accessTokenPlaceholder")} data-testid="input-wa-token" />
+                      </div>
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="wa-token">{t("onboarding.accessToken")}</Label>
-                      <Input id="wa-token" type="password" placeholder={t("onboarding.accessTokenPlaceholder")} data-testid="input-wa-token" />
+                  ) : (
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="tg-token">{t("onboarding.telegramBotToken")}</Label>
+                        <Input id="tg-token" type="password" placeholder={t("onboarding.telegramBotTokenPlaceholder")} data-testid="input-tg-token" />
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </CardContent>
               </Card>
               <p className="text-xs text-muted-foreground text-center">
-                {t("onboarding.noCloudApi")}{" "}
-                <a href="https://developers.facebook.com" target="_blank" rel="noopener noreferrer" className="text-primary underline">
-                  {t("onboarding.setupHere")}
-                </a>
+                {platform === "whatsapp" ? (
+                  <>
+                    {t("onboarding.noCloudApi")}{" "}
+                    <a href="https://developers.facebook.com" target="_blank" rel="noopener noreferrer" className="text-primary underline">
+                      {t("onboarding.setupHere")}
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    {t("onboarding.noTelegramBot")}{" "}
+                    <a href="https://t.me/BotFather" target="_blank" rel="noopener noreferrer" className="text-primary underline">
+                      @BotFather
+                    </a>
+                  </>
+                )}
               </p>
             </div>
           )}
 
-          {/* Step 3: Products */}
-          {step === 3 && (
+          {/* Step 4: Products */}
+          {step === 4 && (
             <div className="space-y-6">
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold mb-1.5" data-testid="text-step-title">
@@ -253,8 +358,8 @@ export default function OnboardingPage() {
             </div>
           )}
 
-          {/* Step 4: AI Script */}
-          {step === 4 && (
+          {/* Step 5: AI Script */}
+          {step === 5 && (
             <div className="space-y-6">
               <div>
                 <h2 className="text-xl sm:text-2xl font-bold mb-1.5" data-testid="text-step-title">{t("onboarding.enableAiScript")}</h2>
@@ -266,17 +371,16 @@ export default function OnboardingPage() {
                     <Bot className="h-7 w-7 text-primary" />
                   </div>
                   <div className="text-center mb-5">
-                    <h3 className="font-semibold mb-1">
-                      {industry === "restaurant" ? t("onboarding.aiScriptRestaurant") : industry === "beauty" ? t("onboarding.aiScriptBeauty") : t("onboarding.aiScriptEcommerce")}
-                    </h3>
+                    <h3 className="font-semibold mb-1">{getAiScriptLabel()}</h3>
                     <p className="text-xs sm:text-sm text-muted-foreground">{t("onboarding.preConfigured")}</p>
                   </div>
                   <div className="space-y-0">
                     {[
                       { label: t("onboarding.tone"), value: t("onboarding.toneFriendly") },
-                      { label: t("onboarding.goal"), value: industry === "restaurant" ? t("onboarding.goalRestaurant") : industry === "beauty" ? t("onboarding.goalBeauty") : t("onboarding.goalEcommerce") },
+                      { label: t("onboarding.goal"), value: getGoalLabel() },
                       { label: t("onboarding.autoReply"), value: t("onboarding.autoReplyValue") },
                       { label: t("onboarding.language"), value: t("onboarding.languageValue") },
+                      { label: t("onboarding.platform"), value: platform === "whatsapp" ? "WhatsApp" : "Telegram" },
                     ].map((item) => (
                       <div key={item.label} className="flex items-center justify-between py-2.5 border-b last:border-0">
                         <span className="text-xs sm:text-sm text-muted-foreground">{item.label}</span>

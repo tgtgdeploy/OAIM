@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useSearch } from "wouter";
+import { useAuthStore } from "@/stores/auth-store";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -33,12 +34,17 @@ import {
   Receipt,
   UserCheck,
   Clock,
+  Briefcase,
+  FileText,
+  TrendingUp,
+  LineChart,
+  Signal,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
 type Step = "choose-role" | "choose-industry" | "login-form";
 type Role = "superadmin" | "merchant" | "member";
-type Industry = "ecommerce" | "fnb" | "beauty";
+type Industry = "ecommerce" | "fnb" | "beauty" | "service" | "quant";
 
 export default function LoginPage() {
   const [, navigate] = useLocation();
@@ -49,6 +55,9 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [authError, setAuthError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const authSignIn = useAuthStore((s) => s.signIn);
 
   const params = new URLSearchParams(search);
   const queryRole = params.get("role") as Role | null;
@@ -130,12 +139,38 @@ export default function LoginPage() {
         { icon: Clock, label: t("login.modules.sessions") },
       ],
     },
+    {
+      id: "service" as Industry,
+      label: t("login.industries.service"),
+      desc: t("login.industries.serviceDesc"),
+      icon: Briefcase,
+      color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
+      borderColor: "border-violet-500/20",
+      modules: [
+        { icon: CalendarDays, label: t("login.modules.booking") },
+        { icon: Users, label: t("login.modules.clients") },
+        { icon: FileText, label: t("login.modules.invoices") },
+      ],
+    },
+    {
+      id: "quant" as Industry,
+      label: t("login.industries.quant"),
+      desc: t("login.industries.quantDesc"),
+      icon: TrendingUp,
+      color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
+      borderColor: "border-cyan-500/20",
+      modules: [
+        { icon: LineChart, label: t("login.modules.analytics") },
+        { icon: Signal, label: t("login.modules.signals") },
+        { icon: TrendingUp, label: t("login.modules.portfolio") },
+      ],
+    },
   ];
 
   useEffect(() => {
     if (queryRole === "merchant" || queryRole === "member") {
       setSelectedRole(queryRole);
-      const validIndustries: Industry[] = ["ecommerce", "fnb", "beauty"];
+      const validIndustries: Industry[] = ["ecommerce", "fnb", "beauty", "service", "quant"];
       if (queryIndustry && validIndustries.includes(queryIndustry as Industry)) {
         setIndustry(queryIndustry as IndustryType);
         navigate(queryRole === "member" ? "/member" : "/app");
@@ -164,14 +199,25 @@ export default function LoginPage() {
     }
   }
 
-  function handleFormLogin(e: React.FormEvent) {
+  async function handleFormLogin(e: React.FormEvent) {
     e.preventDefault();
-    if (selectedRole === "member") {
-      navigate("/member");
-    } else if (selectedRole === "superadmin") {
-      navigate("/superadmin");
-    } else {
-      navigate("/app");
+    setAuthError("");
+    setIsSubmitting(true);
+    try {
+      const { error } = await authSignIn(email, password);
+      if (error) {
+        setAuthError(error);
+        return;
+      }
+      if (selectedRole === "member") {
+        navigate("/member");
+      } else if (selectedRole === "superadmin") {
+        navigate("/superadmin");
+      } else {
+        navigate("/app");
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -340,8 +386,11 @@ export default function LoginPage() {
                       </button>
                     </div>
                   </div>
-                  <Button type="submit" className="w-full" data-testid="button-login">
-                    {t("login.signIn")}
+                  {authError && (
+                    <p className="text-sm text-destructive text-center">{authError}</p>
+                  )}
+                  <Button type="submit" className="w-full" disabled={isSubmitting} data-testid="button-login">
+                    {isSubmitting ? "Signing in..." : t("login.signIn")}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </form>

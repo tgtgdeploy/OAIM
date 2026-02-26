@@ -7,6 +7,10 @@ export interface Database {
           email: string;
           full_name: string;
           avatar_url: string | null;
+          trial_start_at: string | null;
+          trial_expires_at: string | null;
+          industry_type: string | null;
+          bot_platform: string | null;
           created_at: string;
         };
         Insert: {
@@ -14,6 +18,10 @@ export interface Database {
           email: string;
           full_name: string;
           avatar_url?: string | null;
+          trial_start_at?: string | null;
+          trial_expires_at?: string | null;
+          industry_type?: string | null;
+          bot_platform?: string | null;
           created_at?: string;
         };
         Update: {
@@ -21,6 +29,10 @@ export interface Database {
           email?: string;
           full_name?: string;
           avatar_url?: string | null;
+          trial_start_at?: string | null;
+          trial_expires_at?: string | null;
+          industry_type?: string | null;
+          bot_platform?: string | null;
           created_at?: string;
         };
         Relationships: [];
@@ -29,12 +41,14 @@ export interface Database {
         Row: {
           id: string;
           name: string;
-          industry: "ecommerce" | "restaurant";
+          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
           status: "active" | "trial" | "suspended" | "cancelled";
           plan: "trial" | "starter" | "pro" | "business";
           owner_id: string;
           whatsapp_phone_id: string | null;
           whatsapp_token: string | null;
+          telegram_bot_token: string | null;
+          telegram_chat_id: string | null;
           logo_url: string | null;
           settings: Record<string, unknown>;
           created_at: string;
@@ -42,12 +56,14 @@ export interface Database {
         Insert: {
           id?: string;
           name: string;
-          industry: "ecommerce" | "restaurant";
+          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
           status?: "active" | "trial" | "suspended" | "cancelled";
           plan?: "trial" | "starter" | "pro" | "business";
           owner_id: string;
           whatsapp_phone_id?: string | null;
           whatsapp_token?: string | null;
+          telegram_bot_token?: string | null;
+          telegram_chat_id?: string | null;
           logo_url?: string | null;
           settings?: Record<string, unknown>;
           created_at?: string;
@@ -55,12 +71,14 @@ export interface Database {
         Update: {
           id?: string;
           name?: string;
-          industry?: "ecommerce" | "restaurant";
+          industry?: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
           status?: "active" | "trial" | "suspended" | "cancelled";
           plan?: "trial" | "starter" | "pro" | "business";
           owner_id?: string;
           whatsapp_phone_id?: string | null;
           whatsapp_token?: string | null;
+          telegram_bot_token?: string | null;
+          telegram_chat_id?: string | null;
           logo_url?: string | null;
           settings?: Record<string, unknown>;
           created_at?: string;
@@ -371,7 +389,7 @@ export interface Database {
         Row: {
           id: string;
           title: string;
-          industry: "ecommerce" | "restaurant";
+          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
           description: string;
           metrics: Record<string, unknown>;
           screenshots: string[];
@@ -381,7 +399,7 @@ export interface Database {
         Insert: {
           id?: string;
           title: string;
-          industry: "ecommerce" | "restaurant";
+          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
           description: string;
           metrics?: Record<string, unknown>;
           screenshots?: string[];
@@ -391,7 +409,7 @@ export interface Database {
         Update: {
           id?: string;
           title?: string;
-          industry?: "ecommerce" | "restaurant";
+          industry?: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
           description?: string;
           metrics?: Record<string, unknown>;
           screenshots?: string[];
@@ -603,7 +621,7 @@ export interface Database {
           status: "published" | "draft" | "archived";
           visits: number;
           conversions: number;
-          template: "ecommerce" | "restaurant";
+          template: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
           updated_at: string;
           created_at: string;
         };
@@ -614,7 +632,7 @@ export interface Database {
           status?: "published" | "draft" | "archived";
           visits?: number;
           conversions?: number;
-          template: "ecommerce" | "restaurant";
+          template: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
           updated_at?: string;
           created_at?: string;
         };
@@ -625,7 +643,7 @@ export interface Database {
           status?: "published" | "draft" | "archived";
           visits?: number;
           conversions?: number;
-          template?: "ecommerce" | "restaurant";
+          template?: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
           updated_at?: string;
           created_at?: string;
         };
@@ -666,7 +684,7 @@ export interface Database {
           id: string;
           key: string;
           label: string;
-          industry: "ecommerce" | "restaurant";
+          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
           version: string;
           components: Record<string, unknown>[];
           updated_at: string;
@@ -676,7 +694,7 @@ export interface Database {
           id?: string;
           key: string;
           label: string;
-          industry: "ecommerce" | "restaurant";
+          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
           version?: string;
           components?: Record<string, unknown>[];
           updated_at?: string;
@@ -686,7 +704,7 @@ export interface Database {
           id?: string;
           key?: string;
           label?: string;
-          industry?: "ecommerce" | "restaurant";
+          industry?: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
           version?: string;
           components?: Record<string, unknown>[];
           updated_at?: string;
@@ -974,6 +992,7 @@ export interface Database {
           latency_ms: number | null;
           status: "success" | "failed";
           error_message: string | null;
+          request_type: string | null;
           created_at: string;
         };
         Insert: {
@@ -985,6 +1004,7 @@ export interface Database {
           latency_ms?: number | null;
           status: "success" | "failed";
           error_message?: string | null;
+          request_type?: string | null;
           created_at?: string;
         };
         Update: {
@@ -996,6 +1016,709 @@ export interface Database {
           latency_ms?: number | null;
           status?: "success" | "failed";
           error_message?: string | null;
+          request_type?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      members: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          user_id: string | null;
+          name: string;
+          phone: string | null;
+          email: string | null;
+          tags: string[];
+          tier: string;
+          total_spent: string;
+          referral_code: string | null;
+          notes: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          user_id?: string | null;
+          name: string;
+          phone?: string | null;
+          email?: string | null;
+          tags?: string[];
+          tier?: string;
+          total_spent?: string;
+          referral_code?: string | null;
+          notes?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          user_id?: string | null;
+          name?: string;
+          phone?: string | null;
+          email?: string | null;
+          tags?: string[];
+          tier?: string;
+          total_spent?: string;
+          referral_code?: string | null;
+          notes?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      subscriptions: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          plan_id: string | null;
+          status: "trialing" | "active" | "past_due" | "cancelled" | "expired";
+          stripe_customer_id: string | null;
+          stripe_subscription_id: string | null;
+          current_period_start: string | null;
+          current_period_end: string | null;
+          trial_start_at: string | null;
+          trial_expires_at: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          plan_id?: string | null;
+          status?: "trialing" | "active" | "past_due" | "cancelled" | "expired";
+          stripe_customer_id?: string | null;
+          stripe_subscription_id?: string | null;
+          current_period_start?: string | null;
+          current_period_end?: string | null;
+          trial_start_at?: string | null;
+          trial_expires_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          plan_id?: string | null;
+          status?: "trialing" | "active" | "past_due" | "cancelled" | "expired";
+          stripe_customer_id?: string | null;
+          stripe_subscription_id?: string | null;
+          current_period_start?: string | null;
+          current_period_end?: string | null;
+          trial_start_at?: string | null;
+          trial_expires_at?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      bot_configs: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          platform: string;
+          system_prompt: string | null;
+          industry_type: string;
+          welcome_message: string | null;
+          is_active: boolean;
+          openclaw_agent_id: string | null;
+          config: Record<string, unknown>;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          platform?: string;
+          system_prompt?: string | null;
+          industry_type: string;
+          welcome_message?: string | null;
+          is_active?: boolean;
+          openclaw_agent_id?: string | null;
+          config?: Record<string, unknown>;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          platform?: string;
+          system_prompt?: string | null;
+          industry_type?: string;
+          welcome_message?: string | null;
+          is_active?: boolean;
+          openclaw_agent_id?: string | null;
+          config?: Record<string, unknown>;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      ai_conversations: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          contact_id: string | null;
+          member_id: string | null;
+          title: string | null;
+          message_count: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          contact_id?: string | null;
+          member_id?: string | null;
+          title?: string | null;
+          message_count?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          contact_id?: string | null;
+          member_id?: string | null;
+          title?: string | null;
+          message_count?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      ai_messages: {
+        Row: {
+          id: string;
+          conversation_id: string;
+          role: string;
+          content: string;
+          actions: Record<string, unknown> | null;
+          feedback: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          conversation_id: string;
+          role?: string;
+          content: string;
+          actions?: Record<string, unknown> | null;
+          feedback?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          conversation_id?: string;
+          role?: string;
+          content?: string;
+          actions?: Record<string, unknown> | null;
+          feedback?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      inventory_categories: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          name: string;
+          name_en: string | null;
+          color: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          name: string;
+          name_en?: string | null;
+          color?: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          name?: string;
+          name_en?: string | null;
+          color?: string;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      inventory_items: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          name: string;
+          sku: string;
+          category_id: string | null;
+          stock: number;
+          min_stock: number;
+          unit: string;
+          cost_price: string;
+          image_url: string | null;
+          is_active: boolean;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          name: string;
+          sku: string;
+          category_id?: string | null;
+          stock?: number;
+          min_stock?: number;
+          unit?: string;
+          cost_price?: string;
+          image_url?: string | null;
+          is_active?: boolean;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          name?: string;
+          sku?: string;
+          category_id?: string | null;
+          stock?: number;
+          min_stock?: number;
+          unit?: string;
+          cost_price?: string;
+          image_url?: string | null;
+          is_active?: boolean;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      inventory_ledger: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          item_id: string;
+          type: "in" | "out";
+          quantity: number;
+          movement_type: string;
+          note: string | null;
+          operator: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          item_id: string;
+          type: "in" | "out";
+          quantity: number;
+          movement_type?: string;
+          note?: string | null;
+          operator?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          item_id?: string;
+          type?: "in" | "out";
+          quantity?: number;
+          movement_type?: string;
+          note?: string | null;
+          operator?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      suppliers: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          name: string;
+          contact_person: string | null;
+          phone: string | null;
+          email: string | null;
+          address: string | null;
+          status: "active" | "inactive";
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          name: string;
+          contact_person?: string | null;
+          phone?: string | null;
+          email?: string | null;
+          address?: string | null;
+          status?: "active" | "inactive";
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          name?: string;
+          contact_person?: string | null;
+          phone?: string | null;
+          email?: string | null;
+          address?: string | null;
+          status?: "active" | "inactive";
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      purchase_orders: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          po_number: string;
+          supplier_id: string | null;
+          supplier_name: string;
+          total_amount: string;
+          currency: string;
+          status: "draft" | "submitted" | "approved" | "received" | "cancelled";
+          notes: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          po_number: string;
+          supplier_id?: string | null;
+          supplier_name: string;
+          total_amount?: string;
+          currency?: string;
+          status?: "draft" | "submitted" | "approved" | "received" | "cancelled";
+          notes?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          po_number?: string;
+          supplier_id?: string | null;
+          supplier_name?: string;
+          total_amount?: string;
+          currency?: string;
+          status?: "draft" | "submitted" | "approved" | "received" | "cancelled";
+          notes?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      purchase_order_items: {
+        Row: {
+          id: string;
+          po_id: string;
+          item_name: string;
+          sku: string | null;
+          quantity: number;
+          unit_price: string;
+          total_price: string;
+        };
+        Insert: {
+          id?: string;
+          po_id: string;
+          item_name: string;
+          sku?: string | null;
+          quantity: number;
+          unit_price: string;
+          total_price: string;
+        };
+        Update: {
+          id?: string;
+          po_id?: string;
+          item_name?: string;
+          sku?: string | null;
+          quantity?: number;
+          unit_price?: string;
+          total_price?: string;
+        };
+        Relationships: [];
+      };
+      bills: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          bill_number: string;
+          vendor: string;
+          amount: string;
+          currency: string;
+          type: "purchase" | "logistics" | "operation" | "other";
+          status: "pending" | "paid" | "overdue";
+          due_date: string;
+          paid_date: string | null;
+          category: string | null;
+          description: string | null;
+          notes: string | null;
+          reference_type: string | null;
+          reference_id: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          bill_number: string;
+          vendor: string;
+          amount: string;
+          currency?: string;
+          type?: "purchase" | "logistics" | "operation" | "other";
+          status?: "pending" | "paid" | "overdue";
+          due_date: string;
+          paid_date?: string | null;
+          category?: string | null;
+          description?: string | null;
+          notes?: string | null;
+          reference_type?: string | null;
+          reference_id?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          bill_number?: string;
+          vendor?: string;
+          amount?: string;
+          currency?: string;
+          type?: "purchase" | "logistics" | "operation" | "other";
+          status?: "pending" | "paid" | "overdue";
+          due_date?: string;
+          paid_date?: string | null;
+          category?: string | null;
+          description?: string | null;
+          notes?: string | null;
+          reference_type?: string | null;
+          reference_id?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      finance_transactions: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          date: string;
+          type: "income" | "expense";
+          category: string;
+          amount: string;
+          currency: string;
+          description: string | null;
+          reference_type: string | null;
+          reference_id: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          date: string;
+          type: "income" | "expense";
+          category: string;
+          amount: string;
+          currency?: string;
+          description?: string | null;
+          reference_type?: string | null;
+          reference_id?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          date?: string;
+          type?: "income" | "expense";
+          category?: string;
+          amount?: string;
+          currency?: string;
+          description?: string | null;
+          reference_type?: string | null;
+          reference_id?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      marketing_campaigns: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          name: string;
+          platform: string;
+          objective: string | null;
+          status: "draft" | "active" | "paused" | "completed";
+          budget_type: "daily" | "lifetime";
+          budget_amount: string;
+          budget_spent: string;
+          start_date: string | null;
+          end_date: string | null;
+          notes: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          name: string;
+          platform?: string;
+          objective?: string | null;
+          status?: "draft" | "active" | "paused" | "completed";
+          budget_type?: "daily" | "lifetime";
+          budget_amount?: string;
+          budget_spent?: string;
+          start_date?: string | null;
+          end_date?: string | null;
+          notes?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          name?: string;
+          platform?: string;
+          objective?: string | null;
+          status?: "draft" | "active" | "paused" | "completed";
+          budget_type?: "daily" | "lifetime";
+          budget_amount?: string;
+          budget_spent?: string;
+          start_date?: string | null;
+          end_date?: string | null;
+          notes?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      marketing_performance: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          campaign_id: string | null;
+          campaign_name: string | null;
+          platform: string;
+          date: string;
+          impressions: number;
+          clicks: number;
+          conversions: number;
+          spend: string;
+          revenue: string;
+          ctr: string;
+          cpc: string;
+          cpm: string;
+          roas: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          campaign_id?: string | null;
+          campaign_name?: string | null;
+          platform?: string;
+          date: string;
+          impressions?: number;
+          clicks?: number;
+          conversions?: number;
+          spend?: string;
+          revenue?: string;
+          ctr?: string;
+          cpc?: string;
+          cpm?: string;
+          roas?: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          campaign_id?: string | null;
+          campaign_name?: string | null;
+          platform?: string;
+          date?: string;
+          impressions?: number;
+          clicks?: number;
+          conversions?: number;
+          spend?: string;
+          revenue?: string;
+          ctr?: string;
+          cpc?: string;
+          cpm?: string;
+          roas?: string;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      ad_placement_plans: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          name: string;
+          platform: string;
+          status: "draft" | "pending_approval" | "approved" | "active" | "completed" | "rejected";
+          total_budget: string;
+          currency: string;
+          start_date: string | null;
+          end_date: string | null;
+          kpi_targets: Record<string, unknown>;
+          notes: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          name: string;
+          platform?: string;
+          status?: "draft" | "pending_approval" | "approved" | "active" | "completed" | "rejected";
+          total_budget?: string;
+          currency?: string;
+          start_date?: string | null;
+          end_date?: string | null;
+          kpi_targets?: Record<string, unknown>;
+          notes?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          name?: string;
+          platform?: string;
+          status?: "draft" | "pending_approval" | "approved" | "active" | "completed" | "rejected";
+          total_budget?: string;
+          currency?: string;
+          start_date?: string | null;
+          end_date?: string | null;
+          kpi_targets?: Record<string, unknown>;
+          notes?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      media_publishing_plan: {
+        Row: {
+          id: string;
+          tenant_id: string;
+          title: string;
+          description: string | null;
+          platform: string;
+          content_type: string;
+          status: "planned" | "in_progress" | "published" | "cancelled";
+          scheduled_date: string;
+          scheduled_time: string | null;
+          assigned_to: string | null;
+          content_url: string | null;
+          notes: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          tenant_id: string;
+          title: string;
+          description?: string | null;
+          platform?: string;
+          content_type?: string;
+          status?: "planned" | "in_progress" | "published" | "cancelled";
+          scheduled_date: string;
+          scheduled_time?: string | null;
+          assigned_to?: string | null;
+          content_url?: string | null;
+          notes?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          tenant_id?: string;
+          title?: string;
+          description?: string | null;
+          platform?: string;
+          content_type?: string;
+          status?: "planned" | "in_progress" | "published" | "cancelled";
+          scheduled_date?: string;
+          scheduled_time?: string | null;
+          assigned_to?: string | null;
+          content_url?: string | null;
+          notes?: string | null;
           created_at?: string;
         };
         Relationships: [];
@@ -1005,7 +1728,10 @@ export interface Database {
     Functions: Record<string, never>;
     Enums: {
       user_role: "super_admin" | "tenant_owner" | "tenant_admin" | "staff" | "customer";
-      industry_template: "ecommerce" | "restaurant";
+      industry_template: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+      subscription_status: "trialing" | "active" | "past_due" | "cancelled" | "expired";
+      member_tier: "free" | "silver" | "gold" | "platinum";
+      ai_message_role: "user" | "assistant" | "system";
       tenant_status: "active" | "trial" | "suspended" | "cancelled";
       plan_tier: "trial" | "starter" | "pro" | "business";
       pipeline_stage: "new_inquiry" | "quoted" | "follow_up" | "closed_won" | "closed_lost";
@@ -1029,6 +1755,16 @@ export interface Database {
       shipment_status: "pending" | "shipped" | "in_transit" | "completed" | "returned";
       delivery_status: "pending" | "confirmed" | "delivering" | "completed" | "failed";
       transaction_status: "pending" | "success" | "failed" | "refunded";
+      inventory_movement: "in" | "out";
+      supplier_status: "active" | "inactive";
+      po_status: "draft" | "submitted" | "approved" | "received" | "cancelled";
+      bill_type: "purchase" | "logistics" | "operation" | "other";
+      bill_status: "pending" | "paid" | "overdue";
+      finance_type: "income" | "expense";
+      marketing_campaign_status: "draft" | "active" | "paused" | "completed";
+      budget_type: "daily" | "lifetime";
+      placement_status: "draft" | "pending_approval" | "approved" | "active" | "completed" | "rejected";
+      media_status: "planned" | "in_progress" | "published" | "cancelled";
     };
   };
 }

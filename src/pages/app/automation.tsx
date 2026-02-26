@@ -1,5 +1,6 @@
 import { AppLayout } from "./layout";
 import { AutomationModule } from "@/components/modules/automation-module";
+import { FeatureGatekeeper } from "@/components/FeatureGatekeeper";
 import { useTranslation } from "react-i18next";
 
 export default function MerchantAutomationPage() {
@@ -7,7 +8,9 @@ export default function MerchantAutomationPage() {
   return (
     <AppLayout title={t("sidebar.automation")}>
       <div className="p-4 md:p-6">
-        <AutomationModule context="merchant" />
+        <FeatureGatekeeper feature="automations">
+          <AutomationModule context="merchant" />
+        </FeatureGatekeeper>
       </div>
     </AppLayout>
   );

@@ -15,6 +15,7 @@ import { Store, Bot, Users, CreditCard } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTenants, useUpdateTenant } from "@/hooks/use-tenants";
 import { useTenantUsers } from "@/hooks/use-tenant-users";
+import { CheckoutModal } from "@/components/CheckoutModal";
 
 interface TenantSettings {
   email?: string;
@@ -53,11 +54,12 @@ export default function SettingsPage() {
   const { data: members = [], isLoading: membersLoading } = useTenantUsers(tenant?.id);
 
   const [bizName, setBizName] = useState("");
-  const [bizIndustry, setBizIndustry] = useState<"ecommerce" | "restaurant">("ecommerce");
+  const [bizIndustry, setBizIndustry] = useState<string>("ecommerce");
   const [bizPhone, setBizPhone] = useState("");
   const [bizEmail, setBizEmail] = useState("");
   const [bizAddress, setBizAddress] = useState("");
 
+  const [showCheckout, setShowCheckout] = useState(false);
   const [autoReply, setAutoReply] = useState(true);
   const [aiTone, setAiTone] = useState("friendly");
   const [aiGoal, setAiGoal] = useState("close");
@@ -87,7 +89,7 @@ export default function SettingsPage() {
     updateTenant.mutate({
       id: tenant.id,
       name: bizName,
-      industry: bizIndustry,
+      industry: bizIndustry as "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant",
       whatsapp_phone_id: bizPhone || null,
       settings: {
         ...tenantSettings,
@@ -150,7 +152,7 @@ export default function SettingsPage() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="biz-industry">{t("settings.industry")}</Label>
-                    <Select value={bizIndustry} onValueChange={(v) => setBizIndustry(v as "ecommerce" | "restaurant")}>
+                    <Select value={bizIndustry} onValueChange={setBizIndustry}>
                       <SelectTrigger data-testid="select-industry">
                         <SelectValue />
                       </SelectTrigger>
@@ -286,7 +288,7 @@ export default function SettingsPage() {
                     </div>
                     <p className="text-sm text-muted-foreground mt-1">{t("settings.proPlan")}</p>
                   </div>
-                  <Button variant="outline" data-testid="button-change-plan">{t("settings.changePlan")}</Button>
+                  <Button variant="outline" data-testid="button-change-plan" onClick={() => setShowCheckout(true)}>{t("settings.changePlan")}</Button>
                 </div>
                 <div>
                   <h4 className="text-sm font-semibold mb-2">{t("settings.usageThisMonth")}</h4>
@@ -313,6 +315,7 @@ export default function SettingsPage() {
           </TabsContent>
         </Tabs>
       </div>
+      <CheckoutModal open={showCheckout} onOpenChange={setShowCheckout} />
     </AppLayout>
   );
 }

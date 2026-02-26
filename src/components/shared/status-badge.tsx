@@ -36,6 +36,20 @@ const colorMap: Record<string, string> = {
   muted: "bg-muted text-muted-foreground",
   draft: "bg-muted text-muted-foreground",
   closed: "bg-muted text-muted-foreground",
+  inactive: "bg-muted text-muted-foreground",
+
+  paid: "bg-green-500/10 text-green-700 dark:text-green-300",
+  received: "bg-green-500/10 text-green-700 dark:text-green-300",
+  published: "bg-green-500/10 text-green-700 dark:text-green-300",
+  approved: "bg-blue-500/10 text-blue-700 dark:text-blue-300",
+  submitted: "bg-yellow-500/10 text-yellow-700 dark:text-yellow-300",
+  pending_approval: "bg-yellow-500/10 text-yellow-700 dark:text-yellow-300",
+  rejected: "bg-red-500/10 text-red-700 dark:text-red-300",
+  planned: "bg-blue-500/10 text-blue-700 dark:text-blue-300",
+  paused: "bg-yellow-500/10 text-yellow-700 dark:text-yellow-300",
+  low: "bg-orange-500/10 text-orange-700 dark:text-orange-300",
+  out_of_stock: "bg-red-500/10 text-red-700 dark:text-red-300",
+  normal: "bg-green-500/10 text-green-700 dark:text-green-300",
 };
 
 interface StatusBadgeProps {

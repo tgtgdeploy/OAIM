@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-export type Industry = "ecommerce" | "fnb" | "beauty";
+export type Industry = "ecommerce" | "fnb" | "beauty" | "service" | "quant";
 
 interface IndustryContextType {
   industry: Industry;
@@ -10,16 +10,22 @@ interface IndustryContextType {
   industryLabel: string;
 }
 
+const VALID_INDUSTRIES: Industry[] = ["ecommerce", "fnb", "beauty", "service", "quant"];
+
 const industryTemplateMap: Record<Industry, string> = {
   ecommerce: "/templates/ecommerce",
   fnb: "/templates/fnb",
   beauty: "/templates/beauty",
+  service: "/templates/service",
+  quant: "/templates/quant",
 };
 
 const industryLabelKeys: Record<Industry, string> = {
   ecommerce: "sidebar.industry.ecommerceGroup",
   fnb: "sidebar.industry.fnbGroup",
   beauty: "sidebar.industry.beautyGroup",
+  service: "sidebar.industry.serviceGroup",
+  quant: "sidebar.industry.quantGroup",
 };
 
 const IndustryContext = createContext<IndustryContextType | null>(null);
@@ -29,7 +35,7 @@ export function IndustryProvider({ children }: { children: React.ReactNode }) {
   const [industry, setIndustryState] = useState<Industry>(() => {
     try {
       const stored = localStorage.getItem("oaim-industry");
-      if (stored && (stored === "ecommerce" || stored === "fnb" || stored === "beauty")) {
+      if (stored && VALID_INDUSTRIES.includes(stored as Industry)) {
         return stored as Industry;
       }
     } catch {}

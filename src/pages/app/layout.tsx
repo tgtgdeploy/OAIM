@@ -2,6 +2,8 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app/app-sidebar";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { TrialBanner } from "@/components/TrialBanner";
+import { AiChatBot } from "@/components/AiChatBot";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Bell } from "lucide-react";
@@ -33,11 +35,13 @@ export function AppLayout({ children, title }: { children: React.ReactNode; titl
               </Avatar>
             </div>
           </header>
+          <TrialBanner />
           <main className="flex-1 overflow-auto">
             {children}
           </main>
         </div>
       </div>
+      <AiChatBot />
     </SidebarProvider>
   );
 }

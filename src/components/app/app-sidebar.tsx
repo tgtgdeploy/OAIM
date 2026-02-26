@@ -39,18 +39,35 @@ import {
   Store,
   UtensilsCrossed,
   Sparkles,
+  Briefcase,
+  FileText,
+  TrendingUp,
+  LineChart,
+  Signal,
+  Warehouse,
+  ClipboardList,
+  DollarSign,
+  Target,
+  Calendar,
 } from "lucide-react";
 import { useIndustry } from "@/lib/industry-context";
 import { useTranslation } from "react-i18next";
+import { useAuthStore } from "@/stores/auth-store";
+import { useTrialManager } from "@/hooks/use-trial-manager";
+import { isRouteGated } from "@/lib/module-registry";
 
 export function AppSidebar() {
   const [location] = useLocation();
   const { industry, templatePath, industryLabel } = useIndustry();
   const { t } = useTranslation("app");
+  const tenant = useAuthStore((s) => s.tenant);
+  const { status, remainingDays, isPremiumLocked } = useTrialManager(tenant?.id);
 
   const ecommerceItems = [
     { title: t("sidebar.shipping"), href: "/app/shipping", icon: Truck },
     { title: t("sidebar.payments"), href: "/app/payments", icon: CreditCard },
+    { title: t("sidebar.inventory"), href: "/app/inventory", icon: Warehouse },
+    { title: t("sidebar.purchaseOrders"), href: "/app/purchase-orders", icon: ClipboardList },
   ];
 
   const fnbItems = [
@@ -59,12 +76,36 @@ export function AppSidebar() {
     { title: t("sidebar.delivery"), href: "/app/delivery", icon: Bike },
     { title: t("sidebar.tables"), href: "/app/tables", icon: LayoutGrid },
     { title: t("sidebar.checkout"), href: "/app/checkout", icon: Receipt },
+    { title: t("sidebar.inventory"), href: "/app/inventory", icon: Warehouse },
+    { title: t("sidebar.purchaseOrders"), href: "/app/purchase-orders", icon: ClipboardList },
   ];
 
   const beautyItems = [
     { title: t("sidebar.booking"), href: "/app/booking", icon: CalendarDays },
     { title: t("sidebar.therapists"), href: "/app/therapists", icon: UserCheck },
     { title: t("sidebar.services"), href: "/app/services", icon: Scissors },
+  ];
+
+  const serviceItems = [
+    { title: t("sidebar.appointments"), href: "/app/booking", icon: CalendarDays },
+    { title: t("sidebar.clients"), href: "/app/contacts", icon: Users },
+    { title: t("sidebar.invoices"), href: "/app/payments", icon: FileText },
+  ];
+
+  const quantItems = [
+    { title: t("sidebar.portfolio"), href: "/app/portfolio", icon: TrendingUp },
+    { title: t("sidebar.analytics"), href: "/app/analytics", icon: LineChart },
+    { title: t("sidebar.signals"), href: "/app/signals", icon: Signal },
+  ];
+
+  const erpItems = [
+    { title: t("sidebar.bills"), href: "/app/bills", icon: FileText },
+    { title: t("sidebar.finance"), href: "/app/finance", icon: DollarSign },
+  ];
+
+  const adsItems = [
+    { title: t("sidebar.performance"), href: "/app/performance", icon: Target },
+    { title: t("sidebar.mediaPlan"), href: "/app/media-plan", icon: Calendar },
   ];
 
   const industryConfig = {
@@ -89,6 +130,20 @@ export function AppSidebar() {
       items: beautyItems,
       groupLabel: t("sidebar.industry.beautyGroup"),
     },
+    service: {
+      icon: Briefcase,
+      label: t("sidebar.industry.service"),
+      color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
+      items: serviceItems,
+      groupLabel: t("sidebar.industry.serviceGroup"),
+    },
+    quant: {
+      icon: TrendingUp,
+      label: t("sidebar.industry.quant"),
+      color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
+      items: quantItems,
+      groupLabel: t("sidebar.industry.quantGroup"),
+    },
   };
 
   const config = industryConfig[industry];
@@ -106,7 +161,7 @@ export function AppSidebar() {
     { title: t("sidebar.automation"), href: "/app/automation", icon: Zap },
     { title: t("sidebar.followUps"), href: "/app/follow-ups", icon: Repeat },
     { title: t("sidebar.customerSupport"), href: "/app/support", icon: Headphones },
-    { title: t("sidebar.adsRoi"), href: "/app/ads", icon: BarChart3, locked: true },
+    { title: t("sidebar.adsRoi"), href: "/app/ads", icon: BarChart3 },
     { title: t("sidebar.referral"), href: "/app/referral", icon: Share2 },
   ];
 
@@ -120,24 +175,27 @@ export function AppSidebar() {
       <SidebarGroupLabel>{label}</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
-          {items.map((item) => (
-            <SidebarMenuItem key={item.href}>
-              <SidebarMenuButton asChild isActive={location === item.href}>
-                <Link href={item.href} data-testid={`link-app-${item.href.split("/").pop()}`}>
-                  <item.icon className="h-4 w-4" />
-                  <span className="flex-1">{item.title}</span>
-                  {"badge" in item && item.badge && (
-                    <Badge variant="default" className="text-xs px-1.5 min-w-5 h-5 justify-center">
-                      {item.badge as React.ReactNode}
-                    </Badge>
-                  )}
-                  {"locked" in item && (item as { locked?: boolean }).locked && (
-                    <Lock className="h-3 w-3 text-muted-foreground" />
-                  )}
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          {items.map((item) => {
+            const isGated = isPremiumLocked && isRouteGated(item.href);
+            return (
+              <SidebarMenuItem key={item.href}>
+                <SidebarMenuButton asChild isActive={location === item.href}>
+                  <Link href={item.href} data-testid={`link-app-${item.href.split("/").pop()}`}>
+                    <item.icon className="h-4 w-4" />
+                    <span className="flex-1">{item.title}</span>
+                    {"badge" in item && item.badge && (
+                      <Badge variant="default" className="text-xs px-1.5 min-w-5 h-5 justify-center">
+                        {item.badge as React.ReactNode}
+                      </Badge>
+                    )}
+                    {isGated && (
+                      <Lock className="h-3 w-3 text-muted-foreground" />
+                    )}
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            );
+          })}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
@@ -161,12 +219,18 @@ export function AppSidebar() {
       <SidebarContent>
         {renderGroup(t("sidebar.main"), mainItems)}
         {renderGroup(config.groupLabel, config.items)}
+        {renderGroup(t("sidebar.erp"), erpItems)}
         {renderGroup(t("sidebar.advanced"), advancedItems)}
+        {renderGroup(t("sidebar.adsMarketing"), adsItems)}
         {renderGroup(t("sidebar.management"), settingsItems)}
       </SidebarContent>
       <SidebarFooter className="p-4">
-        <div className="rounded-md bg-primary/10 p-3">
-          <div className="text-xs font-medium mb-1">{t("sidebar.footer.proPlan")}</div>
+        <div className={`rounded-md p-3 ${status === "active" ? "bg-primary/10" : "bg-yellow-500/10"}`}>
+          <div className="text-xs font-medium mb-1">
+            {status === "active"
+              ? t("sidebar.footer.proPlan")
+              : t("sidebar.footer.trialPlan", { days: remainingDays })}
+          </div>
           <div className="text-xs text-muted-foreground">{t("sidebar.footer.messagesUsage", { used: "1,234", total: "5,000" })}</div>
           <div className="mt-2 h-1.5 rounded-full bg-muted overflow-hidden">
             <div className="h-full bg-primary rounded-full" style={{ width: "25%" }} />

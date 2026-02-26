@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
+import { useAuthStore } from "@/stores/auth-store";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -38,6 +39,9 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [businessType, setBusinessType] = useState("");
   const [phone, setPhone] = useState("");
+  const [authError, setAuthError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const authSignUp = useAuthStore((s) => s.signUp);
 
   const benefits = [
     t("register.leftPanel.benefit1"),
@@ -46,9 +50,24 @@ export default function RegisterPage() {
     t("register.leftPanel.benefit4"),
   ];
 
-  function handleRegister(e: React.FormEvent) {
+  async function handleRegister(e: React.FormEvent) {
     e.preventDefault();
-    navigate("/app/onboarding");
+    setAuthError("");
+    setIsSubmitting(true);
+    try {
+      const { error } = await authSignUp(email, password, {
+        full_name: name,
+        phone,
+        business_type: businessType,
+      });
+      if (error) {
+        setAuthError(error);
+        return;
+      }
+      navigate("/app/onboarding");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -210,8 +229,11 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full" data-testid="button-register">
-                {t("register.createAccount")}
+              {authError && (
+                <p className="text-sm text-destructive text-center">{authError}</p>
+              )}
+              <Button type="submit" className="w-full" disabled={isSubmitting} data-testid="button-register">
+                {isSubmitting ? "Creating account..." : t("register.createAccount")}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
 

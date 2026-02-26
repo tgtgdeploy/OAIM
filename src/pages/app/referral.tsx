@@ -1,5 +1,6 @@
 import { AppLayout } from "./layout";
 import { ReferralModule } from "@/components/modules/referral-module";
+import { FeatureGatekeeper } from "@/components/FeatureGatekeeper";
 import { useTranslation } from "react-i18next";
 
 export default function MerchantReferralPage() {
@@ -7,7 +8,9 @@ export default function MerchantReferralPage() {
   return (
     <AppLayout title={t("sidebar.referral")}>
       <div className="p-4 md:p-6">
-        <ReferralModule context="merchant" />
+        <FeatureGatekeeper feature="referrals">
+          <ReferralModule context="merchant" />
+        </FeatureGatekeeper>
       </div>
     </AppLayout>
   );

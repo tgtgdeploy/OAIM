@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Search, Send, Paperclip, Phone, ArrowLeft } from "lucide-react";
+import { Search, Send, Paperclip, Phone, ArrowLeft, Bot } from "lucide-react";
 import { useConversations } from "@/hooks/use-conversations";
 import { useMessages } from "@/hooks/use-messages";
 
@@ -49,6 +49,7 @@ export default function InboxPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [showChat, setShowChat] = useState(false);
+  const [aiMode, setAiMode] = useState(false);
 
   const selected = conversations.find(c => c.id === selectedId) ?? conversations[0] ?? null;
   const { data: messages = [], isLoading: msgLoading } = useMessages(selected?.id);
@@ -207,12 +208,26 @@ export default function InboxPage() {
               </ScrollArea>
 
               <div className="border-t p-3">
+                {aiMode && (
+                  <div className="flex items-center gap-2 max-w-2xl mx-auto mb-2 text-xs text-primary">
+                    <Bot className="h-3.5 w-3.5" />
+                    <span>{t("inbox.aiModeActive")}</span>
+                  </div>
+                )}
                 <div className="flex items-center gap-2 max-w-2xl mx-auto">
                   <Button size="icon" variant="ghost" data-testid="button-attach">
                     <Paperclip className="h-4 w-4" />
                   </Button>
+                  <Button
+                    size="icon"
+                    variant={aiMode ? "default" : "ghost"}
+                    onClick={() => setAiMode(!aiMode)}
+                    data-testid="button-ai-toggle"
+                  >
+                    <Bot className="h-4 w-4" />
+                  </Button>
                   <Input
-                    placeholder={t("inbox.typeMessage")}
+                    placeholder={aiMode ? t("inbox.typeAiMessage") : t("inbox.typeMessage")}
                     className="flex-1"
                     data-testid="input-message"
                   />
