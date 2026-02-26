@@ -9,14 +9,8 @@ channel = "stable-24_05"
 localPort = 5000
 externalPort = 80
 
-<<<<<<< HEAD
-[[ports]]
-localPort = 5174
-externalPort = 3000
-=======
 [env]
 PORT = "5000"
->>>>>>> 2190e1b (Post-Recovery checkpoint)
 
 [deployment]
 deploymentTarget = "autoscale"
@@ -41,9 +35,5 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-<<<<<<< HEAD
-args = "bash dev.sh"
-=======
 args = "npm run dev"
 waitForPort = 5000
->>>>>>> 2190e1b (Post-Recovery checkpoint)
