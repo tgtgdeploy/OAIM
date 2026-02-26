@@ -24,19 +24,16 @@
     "customerSupport": "Customer Support",
     "adsRoi": "Ads & ROI",
     "referral": "Referral",
+    "plugins": "Plugins",
     "teamRoles": "Team & Roles",
     "settings": "Settings",
     "industry": {
       "ecommerce": "E-Commerce",
       "fnb": "F&B",
       "beauty": "Beauty",
-      "service": "Service",
-      "quant": "Quant",
       "ecommerceGroup": "E-Commerce",
       "fnbGroup": "F&B / Restaurant",
-      "beautyGroup": "Beauty & Wellness",
-      "serviceGroup": "Professional Services",
-      "quantGroup": "Quantitative Trading"
+      "beautyGroup": "Beauty & Wellness"
     },
     "appointments": "Appointments",
     "clients": "Clients",
@@ -108,7 +105,17 @@
     "stageQuoted": "Quoted",
     "stageFollowUp": "Follow-up",
     "stageWon": "Won",
-    "stageLost": "Lost"
+    "stageLost": "Lost",
+    "dialogTitle": "Add New Contact",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "tags": "Tags",
+    "tagsPlaceholder": "e.g. VIP, wholesale",
+    "stage": "Stage",
+    "notes": "Notes",
+    "notesPlaceholder": "Optional notes...",
+    "success": "Contact added successfully"
   },
   "pipeline": {
     "title": "Pipeline",
@@ -118,7 +125,14 @@
     "stageNewInquiry": "New Inquiry",
     "stageQuoted": "Quoted",
     "stageFollowUp": "Follow-up",
-    "stageClosedWon": "Closed Won"
+    "stageClosedWon": "Closed Won",
+    "dialogTitle": "Add New Deal",
+    "contactName": "Contact Name",
+    "phone": "Phone",
+    "stage": "Stage",
+    "tags": "Tags",
+    "notes": "Notes",
+    "success": "Deal added successfully"
   },
   "orders": {
     "title": "Orders",
@@ -133,7 +147,15 @@
     "thItems": "Items",
     "thStatus": "Status",
     "thTotal": "Total",
-    "thDate": "Date"
+    "thDate": "Date",
+    "dialogTitle": "Create New Order",
+    "customer": "Customer",
+    "customerPlaceholder": "Contact name or ID",
+    "total": "Total",
+    "currency": "Currency",
+    "notes": "Notes",
+    "notesPlaceholder": "Order notes...",
+    "success": "Order created successfully"
   },
   "products": {
     "title": "Products",
@@ -142,7 +164,16 @@
     "addProduct": "Add Product",
     "inStock": "{{count}} in stock",
     "outOfStock": "Out of stock",
-    "oos": "OOS"
+    "oos": "OOS",
+    "dialogTitle": "Add New Product",
+    "name": "Product Name",
+    "category": "Category",
+    "price": "Price",
+    "currency": "Currency",
+    "stock": "Stock",
+    "description": "Description",
+    "descriptionPlaceholder": "Product description...",
+    "success": "Product added successfully"
   },
   "followUps": {
     "title": "Follow-ups",
@@ -268,7 +299,14 @@
     "category": "Category",
     "addItem": "Add Item",
     "all": "All",
-    "popular": "Popular"
+    "popular": "Popular",
+    "dialogTitle": "Add Menu Item",
+    "itemName": "Item Name",
+    "price": "Price",
+    "currency": "Currency",
+    "description": "Description",
+    "descriptionPlaceholder": "Item description...",
+    "success": "Menu item added successfully"
   },
   "tables": {
     "title": "Table Management",
@@ -315,7 +353,16 @@
     "thPax": "Pax",
     "thTable": "Table",
     "thStatus": "Status",
-    "thNote": "Note"
+    "thNote": "Note",
+    "dialogTitle": "Add Reservation",
+    "guestName": "Guest Name",
+    "date": "Date",
+    "time": "Time",
+    "pax": "Guests",
+    "table": "Table",
+    "note": "Note",
+    "notePlaceholder": "Special requests...",
+    "success": "Reservation added successfully"
   },
   "checkout": {
     "title": "Checkout & Billing",
@@ -497,7 +544,31 @@
       "automations": "Automate workflows, follow-ups, and customer engagement sequences.",
       "referrals": "Set up referral programs with reward tracking and link management.",
       "ads": "Advanced advertising analytics and ROI optimization tools.",
-      "aiChat": "AI-powered chat assistant for customer support and sales automation."
+      "aiChat": "AI-powered chat assistant for customer support and sales automation.",
+      "professionalServices": "Appointments, client management, invoicing and project tracking for service businesses.",
+      "quantTrading": "Trading signals, portfolio analytics, risk management and quantitative strategy tools."
+    }
+  },
+  "plugins": {
+    "title": "Plugin Store",
+    "addon": "Add-on",
+    "trialActive": "Trial Active",
+    "activated": "Activated",
+    "unlock": "Unlock",
+    "includedIn": "Included in {{tier}} plan",
+    "addonPlugins": "Add-on Plugins",
+    "addonPluginsDesc": "Extend your platform with industry-specific plugin modules. Pay per module to unlock.",
+    "includedModules": "Included Modules",
+    "includedModulesDesc": "These modules are included based on your subscription tier.",
+    "trialBanner": "All plugins are unlocked during your {{days}}-day free trial!",
+    "trialBannerDesc": "Explore every feature at no cost. Upgrade before your trial ends to keep access.",
+    "service": {
+      "title": "Professional Services",
+      "description": "Full suite for service businesses: appointment scheduling, client management, invoicing, and project tracking."
+    },
+    "quant": {
+      "title": "Quantitative Trading",
+      "description": "Advanced trading tools: signal generation, portfolio analytics, risk management, and strategy backtesting."
     }
   },
   "pricing": {

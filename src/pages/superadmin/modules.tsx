@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import {
   MessageSquare, ShoppingCart, Users, GitBranch, Repeat, BarChart3, Bot, Package,
-  Headphones, Share2, Palette, Zap, Settings,
+  Headphones, Share2, Palette, Zap, Settings, Briefcase, TrendingUp,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useFeatureFlags } from "@/hooks/use-feature-flags";
@@ -25,6 +25,8 @@ const iconMap: Record<string, typeof MessageSquare> = {
   referral: Share2,
   design_pages: Palette,
   team_permissions: Users,
+  professional_services: Briefcase,
+  quant_trading: TrendingUp,
 };
 
 export default function ModulesPage() {

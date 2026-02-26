@@ -15,8 +15,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Plus, Filter, Download, MoreHorizontal } from "lucide-react";
-import { useContacts } from "@/hooks/use-contacts";
+import { useContacts, useCreateContact } from "@/hooks/use-contacts";
+import { useToast } from "@/hooks/use-toast";
 
 const stageColors: Record<string, string> = {
   new_inquiry: "bg-blue-500/10 text-blue-700 dark:text-blue-300",
@@ -30,6 +35,48 @@ export default function ContactsPage() {
   const { t } = useTranslation("app");
   const [searchQuery, setSearchQuery] = useState("");
   const { data: contacts = [], isLoading } = useContacts();
+  const createContact = useCreateContact();
+  const { toast } = useToast();
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [formName, setFormName] = useState("");
+  const [formPhone, setFormPhone] = useState("");
+  const [formEmail, setFormEmail] = useState("");
+  const [formTags, setFormTags] = useState("");
+  const [formStage, setFormStage] = useState<string>("new_inquiry");
+  const [formNotes, setFormNotes] = useState("");
+
+  const resetForm = () => {
+    setFormName("");
+    setFormPhone("");
+    setFormEmail("");
+    setFormTags("");
+    setFormStage("new_inquiry");
+    setFormNotes("");
+  };
+
+  const handleSubmit = () => {
+    if (!formName || !formPhone) return;
+    const tags = formTags.split(",").map(t => t.trim()).filter(Boolean);
+    createContact.mutate(
+      {
+        tenant_id: "demo",
+        name: formName,
+        phone: formPhone,
+        email: formEmail || null,
+        tags,
+        stage: formStage as "new_inquiry" | "quoted" | "follow_up" | "closed_won" | "closed_lost",
+        notes: formNotes || null,
+      },
+      {
+        onSuccess: () => {
+          toast({ title: t("contacts.success") });
+          setDialogOpen(false);
+          resetForm();
+        },
+      }
+    );
+  };
 
   const stageLabels: Record<string, string> = {
     new_inquiry: t("contacts.stageNew"),
@@ -69,7 +116,7 @@ export default function ContactsPage() {
               <Download className="h-4 w-4 mr-2" />
               {t("common.export")}
             </Button>
-            <Button data-testid="button-add-contact">
+            <Button data-testid="button-add-contact" onClick={() => setDialogOpen(true)}>
               <Plus className="h-4 w-4 mr-2" />
               {t("contacts.addContact")}
             </Button>
@@ -167,6 +214,78 @@ export default function ContactsPage() {
           </CardContent>
         </Card>
       </div>
+
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("contacts.dialogTitle")}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>{t("contacts.name")}</Label>
+              <Input
+                value={formName}
+                onChange={(e) => setFormName(e.target.value)}
+                required
+                data-testid="input-contact-name"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>{t("contacts.phone")}</Label>
+              <Input
+                value={formPhone}
+                onChange={(e) => setFormPhone(e.target.value)}
+                required
+                data-testid="input-contact-phone"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>{t("contacts.email")}</Label>
+              <Input
+                value={formEmail}
+                onChange={(e) => setFormEmail(e.target.value)}
+                data-testid="input-contact-email"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>{t("contacts.tags")}</Label>
+              <Input
+                value={formTags}
+                onChange={(e) => setFormTags(e.target.value)}
+                placeholder={t("contacts.tagsPlaceholder")}
+                data-testid="input-contact-tags"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>{t("contacts.stage")}</Label>
+              <Select value={formStage} onValueChange={setFormStage}>
+                <SelectTrigger data-testid="select-contact-stage">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(stageLabels).map(([value, label]) => (
+                    <SelectItem key={value} value={value}>{label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>{t("contacts.notes")}</Label>
+              <Textarea
+                value={formNotes}
+                onChange={(e) => setFormNotes(e.target.value)}
+                placeholder={t("contacts.notesPlaceholder")}
+                data-testid="input-contact-notes"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button onClick={handleSubmit} disabled={createContact.isPending} data-testid="button-save-contact">
+              {t("common.save")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 }

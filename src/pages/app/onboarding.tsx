@@ -12,8 +12,6 @@ import {
   Store,
   UtensilsCrossed,
   Sparkles,
-  Briefcase,
-  TrendingUp,
   ArrowRight,
   ArrowLeft,
   CheckCircle2,
@@ -28,7 +26,7 @@ import { SiWhatsapp, SiTelegram } from "react-icons/si";
 
 const stepIcons = [Store, Zap, MessageSquare, Bot, Upload, Bot];
 
-type IndustryId = "ecommerce" | "restaurant" | "beauty" | "service" | "quant";
+type IndustryId = "ecommerce" | "restaurant" | "beauty";
 type Platform = "whatsapp" | "telegram";
 
 export default function OnboardingPage() {
@@ -53,16 +51,12 @@ export default function OnboardingPage() {
     { id: "ecommerce" as const, icon: Store, label: t("onboarding.industryEcommerce"), desc: t("onboarding.industryEcommerceDesc"), color: "bg-blue-500/10 dark:bg-blue-400/10", iconColor: "text-blue-600 dark:text-blue-400" },
     { id: "restaurant" as const, label: t("onboarding.industryRestaurant"), icon: UtensilsCrossed, desc: t("onboarding.industryRestaurantDesc"), color: "bg-orange-500/10 dark:bg-orange-400/10", iconColor: "text-orange-600 dark:text-orange-400" },
     { id: "beauty" as const, label: t("onboarding.industryBeauty"), icon: Sparkles, desc: t("onboarding.industryBeautyDesc"), color: "bg-rose-500/10 dark:bg-rose-400/10", iconColor: "text-rose-600 dark:text-rose-400" },
-    { id: "service" as const, label: t("onboarding.industryService"), icon: Briefcase, desc: t("onboarding.industryServiceDesc"), color: "bg-violet-500/10 dark:bg-violet-400/10", iconColor: "text-violet-600 dark:text-violet-400" },
-    { id: "quant" as const, label: t("onboarding.industryQuant"), icon: TrendingUp, desc: t("onboarding.industryQuantDesc"), color: "bg-cyan-500/10 dark:bg-cyan-400/10", iconColor: "text-cyan-600 dark:text-cyan-400" },
   ];
 
   const getAiScriptLabel = () => {
     switch (industry) {
       case "restaurant": return t("onboarding.aiScriptRestaurant");
       case "beauty": return t("onboarding.aiScriptBeauty");
-      case "service": return t("onboarding.aiScriptService");
-      case "quant": return t("onboarding.aiScriptQuant");
       default: return t("onboarding.aiScriptEcommerce");
     }
   };
@@ -71,8 +65,6 @@ export default function OnboardingPage() {
     switch (industry) {
       case "restaurant": return t("onboarding.goalRestaurant");
       case "beauty": return t("onboarding.goalBeauty");
-      case "service": return t("onboarding.goalService");
-      case "quant": return t("onboarding.goalQuant");
       default: return t("onboarding.goalEcommerce");
     }
   };

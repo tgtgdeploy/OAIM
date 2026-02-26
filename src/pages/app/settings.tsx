@@ -89,7 +89,7 @@ export default function SettingsPage() {
     updateTenant.mutate({
       id: tenant.id,
       name: bizName,
-      industry: bizIndustry as "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant",
+      industry: bizIndustry as "ecommerce" | "restaurant" | "fnb" | "beauty",
       whatsapp_phone_id: bizPhone || null,
       settings: {
         ...tenantSettings,

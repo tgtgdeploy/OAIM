@@ -5,15 +5,66 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Search, Plus, Upload, Package, Grid3X3, List } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useProducts } from "@/hooks/use-products";
+import { useProducts, useCreateProduct } from "@/hooks/use-products";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ProductsPage() {
   const { t } = useTranslation("app");
   const { data: products = [], isLoading } = useProducts();
+  const createProduct = useCreateProduct();
+  const { toast } = useToast();
   const [view, setView] = useState<"grid" | "list">("grid");
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [price, setPrice] = useState("");
+  const [currency, setCurrency] = useState("MYR");
+  const [stock, setStock] = useState("");
+  const [description, setDescription] = useState("");
+
+  const resetForm = () => {
+    setName("");
+    setCategory("");
+    setPrice("");
+    setCurrency("MYR");
+    setStock("");
+    setDescription("");
+  };
+
+  const handleSubmit = () => {
+    if (!name || !price) return;
+    createProduct.mutate(
+      {
+        tenant_id: "demo",
+        name,
+        category: category || null,
+        price,
+        currency,
+        stock: stock ? parseInt(stock, 10) : null,
+        description: description || null,
+      },
+      {
+        onSuccess: () => {
+          toast({ title: t("products.success") });
+          setDialogOpen(false);
+          resetForm();
+        },
+      }
+    );
+  };
 
   return (
     <AppLayout title={t("products.title")}>
@@ -47,7 +98,7 @@ export default function ProductsPage() {
               <Upload className="h-4 w-4 mr-2" />
               {t("common.import")}
             </Button>
-            <Button data-testid="button-add-product">
+            <Button data-testid="button-add-product" onClick={() => setDialogOpen(true)}>
               <Plus className="h-4 w-4 mr-2" />
               {t("products.addProduct")}
             </Button>
@@ -154,6 +205,73 @@ export default function ProductsPage() {
             </CardContent>
           </Card>
         )}
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{t("products.dialogTitle")}</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-2">
+              <div className="space-y-2">
+                <Label>{t("products.name")}</Label>
+                <Input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  data-testid="input-product-name"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>{t("products.category")}</Label>
+                <Input
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  data-testid="input-product-category"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>{t("products.price")}</Label>
+                <Input
+                  type="number"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  required
+                  data-testid="input-product-price"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>{t("products.currency")}</Label>
+                <Input
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
+                  data-testid="input-product-currency"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>{t("products.stock")}</Label>
+                <Input
+                  type="number"
+                  value={stock}
+                  onChange={(e) => setStock(e.target.value)}
+                  data-testid="input-product-stock"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>{t("products.description")}</Label>
+                <Textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder={t("products.descriptionPlaceholder")}
+                  data-testid="input-product-description"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button onClick={handleSubmit} disabled={!name || !price || createProduct.isPending} data-testid="button-submit-product">
+                {t("common.save")}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </AppLayout>
   );

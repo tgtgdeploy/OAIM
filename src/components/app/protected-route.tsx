@@ -36,7 +36,6 @@ export function ProtectedRoute({ children, requiredRole = 'customer' }: Protecte
     if (!initialized || loading) return;
 
     if (!user) {
-      navigate('/auth/login');
       return;
     }
 
@@ -44,7 +43,6 @@ export function ProtectedRoute({ children, requiredRole = 'customer' }: Protecte
       const userLevel = ROLE_HIERARCHY[role] ?? 0;
       const requiredLevel = ROLE_HIERARCHY[requiredRole] ?? 0;
       if (userLevel < requiredLevel) {
-        // Redirect based on actual role
         if (role === 'customer') {
           navigate('/member');
         } else {
@@ -55,10 +53,6 @@ export function ProtectedRoute({ children, requiredRole = 'customer' }: Protecte
   }, [user, loading, initialized, role, requiredRole, navigate]);
 
   if (!initialized || loading) {
-    return <LoadingFallback />;
-  }
-
-  if (!user) {
     return <LoadingFallback />;
   }
 

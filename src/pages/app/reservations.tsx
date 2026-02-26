@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AppLayout } from "./layout";
 import { Card, CardContent } from "@/components/ui/card";
@@ -5,6 +6,10 @@ import { Button } from "@/components/ui/button";
 import { StatCard } from "@/components/shared/stat-card";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Table,
   TableBody,
@@ -15,12 +20,54 @@ import {
 } from "@/components/ui/table";
 import { SearchInput } from "@/components/shared/search-input";
 import { Plus, Filter, CalendarDays, Users, Clock, CheckCircle2 } from "lucide-react";
-import { useReservations } from "@/hooks/use-reservations";
+import { useReservations, useCreateReservation } from "@/hooks/use-reservations";
+import { useToast } from "@/hooks/use-toast";
 import "@/styles/dashboard.css";
 
 export default function ReservationsPage() {
   const { t } = useTranslation("app");
   const { data: reservations = [], isLoading } = useReservations();
+  const createReservation = useCreateReservation();
+  const { toast } = useToast();
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [formGuestName, setFormGuestName] = useState("");
+  const [formDate, setFormDate] = useState("");
+  const [formTime, setFormTime] = useState("");
+  const [formPax, setFormPax] = useState("2");
+  const [formTableLabel, setFormTableLabel] = useState("");
+  const [formNote, setFormNote] = useState("");
+
+  function resetForm() {
+    setFormGuestName("");
+    setFormDate("");
+    setFormTime("");
+    setFormPax("2");
+    setFormTableLabel("");
+    setFormNote("");
+  }
+
+  function handleSubmitReservation(e: React.FormEvent) {
+    e.preventDefault();
+    if (!formGuestName || !formDate || !formTime) return;
+    createReservation.mutate(
+      {
+        tenant_id: "demo",
+        guest_name: formGuestName,
+        date: formDate,
+        time: formTime,
+        pax: parseInt(formPax, 10) || 2,
+        table_label: formTableLabel || null,
+        note: formNote || null,
+      },
+      {
+        onSuccess: () => {
+          toast({ title: t("reservations.success") });
+          setDialogOpen(false);
+          resetForm();
+        },
+      }
+    );
+  }
 
   const today = new Date().toISOString().slice(0, 10);
   const todaysBookings = reservations.filter((r) => r.date === today);
@@ -44,7 +91,7 @@ export default function ReservationsPage() {
               <Filter className="h-4 w-4 mr-2" />
               {t("common.filter")}
             </Button>
-            <Button data-testid="button-add-reservation">
+            <Button onClick={() => setDialogOpen(true)} data-testid="button-add-reservation">
               <Plus className="h-4 w-4 mr-2" />
               {t("reservations.addBooking")}
             </Button>
@@ -99,6 +146,44 @@ export default function ReservationsPage() {
           </CardContent>
         </Card>
       </div>
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("reservations.dialogTitle")}</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleSubmitReservation} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="res-guest-name">{t("reservations.guestName")}</Label>
+              <Input id="res-guest-name" required value={formGuestName} onChange={(e) => setFormGuestName(e.target.value)} data-testid="input-reservation-guest" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="res-date">{t("reservations.date")}</Label>
+              <Input id="res-date" type="date" required value={formDate} onChange={(e) => setFormDate(e.target.value)} data-testid="input-reservation-date" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="res-time">{t("reservations.time")}</Label>
+              <Input id="res-time" type="time" required value={formTime} onChange={(e) => setFormTime(e.target.value)} data-testid="input-reservation-time" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="res-pax">{t("reservations.pax")}</Label>
+              <Input id="res-pax" type="number" min="1" value={formPax} onChange={(e) => setFormPax(e.target.value)} data-testid="input-reservation-pax" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="res-table">{t("reservations.table")}</Label>
+              <Input id="res-table" value={formTableLabel} onChange={(e) => setFormTableLabel(e.target.value)} data-testid="input-reservation-table" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="res-note">{t("reservations.note")}</Label>
+              <Textarea id="res-note" placeholder={t("reservations.notePlaceholder")} value={formNote} onChange={(e) => setFormNote(e.target.value)} data-testid="input-reservation-note" />
+            </div>
+            <DialogFooter>
+              <Button type="submit" disabled={createReservation.isPending} data-testid="button-submit-reservation">
+                {t("common.save")}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 }

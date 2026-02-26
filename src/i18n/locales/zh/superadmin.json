@@ -83,7 +83,11 @@
     "designPages": "设计与落地页",
     "designPagesDesc": "可定制的广告页面和设计素材",
     "teamPermissions": "团队与权限",
-    "teamPermissionsDesc": "多管理员角色和访问控制"
+    "teamPermissionsDesc": "多管理员角色和访问控制",
+    "professionalServices": "专业服务插件",
+    "professionalServicesDesc": "预约管理、客户管理、开票和项目管理，适合服务型企业",
+    "quantTrading": "量化交易插件",
+    "quantTradingDesc": "交易信号、投资组合分析、风险管理和策略工具"
   },
   "templates": {
     "title": "行业模板",

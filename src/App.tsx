@@ -24,8 +24,6 @@ const RegisterPage = lazy(() => import("@/pages/auth/register"));
 const EcommerceTemplate = lazy(() => import("@/pages/templates/ecommerce"));
 const FnbTemplate = lazy(() => import("@/pages/templates/fnb"));
 const BeautyTemplate = lazy(() => import("@/pages/templates/beauty"));
-const ServiceTemplate = lazy(() => import("@/pages/templates/service"));
-const QuantTemplate = lazy(() => import("@/pages/templates/quant"));
 
 const OnboardingPage = lazy(() => import("@/pages/app/onboarding"));
 const InboxPage = lazy(() => import("@/pages/app/inbox"));
@@ -56,6 +54,7 @@ const BillsPage = lazy(() => import("@/pages/app/bills"));
 const FinancePage = lazy(() => import("@/pages/app/finance"));
 const PerformancePage = lazy(() => import("@/pages/app/performance"));
 const MediaPlanPage = lazy(() => import("@/pages/app/media-plan"));
+const PluginsPage = lazy(() => import("@/pages/app/plugins"));
 
 const TenantsPage = lazy(() => import("@/pages/superadmin/tenants"));
 const PlansPage = lazy(() => import("@/pages/superadmin/plans"));
@@ -104,8 +103,6 @@ function Router() {
         <Route path="/templates/ecommerce" component={EcommerceTemplate} />
         <Route path="/templates/fnb" component={FnbTemplate} />
         <Route path="/templates/beauty" component={BeautyTemplate} />
-        <Route path="/templates/service" component={ServiceTemplate} />
-        <Route path="/templates/quant" component={QuantTemplate} />
 
         <Route path="/app/onboarding" component={OnboardingPage} />
         <Route path="/app">{() => <ProtectedRoute requiredRole="staff"><InboxPage /></ProtectedRoute>}</Route>
@@ -136,6 +133,7 @@ function Router() {
         <Route path="/app/finance">{() => <ProtectedRoute requiredRole="staff"><FinancePage /></ProtectedRoute>}</Route>
         <Route path="/app/performance">{() => <ProtectedRoute requiredRole="staff"><PerformancePage /></ProtectedRoute>}</Route>
         <Route path="/app/media-plan">{() => <ProtectedRoute requiredRole="staff"><MediaPlanPage /></ProtectedRoute>}</Route>
+        <Route path="/app/plugins">{() => <ProtectedRoute requiredRole="staff"><PluginsPage /></ProtectedRoute>}</Route>
 
         <Route path="/superadmin">{() => <ProtectedRoute requiredRole="super_admin"><TenantsPage /></ProtectedRoute>}</Route>
         <Route path="/superadmin/plans">{() => <ProtectedRoute requiredRole="super_admin"><PlansPage /></ProtectedRoute>}</Route>

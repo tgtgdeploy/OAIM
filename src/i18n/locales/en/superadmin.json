@@ -83,7 +83,11 @@
     "designPages": "Design & Landing Pages",
     "designPagesDesc": "Customizable ad pages and design assets",
     "teamPermissions": "Team & Permissions",
-    "teamPermissionsDesc": "Multi-admin roles and access control"
+    "teamPermissionsDesc": "Multi-admin roles and access control",
+    "professionalServices": "Professional Services Plugin",
+    "professionalServicesDesc": "Appointments, clients, invoicing, and project management for service businesses",
+    "quantTrading": "Quantitative Trading Plugin",
+    "quantTradingDesc": "Trading signals, portfolio analytics, risk management, and strategy tools"
   },
   "templates": {
     "title": "Templates",

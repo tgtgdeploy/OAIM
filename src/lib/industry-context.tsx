@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 
-export type Industry = "ecommerce" | "fnb" | "beauty" | "service" | "quant";
+export type Industry = "ecommerce" | "fnb" | "beauty";
 
 interface IndustryContextType {
   industry: Industry;
@@ -10,22 +10,18 @@ interface IndustryContextType {
   industryLabel: string;
 }
 
-const VALID_INDUSTRIES: Industry[] = ["ecommerce", "fnb", "beauty", "service", "quant"];
+const VALID_INDUSTRIES: Industry[] = ["ecommerce", "fnb", "beauty"];
 
 const industryTemplateMap: Record<Industry, string> = {
   ecommerce: "/templates/ecommerce",
   fnb: "/templates/fnb",
   beauty: "/templates/beauty",
-  service: "/templates/service",
-  quant: "/templates/quant",
 };
 
 const industryLabelKeys: Record<Industry, string> = {
   ecommerce: "sidebar.industry.ecommerceGroup",
   fnb: "sidebar.industry.fnbGroup",
   beauty: "sidebar.industry.beautyGroup",
-  service: "sidebar.industry.serviceGroup",
-  quant: "sidebar.industry.quantGroup",
 };
 
 const IndustryContext = createContext<IndustryContextType | null>(null);

@@ -24,19 +24,16 @@
     "customerSupport": "客户支持",
     "adsRoi": "广告与投资回报",
     "referral": "推荐计划",
+    "plugins": "插件商店",
     "teamRoles": "团队与角色",
     "settings": "设置",
     "industry": {
       "ecommerce": "电商",
       "fnb": "餐饮",
       "beauty": "美容",
-      "service": "服务",
-      "quant": "量化",
       "ecommerceGroup": "电商",
       "fnbGroup": "餐饮",
-      "beautyGroup": "美容健康",
-      "serviceGroup": "专业服务",
-      "quantGroup": "量化交易"
+      "beautyGroup": "美容健康"
     },
     "appointments": "预约",
     "clients": "客户",
@@ -108,7 +105,17 @@
     "stageQuoted": "已报价",
     "stageFollowUp": "跟进中",
     "stageWon": "成交",
-    "stageLost": "流失"
+    "stageLost": "流失",
+    "dialogTitle": "添加联系人",
+    "name": "姓名",
+    "phone": "电话",
+    "email": "邮箱",
+    "tags": "标签",
+    "tagsPlaceholder": "例如 VIP, 批发",
+    "stage": "阶段",
+    "notes": "备注",
+    "notesPlaceholder": "可选备注...",
+    "success": "联系人添加成功"
   },
   "pipeline": {
     "title": "销售管道",
@@ -118,7 +125,14 @@
     "stageNewInquiry": "新咨询",
     "stageQuoted": "已报价",
     "stageFollowUp": "跟进中",
-    "stageClosedWon": "成交"
+    "stageClosedWon": "成交",
+    "dialogTitle": "添加交易",
+    "contactName": "联系人姓名",
+    "phone": "电话",
+    "stage": "阶段",
+    "tags": "标签",
+    "notes": "备注",
+    "success": "交易添加成功"
   },
   "orders": {
     "title": "订单",
@@ -133,7 +147,15 @@
     "thItems": "商品",
     "thStatus": "状态",
     "thTotal": "总计",
-    "thDate": "日期"
+    "thDate": "日期",
+    "dialogTitle": "创建订单",
+    "customer": "客户",
+    "customerPlaceholder": "联系人姓名或ID",
+    "total": "总金额",
+    "currency": "货币",
+    "notes": "备注",
+    "notesPlaceholder": "订单备注...",
+    "success": "订单创建成功"
   },
   "products": {
     "title": "商品",
@@ -142,7 +164,16 @@
     "addProduct": "添加商品",
     "inStock": "库存 {{count}} 件",
     "outOfStock": "缺货",
-    "oos": "缺货"
+    "oos": "缺货",
+    "dialogTitle": "添加商品",
+    "name": "商品名称",
+    "category": "分类",
+    "price": "价格",
+    "currency": "货币",
+    "stock": "库存",
+    "description": "描述",
+    "descriptionPlaceholder": "商品描述...",
+    "success": "商品添加成功"
   },
   "followUps": {
     "title": "跟进",
@@ -268,7 +299,14 @@
     "category": "分类",
     "addItem": "添加菜品",
     "all": "全部",
-    "popular": "热门"
+    "popular": "热门",
+    "dialogTitle": "添加菜品",
+    "itemName": "菜品名称",
+    "price": "价格",
+    "currency": "货币",
+    "description": "描述",
+    "descriptionPlaceholder": "菜品描述...",
+    "success": "菜品添加成功"
   },
   "tables": {
     "title": "桌位管理",
@@ -315,7 +353,16 @@
     "thPax": "人数",
     "thTable": "桌位",
     "thStatus": "状态",
-    "thNote": "备注"
+    "thNote": "备注",
+    "dialogTitle": "添加预约",
+    "guestName": "客人姓名",
+    "date": "日期",
+    "time": "时间",
+    "pax": "人数",
+    "table": "桌号",
+    "note": "备注",
+    "notePlaceholder": "特殊要求...",
+    "success": "预约添加成功"
   },
   "checkout": {
     "title": "结账与账单",
@@ -497,7 +544,31 @@
       "automations": "自动化工作流程、跟进和客户互动序列。",
       "referrals": "设置推荐奖励计划，含奖励追踪和链接管理。",
       "ads": "高级广告分析和 ROI 优化工具。",
-      "aiChat": "AI 驱动的聊天助手，用于客户支持和销售自动化。"
+      "aiChat": "AI 驱动的聊天助手，用于客户支持和销售自动化。",
+      "professionalServices": "预约管理、客户管理、发票和项目跟踪，适合服务型企业。",
+      "quantTrading": "交易信号、投资组合分析、风险管理和量化策略工具。"
+    }
+  },
+  "plugins": {
+    "title": "插件商店",
+    "addon": "付费插件",
+    "trialActive": "试用中",
+    "activated": "已激活",
+    "unlock": "解锁",
+    "includedIn": "包含在 {{tier}} 套餐中",
+    "addonPlugins": "付费插件",
+    "addonPluginsDesc": "通过行业专属插件模块扩展您的平台。按模块付费解锁。",
+    "includedModules": "套餐内模块",
+    "includedModulesDesc": "这些模块根据您的订阅套餐等级包含在内。",
+    "trialBanner": "{{days}} 天免费试用期间所有插件全部开放！",
+    "trialBannerDesc": "免费体验所有功能。试用结束前升级以保留访问权限。",
+    "service": {
+      "title": "专业服务",
+      "description": "服务型企业全套工具：预约排期、客户管理、开票和项目跟踪。"
+    },
+    "quant": {
+      "title": "量化交易",
+      "description": "高级交易工具：信号生成、投资组合分析、风险管理和策略回测。"
     }
   },
   "pricing": {

@@ -1,11 +1,22 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AppLayout } from "./layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { StatCard } from "@/components/shared/stat-card";
 import { SearchInput } from "@/components/shared/search-input";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Table,
   TableBody,
@@ -15,12 +26,49 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Plus, Filter, ShoppingCart, Package, Truck, CheckCircle2 } from "lucide-react";
-import { useOrders } from "@/hooks/use-orders";
+import { useOrders, useCreateOrder } from "@/hooks/use-orders";
+import { useToast } from "@/hooks/use-toast";
 import "@/styles/dashboard.css";
 
 export default function OrdersPage() {
   const { t } = useTranslation("app");
   const { data: orders = [], isLoading } = useOrders();
+  const createOrder = useCreateOrder();
+  const { toast } = useToast();
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [contactId, setContactId] = useState("");
+  const [total, setTotal] = useState("");
+  const [currency, setCurrency] = useState("MYR");
+  const [notes, setNotes] = useState("");
+
+  const resetForm = () => {
+    setContactId("");
+    setTotal("");
+    setCurrency("MYR");
+    setNotes("");
+  };
+
+  const handleSubmit = () => {
+    if (!contactId || !total) return;
+    createOrder.mutate(
+      {
+        tenant_id: "demo",
+        contact_id: contactId,
+        total,
+        currency,
+        items: [],
+        notes: notes || null,
+      },
+      {
+        onSuccess: () => {
+          toast({ title: t("orders.success") });
+          setDialogOpen(false);
+          resetForm();
+        },
+      }
+    );
+  };
 
   const totalOrders = orders.length;
   const revenue = orders.reduce((sum, order) => sum + parseFloat(order.total), 0);
@@ -44,7 +92,7 @@ export default function OrdersPage() {
               <Filter className="h-4 w-4 mr-2" />
               {t("common.filter")}
             </Button>
-            <Button data-testid="button-create-order">
+            <Button data-testid="button-create-order" onClick={() => setDialogOpen(true)}>
               <Plus className="h-4 w-4 mr-2" />
               {t("orders.createOrder")}
             </Button>
@@ -94,6 +142,57 @@ export default function OrdersPage() {
             </Table>
           </CardContent>
         </Card>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{t("orders.dialogTitle")}</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4 py-2">
+              <div className="space-y-2">
+                <Label>{t("orders.customer")}</Label>
+                <Input
+                  value={contactId}
+                  onChange={(e) => setContactId(e.target.value)}
+                  placeholder={t("orders.customerPlaceholder")}
+                  required
+                  data-testid="input-order-customer"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>{t("orders.total")}</Label>
+                <Input
+                  type="number"
+                  value={total}
+                  onChange={(e) => setTotal(e.target.value)}
+                  required
+                  data-testid="input-order-total"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>{t("orders.currency")}</Label>
+                <Input
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
+                  data-testid="input-order-currency"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>{t("orders.notes")}</Label>
+                <Textarea
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder={t("orders.notesPlaceholder")}
+                  data-testid="input-order-notes"
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button onClick={handleSubmit} disabled={!contactId || !total || createOrder.isPending} data-testid="button-submit-order">
+                {t("common.save")}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </AppLayout>
   );

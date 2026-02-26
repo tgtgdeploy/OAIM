@@ -39,11 +39,7 @@ import {
   Store,
   UtensilsCrossed,
   Sparkles,
-  Briefcase,
   FileText,
-  TrendingUp,
-  LineChart,
-  Signal,
   Warehouse,
   ClipboardList,
   DollarSign,
@@ -86,17 +82,6 @@ export function AppSidebar() {
     { title: t("sidebar.services"), href: "/app/services", icon: Scissors },
   ];
 
-  const serviceItems = [
-    { title: t("sidebar.appointments"), href: "/app/booking", icon: CalendarDays },
-    { title: t("sidebar.clients"), href: "/app/contacts", icon: Users },
-    { title: t("sidebar.invoices"), href: "/app/payments", icon: FileText },
-  ];
-
-  const quantItems = [
-    { title: t("sidebar.portfolio"), href: "/app/portfolio", icon: TrendingUp },
-    { title: t("sidebar.analytics"), href: "/app/analytics", icon: LineChart },
-    { title: t("sidebar.signals"), href: "/app/signals", icon: Signal },
-  ];
 
   const erpItems = [
     { title: t("sidebar.bills"), href: "/app/bills", icon: FileText },
@@ -130,32 +115,27 @@ export function AppSidebar() {
       items: beautyItems,
       groupLabel: t("sidebar.industry.beautyGroup"),
     },
-    service: {
-      icon: Briefcase,
-      label: t("sidebar.industry.service"),
-      color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
-      items: serviceItems,
-      groupLabel: t("sidebar.industry.serviceGroup"),
-    },
-    quant: {
-      icon: TrendingUp,
-      label: t("sidebar.industry.quant"),
-      color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
-      items: quantItems,
-      groupLabel: t("sidebar.industry.quantGroup"),
-    },
   };
 
   const config = industryConfig[industry];
 
-  const mainItems = [
+  const coreMainItems = [
     { title: t("sidebar.storeHomepage"), href: templatePath, icon: Globe },
     { title: t("sidebar.inbox"), href: "/app", icon: MessageSquare, badge: "3" },
     { title: t("sidebar.contacts"), href: "/app/contacts", icon: Users },
     { title: t("sidebar.pipeline"), href: "/app/pipeline", icon: GitBranch },
-    { title: t("sidebar.orders"), href: "/app/orders", icon: ShoppingCart },
-    { title: t("sidebar.products"), href: "/app/products", icon: Package },
   ];
+
+  const industryMainExtras: Record<string, typeof coreMainItems> = {
+    ecommerce: [
+      { title: t("sidebar.orders"), href: "/app/orders", icon: ShoppingCart },
+      { title: t("sidebar.products"), href: "/app/products", icon: Package },
+    ],
+    fnb: [],
+    beauty: [],
+  };
+
+  const mainItems = [...coreMainItems, ...(industryMainExtras[industry] ?? [])];
 
   const advancedItems = [
     { title: t("sidebar.automation"), href: "/app/automation", icon: Zap },
@@ -166,6 +146,7 @@ export function AppSidebar() {
   ];
 
   const settingsItems = [
+    { title: t("sidebar.plugins"), href: "/app/plugins", icon: Zap },
     { title: t("sidebar.teamRoles"), href: "/app/team", icon: UserCog },
     { title: t("sidebar.settings"), href: "/app/settings", icon: Settings },
   ];

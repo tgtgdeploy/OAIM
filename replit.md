@@ -7,7 +7,7 @@ Multi-tenant WhatsApp-first AI sales platform for e-commerce and restaurant busi
 - **Frontend**: React + Vite, Tailwind CSS, shadcn/ui
 - **Backend**: Supabase (database, auth, edge functions) — NOT Express
 - **Routing**: wouter with lazy-loaded pages
-- **State**: @tanstack/react-query
+- **State**: @tanstack/react-query, zustand (auth store)
 
 ## Project Structure
 
@@ -41,11 +41,12 @@ Multi-tenant WhatsApp-first AI sales platform for e-commerce and restaurant busi
    - Sidebar: `client/src/components/member/member-sidebar.tsx`
 
 ### Industry Storefront Templates
-- `client/src/pages/templates/` — Public-facing merchant storefronts:
+- `src/pages/templates/` — Public-facing merchant storefronts:
   - `ecommerce.tsx` — E-commerce storefront with product grid, categories, features
   - `fnb.tsx` — F&B/Restaurant storefront with menu, reservations, delivery
   - `beauty.tsx` — Beauty/Wellness storefront with services, packages, gallery
 - Each template uses shared storefront components + ManagementShowcase to display industry-specific backend features
+- Industries supported: ecommerce, fnb, beauty (service and quant removed)
 
 ### Shared Storefront Components
 - `client/src/components/storefront/` — 14 reusable components:

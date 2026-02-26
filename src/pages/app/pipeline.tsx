@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AppLayout } from "./layout";
 import { Card, CardContent } from "@/components/ui/card";
@@ -5,9 +6,15 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus } from "lucide-react";
-import { useContacts } from "@/hooks/use-contacts";
+import { useContacts, useCreateContact } from "@/hooks/use-contacts";
+import { useToast } from "@/hooks/use-toast";
 
 function formatRelativeTime(isoDate: string): string {
   const now = new Date();
@@ -29,6 +36,52 @@ function formatRelativeTime(isoDate: string): string {
 export default function PipelinePage() {
   const { t } = useTranslation("app");
   const { data: contacts = [], isLoading } = useContacts();
+  const createContact = useCreateContact();
+  const { toast } = useToast();
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [defaultStage, setDefaultStage] = useState("");
+  const [formName, setFormName] = useState("");
+  const [formPhone, setFormPhone] = useState("");
+  const [formStage, setFormStage] = useState("");
+  const [formTags, setFormTags] = useState("");
+  const [formNotes, setFormNotes] = useState("");
+
+  const resetForm = () => {
+    setFormName("");
+    setFormPhone("");
+    setFormStage("");
+    setFormTags("");
+    setFormNotes("");
+  };
+
+  const openDialog = (stage: string) => {
+    setDefaultStage(stage);
+    setFormStage(stage);
+    setDialogOpen(true);
+  };
+
+  const handleSubmit = () => {
+    if (!formName || !formPhone) return;
+    const tags = formTags.split(",").map(t => t.trim()).filter(Boolean);
+    createContact.mutate(
+      {
+        tenant_id: "demo",
+        name: formName,
+        phone: formPhone,
+        tags,
+        stage: (formStage || "new_inquiry") as "new_inquiry" | "quoted" | "follow_up" | "closed_won" | "closed_lost",
+        notes: formNotes || null,
+      },
+      {
+        onSuccess: () => {
+          toast({ title: t("pipeline.success") });
+          setDialogOpen(false);
+          resetForm();
+        },
+      }
+    );
+  };
 
   const stageOrder = ["new_inquiry", "quoted", "follow_up", "closed_won"] as const;
   const stageColorMap: Record<string, string> = {
@@ -75,7 +128,7 @@ export default function PipelinePage() {
             </div>
             <Badge variant="secondary" className="text-sm">{t("pipeline.pipelineValue", { value: totalValue })}</Badge>
           </div>
-          <Button data-testid="button-add-deal">
+          <Button data-testid="button-add-deal" onClick={() => { setDefaultStage(""); setFormStage(""); setDialogOpen(true); }}>
             <Plus className="h-4 w-4 mr-2" />
             {t("pipeline.addDeal")}
           </Button>
@@ -143,7 +196,7 @@ export default function PipelinePage() {
                         </CardContent>
                       </Card>
                     ))}
-                    <Button variant="ghost" className="w-full border border-dashed text-muted-foreground" data-testid={`button-add-deal-${stage.id}`}>
+                    <Button variant="ghost" className="w-full border border-dashed text-muted-foreground" data-testid={`button-add-deal-${stage.id}`} onClick={() => openDialog(stage.id)}>
                       <Plus className="h-4 w-4 mr-1" /> {t("common.add")}
                     </Button>
                   </div>
@@ -153,6 +206,68 @@ export default function PipelinePage() {
           </div>
         )}
       </div>
+
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("pipeline.dialogTitle")}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>{t("pipeline.contactName")}</Label>
+              <Input
+                value={formName}
+                onChange={(e) => setFormName(e.target.value)}
+                required
+                data-testid="input-deal-name"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>{t("pipeline.phone")}</Label>
+              <Input
+                value={formPhone}
+                onChange={(e) => setFormPhone(e.target.value)}
+                required
+                data-testid="input-deal-phone"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>{t("pipeline.stage")}</Label>
+              <Select value={formStage} onValueChange={setFormStage}>
+                <SelectTrigger data-testid="select-deal-stage">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {stageOrder.map((stageId) => (
+                    <SelectItem key={stageId} value={stageId}>{stageTitles[stageId]}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-2">
+              <Label>{t("pipeline.tags")}</Label>
+              <Input
+                value={formTags}
+                onChange={(e) => setFormTags(e.target.value)}
+                data-testid="input-deal-tags"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>{t("pipeline.notes")}</Label>
+              <Textarea
+                value={formNotes}
+                onChange={(e) => setFormNotes(e.target.value)}
+                data-testid="input-deal-notes"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button onClick={handleSubmit} disabled={createContact.isPending} data-testid="button-save-deal">
+              {t("common.save")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 }

@@ -10,10 +10,13 @@ import {
   Share2,
   BarChart3,
   MessageSquare,
+  Briefcase,
+  TrendingUp,
 } from "lucide-react";
 import type { GatedFeature } from "@/hooks/use-trial-manager";
 
 export type ModuleTier = "free" | "starter" | "pro" | "business";
+export type PluginCategory = "core" | "industry" | "addon";
 
 export interface ModuleDefinition {
   key: GatedFeature;
@@ -22,6 +25,8 @@ export interface ModuleDefinition {
   icon: LucideIcon;
   tier: ModuleTier;
   route: string;
+  category?: PluginCategory;
+  price?: number;
 }
 
 /**
@@ -129,6 +134,28 @@ export const MODULE_REGISTRY: ModuleDefinition[] = [
     icon: MessageSquare,
     tier: "pro",
     route: "/app",
+  },
+
+  // Addon Plugin Modules (business tier)
+  {
+    key: "professional_services",
+    nameKey: "plugins.service.title",
+    descriptionKey: "plugins.service.description",
+    icon: Briefcase,
+    tier: "business",
+    route: "/app/plugins",
+    category: "addon",
+    price: 49,
+  },
+  {
+    key: "quant_trading",
+    nameKey: "plugins.quant.title",
+    descriptionKey: "plugins.quant.description",
+    icon: TrendingUp,
+    tier: "business",
+    route: "/app/plugins",
+    category: "addon",
+    price: 99,
   },
 ];
 
