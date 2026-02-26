@@ -41,7 +41,7 @@ export interface Database {
         Row: {
           id: string;
           name: string;
-          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service";
           status: "active" | "trial" | "suspended" | "cancelled";
           plan: "trial" | "starter" | "pro" | "business";
           owner_id: string;
@@ -56,7 +56,7 @@ export interface Database {
         Insert: {
           id?: string;
           name: string;
-          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service";
           status?: "active" | "trial" | "suspended" | "cancelled";
           plan?: "trial" | "starter" | "pro" | "business";
           owner_id: string;
@@ -71,7 +71,7 @@ export interface Database {
         Update: {
           id?: string;
           name?: string;
-          industry?: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+          industry?: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service";
           status?: "active" | "trial" | "suspended" | "cancelled";
           plan?: "trial" | "starter" | "pro" | "business";
           owner_id?: string;
@@ -389,7 +389,7 @@ export interface Database {
         Row: {
           id: string;
           title: string;
-          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service";
           description: string;
           metrics: Record<string, unknown>;
           screenshots: string[];
@@ -399,7 +399,7 @@ export interface Database {
         Insert: {
           id?: string;
           title: string;
-          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service";
           description: string;
           metrics?: Record<string, unknown>;
           screenshots?: string[];
@@ -409,7 +409,7 @@ export interface Database {
         Update: {
           id?: string;
           title?: string;
-          industry?: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+          industry?: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service";
           description?: string;
           metrics?: Record<string, unknown>;
           screenshots?: string[];
@@ -621,7 +621,7 @@ export interface Database {
           status: "published" | "draft" | "archived";
           visits: number;
           conversions: number;
-          template: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+          template: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service";
           updated_at: string;
           created_at: string;
         };
@@ -632,7 +632,7 @@ export interface Database {
           status?: "published" | "draft" | "archived";
           visits?: number;
           conversions?: number;
-          template: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+          template: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service";
           updated_at?: string;
           created_at?: string;
         };
@@ -643,7 +643,7 @@ export interface Database {
           status?: "published" | "draft" | "archived";
           visits?: number;
           conversions?: number;
-          template?: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+          template?: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service";
           updated_at?: string;
           created_at?: string;
         };
@@ -684,7 +684,7 @@ export interface Database {
           id: string;
           key: string;
           label: string;
-          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service";
           version: string;
           components: Record<string, unknown>[];
           updated_at: string;
@@ -694,7 +694,7 @@ export interface Database {
           id?: string;
           key: string;
           label: string;
-          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+          industry: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service";
           version?: string;
           components?: Record<string, unknown>[];
           updated_at?: string;
@@ -704,7 +704,7 @@ export interface Database {
           id?: string;
           key?: string;
           label?: string;
-          industry?: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+          industry?: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service";
           version?: string;
           components?: Record<string, unknown>[];
           updated_at?: string;
@@ -1728,7 +1728,7 @@ export interface Database {
     Functions: Record<string, never>;
     Enums: {
       user_role: "super_admin" | "tenant_owner" | "tenant_admin" | "staff" | "customer";
-      industry_template: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service" | "quant";
+      industry_template: "ecommerce" | "restaurant" | "fnb" | "beauty" | "service";
       subscription_status: "trialing" | "active" | "past_due" | "cancelled" | "expired";
       member_tier: "free" | "silver" | "gold" | "platinum";
       ai_message_role: "user" | "assistant" | "system";

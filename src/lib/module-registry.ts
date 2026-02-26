@@ -11,7 +11,6 @@ import {
   BarChart3,
   MessageSquare,
   Briefcase,
-  TrendingUp,
 } from "lucide-react";
 import type { GatedFeature } from "@/hooks/use-trial-manager";
 
@@ -146,16 +145,6 @@ export const MODULE_REGISTRY: ModuleDefinition[] = [
     route: "/app/plugins",
     category: "addon",
     price: 49,
-  },
-  {
-    key: "quant_trading",
-    nameKey: "plugins.quant.title",
-    descriptionKey: "plugins.quant.description",
-    icon: TrendingUp,
-    tier: "business",
-    route: "/app/plugins",
-    category: "addon",
-    price: 99,
   },
 ];
 

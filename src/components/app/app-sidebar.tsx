@@ -120,7 +120,7 @@ export function AppSidebar() {
   const config = industryConfig[industry];
 
   const coreMainItems = [
-    { title: t("sidebar.storeHomepage"), href: templatePath, icon: Globe },
+    { title: t("sidebar.storeHomepage"), href: templatePath ?? `/templates/${industry}`, icon: Globe },
     { title: t("sidebar.inbox"), href: "/app", icon: MessageSquare, badge: "3" },
     { title: t("sidebar.contacts"), href: "/app/contacts", icon: Users },
     { title: t("sidebar.pipeline"), href: "/app/pipeline", icon: GitBranch },

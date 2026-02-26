@@ -34,17 +34,12 @@ import {
   Receipt,
   UserCheck,
   Clock,
-  Briefcase,
-  FileText,
-  TrendingUp,
-  LineChart,
-  Signal,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
 type Step = "choose-role" | "choose-industry" | "login-form";
 type Role = "superadmin" | "merchant" | "member";
-type Industry = "ecommerce" | "fnb" | "beauty" | "service" | "quant";
+type Industry = "ecommerce" | "fnb" | "beauty";
 
 export default function LoginPage() {
   const [, navigate] = useLocation();
@@ -139,38 +134,12 @@ export default function LoginPage() {
         { icon: Clock, label: t("login.modules.sessions") },
       ],
     },
-    {
-      id: "service" as Industry,
-      label: t("login.industries.service"),
-      desc: t("login.industries.serviceDesc"),
-      icon: Briefcase,
-      color: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
-      borderColor: "border-violet-500/20",
-      modules: [
-        { icon: CalendarDays, label: t("login.modules.booking") },
-        { icon: Users, label: t("login.modules.clients") },
-        { icon: FileText, label: t("login.modules.invoices") },
-      ],
-    },
-    {
-      id: "quant" as Industry,
-      label: t("login.industries.quant"),
-      desc: t("login.industries.quantDesc"),
-      icon: TrendingUp,
-      color: "bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
-      borderColor: "border-cyan-500/20",
-      modules: [
-        { icon: LineChart, label: t("login.modules.analytics") },
-        { icon: Signal, label: t("login.modules.signals") },
-        { icon: TrendingUp, label: t("login.modules.portfolio") },
-      ],
-    },
   ];
 
   useEffect(() => {
     if (queryRole === "merchant" || queryRole === "member") {
       setSelectedRole(queryRole);
-      const validIndustries: Industry[] = ["ecommerce", "fnb", "beauty", "service", "quant"];
+      const validIndustries: Industry[] = ["ecommerce", "fnb", "beauty"];
       if (queryIndustry && validIndustries.includes(queryIndustry as Industry)) {
         setIndustry(queryIndustry as IndustryType);
         navigate(queryRole === "member" ? "/member" : "/app");

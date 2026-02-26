@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Edit, Copy, Store, UtensilsCrossed, CheckCircle2, GitBranch, Tag, Bot, Repeat } from "lucide-react";
+import { Plus, Edit, Copy, Store, UtensilsCrossed, Sparkles, CheckCircle2, GitBranch, Tag, Bot, Repeat, MessageSquare, ShoppingBag, BookOpen, Scissors } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useIndustryTemplates } from "@/hooks/use-industry-templates";
 
@@ -25,6 +25,11 @@ const industryConfig: Record<string, { icon: typeof Store; color: string; bgColo
     color: "text-orange-600 dark:text-orange-400",
     bgColor: "bg-orange-500/10 dark:bg-orange-400/10",
   },
+  beauty: {
+    icon: Sparkles,
+    color: "text-pink-600 dark:text-pink-400",
+    bgColor: "bg-pink-500/10 dark:bg-pink-400/10",
+  },
 };
 
 const compIconMap: Record<string, typeof Bot> = {
@@ -32,6 +37,10 @@ const compIconMap: Record<string, typeof Bot> = {
   "Pipeline": GitBranch,
   "Tags": Tag,
   "Follow-ups": Repeat,
+  "Quick Replies": MessageSquare,
+  "Storefront": ShoppingBag,
+  "Menu Card": BookOpen,
+  "Service Menu": Scissors,
 };
 
 export default function TemplatesPage() {

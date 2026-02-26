@@ -17,7 +17,7 @@ const GATED_FEATURES = [
   "automations", "campaigns", "referrals", "ads", "ai_chat",
   "inventory", "purchase_orders", "bills", "finance",
   "performance", "media_plan",
-  "professional_services", "quant_trading",
+  "professional_services",
 ] as const;
 export type GatedFeature = (typeof GATED_FEATURES)[number];
 

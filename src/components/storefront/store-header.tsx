@@ -15,7 +15,7 @@ interface StoreHeaderProps {
   ctaHref?: string;
   whatsappNumber?: string;
   showWhatsappInNav?: boolean;
-  industry?: "ecommerce" | "fnb" | "beauty" | "service" | "quant";
+  industry?: "ecommerce" | "fnb" | "beauty";
 }
 
 export function StoreHeader({

@@ -26,8 +26,6 @@ const INDUSTRY_SYSTEM_PROMPTS: Record<string, string> = {
     "You are an AI assistant for a beauty & wellness business. Help customers book appointments, recommend services, answer treatment questions, and manage scheduling.",
   service:
     "You are an AI assistant for a service business. Help customers with booking, inquiries, pricing, and scheduling. Be professional and solution-oriented.",
-  quant:
-    "You are an AI assistant for quantitative trading. Help users analyze portfolios, interpret signals, manage risk, and understand market data.",
 };
 
 export function getSystemPrompt(industryType: string, customPrompt?: string | null): string {

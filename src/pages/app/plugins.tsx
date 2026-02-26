@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import {
   Warehouse, ClipboardList, FileText, DollarSign, Target, Calendar,
-  Zap, Share2, BarChart3, MessageSquare, Briefcase, TrendingUp,
+  Zap, Share2, BarChart3, MessageSquare, Briefcase,
   Check, Crown, Sparkles,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -26,7 +26,6 @@ const iconMap: Record<string, typeof MessageSquare> = {
   ads: BarChart3,
   ai_chat: MessageSquare,
   professional_services: Briefcase,
-  quant_trading: TrendingUp,
 };
 
 const tierColors: Record<ModuleTier, string> = {

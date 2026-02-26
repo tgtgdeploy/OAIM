@@ -455,10 +455,6 @@
     "industryRestaurantDesc": "菜单、预约、配送、会员",
     "industryBeauty": "美容健康",
     "industryBeautyDesc": "预约、服务、技师",
-    "industryService": "服务业",
-    "industryServiceDesc": "预约、客户、发票",
-    "industryQuant": "量化交易",
-    "industryQuantDesc": "投资组合、信号、分析",
     "selected": "已选择",
     "stepPlatform": "平台",
     "choosePlatform": "选择您的平台",
@@ -473,10 +469,6 @@
     "telegramBotTokenPlaceholder": "来自 @BotFather 的令牌",
     "noTelegramBot": "还没有 Telegram 机器人？",
     "platform": "平台",
-    "aiScriptService": "服务业 AI 脚本",
-    "aiScriptQuant": "量化 AI 脚本",
-    "goalService": "预约与咨询",
-    "goalQuant": "分析与信号",
     "connectWhatsApp": "连接 WhatsApp",
     "connectWhatsAppDesc": "通过 Cloud API 连接您的 WhatsApp Business 号码。",
     "waBusinessApi": "WhatsApp Business API",
@@ -545,8 +537,7 @@
       "referrals": "设置推荐奖励计划，含奖励追踪和链接管理。",
       "ads": "高级广告分析和 ROI 优化工具。",
       "aiChat": "AI 驱动的聊天助手，用于客户支持和销售自动化。",
-      "professionalServices": "预约管理、客户管理、发票和项目跟踪，适合服务型企业。",
-      "quantTrading": "交易信号、投资组合分析、风险管理和量化策略工具。"
+      "professionalServices": "预约管理、客户管理、发票和项目跟踪，适合服务型企业。"
     }
   },
   "plugins": {
@@ -565,10 +556,6 @@
     "service": {
       "title": "专业服务",
       "description": "服务型企业全套工具：预约排期、客户管理、开票和项目跟踪。"
-    },
-    "quant": {
-      "title": "量化交易",
-      "description": "高级交易工具：信号生成、投资组合分析、风险管理和策略回测。"
     }
   },
   "pricing": {

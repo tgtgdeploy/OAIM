@@ -455,10 +455,6 @@
     "industryRestaurantDesc": "Menu, reservations, delivery, loyalty",
     "industryBeauty": "Beauty & Wellness",
     "industryBeautyDesc": "Booking, services, therapists",
-    "industryService": "Services",
-    "industryServiceDesc": "Appointments, clients, invoices",
-    "industryQuant": "Quant Trading",
-    "industryQuantDesc": "Portfolio, signals, analytics",
     "selected": "Selected",
     "stepPlatform": "Platform",
     "choosePlatform": "Choose Your Platform",
@@ -473,10 +469,6 @@
     "telegramBotTokenPlaceholder": "Your bot token from @BotFather",
     "noTelegramBot": "Don't have a Telegram bot?",
     "platform": "Platform",
-    "aiScriptService": "Service AI Script",
-    "aiScriptQuant": "Quant AI Script",
-    "goalService": "Bookings & Inquiries",
-    "goalQuant": "Analysis & Signals",
     "connectWhatsApp": "Connect WhatsApp",
     "connectWhatsAppDesc": "Link your WhatsApp Business number via Cloud API.",
     "waBusinessApi": "WhatsApp Business API",
@@ -545,8 +537,7 @@
       "referrals": "Set up referral programs with reward tracking and link management.",
       "ads": "Advanced advertising analytics and ROI optimization tools.",
       "aiChat": "AI-powered chat assistant for customer support and sales automation.",
-      "professionalServices": "Appointments, client management, invoicing and project tracking for service businesses.",
-      "quantTrading": "Trading signals, portfolio analytics, risk management and quantitative strategy tools."
+      "professionalServices": "Appointments, client management, invoicing and project tracking for service businesses."
     }
   },
   "plugins": {
@@ -565,10 +556,6 @@
     "service": {
       "title": "Professional Services",
       "description": "Full suite for service businesses: appointment scheduling, client management, invoicing, and project tracking."
-    },
-    "quant": {
-      "title": "Quantitative Trading",
-      "description": "Advanced trading tools: signal generation, portfolio analytics, risk management, and strategy backtesting."
     }
   },
   "pricing": {
