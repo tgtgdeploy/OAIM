@@ -10,6 +10,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -209,6 +210,7 @@ export default function ProductsPage() {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>{t("products.dialogTitle")}</DialogTitle>
+              <DialogDescription className="sr-only">{t("products.dialogTitle")}</DialogDescription>
             </DialogHeader>
             <div className="space-y-4 py-2">
               <div className="space-y-2">

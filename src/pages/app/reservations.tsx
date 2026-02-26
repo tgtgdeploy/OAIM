@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { StatCard } from "@/components/shared/stat-card";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -150,6 +150,7 @@ export default function ReservationsPage() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{t("reservations.dialogTitle")}</DialogTitle>
+            <DialogDescription className="sr-only">{t("reservations.dialogTitle")}</DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSubmitReservation} className="space-y-4">
             <div className="space-y-2">

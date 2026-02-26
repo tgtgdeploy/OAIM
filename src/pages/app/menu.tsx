@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -192,6 +192,7 @@ export default function MenuPage() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{t("menu.dialogTitle")}</DialogTitle>
+            <DialogDescription className="sr-only">{t("menu.dialogTitle")}</DialogDescription>
           </DialogHeader>
           <form onSubmit={handleSubmitItem} className="space-y-4">
             <div className="space-y-2">
