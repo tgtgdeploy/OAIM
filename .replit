@@ -1,21 +1,26 @@
-modules = ["nodejs-20", "web"]
+modules = ["nodejs-20", "web", "postgresql-16"]
 run = "npm run dev"
-hidden = [".config", ".git", "node_modules", "dist"]
+hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
 
 [nix]
 channel = "stable-24_05"
 
 [[ports]]
-localPort = 5173
+localPort = 5000
 externalPort = 80
 
+<<<<<<< HEAD
 [[ports]]
 localPort = 5174
 externalPort = 3000
+=======
+[env]
+PORT = "5000"
+>>>>>>> 2190e1b (Post-Recovery checkpoint)
 
 [deployment]
-deploymentTarget = "static"
-publicDir = "dist"
+deploymentTarget = "autoscale"
+run = ["node", "./dist/index.cjs"]
 build = ["npm", "run", "build"]
 
 [workflows]
@@ -36,4 +41,9 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
+<<<<<<< HEAD
 args = "bash dev.sh"
+=======
+args = "npm run dev"
+waitForPort = 5000
+>>>>>>> 2190e1b (Post-Recovery checkpoint)
