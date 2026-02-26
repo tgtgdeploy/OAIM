@@ -34,6 +34,7 @@ import {
   Receipt,
   UserCheck,
   Clock,
+  Play,
 } from "lucide-react";
 import { SiWhatsapp } from "react-icons/si";
 
@@ -53,6 +54,7 @@ export default function LoginPage() {
   const [authError, setAuthError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const authSignIn = useAuthStore((s) => s.signIn);
+  const demoLogin = useAuthStore((s) => s.demoLogin);
 
   const params = new URLSearchParams(search);
   const queryRole = params.get("role") as Role | null;
@@ -153,9 +155,8 @@ export default function LoginPage() {
     setSelectedRole(role);
     if (role === "merchant" || role === "member") {
       setStep("choose-industry");
-    } else {
-      const r = roles.find((r) => r.id === role);
-      if (r) navigate(r.path);
+    } else if (role === "superadmin") {
+      setStep("login-form");
     }
   }
 
@@ -166,6 +167,12 @@ export default function LoginPage() {
     } else {
       navigate("/app");
     }
+  }
+
+  function handleDemoLogin(industry: Industry) {
+    setIndustry(industry as IndustryType);
+    demoLogin(industry);
+    navigate("/app");
   }
 
   async function handleFormLogin(e: React.FormEvent) {
@@ -398,15 +405,17 @@ export default function LoginPage() {
                   {industryOptions.map((ind) => (
                     <Card
                       key={ind.id}
-                      role="button"
-                      tabIndex={0}
-                      className={`cursor-pointer hover-elevate overflow-visible border ${ind.borderColor}`}
-                      onClick={() => handleIndustrySelect(ind.id)}
-                      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleIndustrySelect(ind.id); }}
+                      className={`overflow-visible border ${ind.borderColor}`}
                       data-testid={`button-industry-${ind.id}`}
                     >
                       <CardContent className="p-4">
-                        <div className="flex items-center gap-4">
+                        <div
+                          role="button"
+                          tabIndex={0}
+                          className="flex items-center gap-4 cursor-pointer"
+                          onClick={() => handleIndustrySelect(ind.id)}
+                          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") handleIndustrySelect(ind.id); }}
+                        >
                           <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-md ${ind.color}`}>
                             <ind.icon className="h-5 w-5" />
                           </div>
@@ -416,18 +425,98 @@ export default function LoginPage() {
                           </div>
                           <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
                         </div>
-                        <div className="flex flex-wrap gap-1.5 mt-3 ml-15 pl-15">
-                          {ind.modules.map((mod) => (
-                            <Badge key={mod.label} variant="outline" className="text-[10px] px-1.5 py-0 gap-1">
-                              <mod.icon className="h-2.5 w-2.5" />
-                              {mod.label}
-                            </Badge>
-                          ))}
+                        <div className="flex items-center justify-between mt-3 ml-15 pl-15">
+                          <div className="flex flex-wrap gap-1.5">
+                            {ind.modules.map((mod) => (
+                              <Badge key={mod.label} variant="outline" className="text-[10px] px-1.5 py-0 gap-1">
+                                <mod.icon className="h-2.5 w-2.5" />
+                                {mod.label}
+                              </Badge>
+                            ))}
+                          </div>
+                          {selectedRole === "merchant" && (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-xs h-6 px-2 text-muted-foreground hover:text-primary"
+                              onClick={(e) => { e.stopPropagation(); handleDemoLogin(ind.id); }}
+                              data-testid={`button-demo-${ind.id}`}
+                            >
+                              <Play className="h-3 w-3 mr-1" />
+                              {t("login.viewDemo")}
+                            </Button>
+                          )}
                         </div>
                       </CardContent>
                     </Card>
                   ))}
                 </div>
+              </>
+            )}
+
+            {step === "login-form" && (
+              <>
+                <div className="space-y-2">
+                  <button
+                    onClick={handleBack}
+                    className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    data-testid="button-back-to-roles"
+                  >
+                    <ArrowLeft className="h-3.5 w-3.5" />
+                    {t("login.back")}
+                  </button>
+                  <h2 className="text-2xl font-bold" data-testid="text-login-form-title">
+                    {t("login.superadminLogin")}
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    {t("login.superadminLoginDesc")}
+                  </p>
+                </div>
+
+                <form onSubmit={handleFormLogin} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="admin-email">{t("login.email")}</Label>
+                    <Input
+                      id="admin-email"
+                      type="email"
+                      placeholder="admin@oaim.demo"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      data-testid="input-admin-email"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="admin-password">{t("login.password")}</Label>
+                    <div className="relative">
+                      <Input
+                        id="admin-password"
+                        type={showPassword ? "text" : "password"}
+                        placeholder={t("login.passwordPlaceholder")}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        data-testid="input-admin-password"
+                      />
+                      <button
+                        type="button"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                      </button>
+                    </div>
+                  </div>
+                  {authError && (
+                    <p className="text-sm text-destructive text-center">{authError}</p>
+                  )}
+                  <Button type="submit" className="w-full" disabled={isSubmitting} data-testid="button-admin-login">
+                    {isSubmitting ? "Signing in..." : t("login.signIn")}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </form>
+
+                <p className="text-xs text-center text-muted-foreground">
+                  {t("login.demoHint")}
+                </p>
               </>
             )}
 

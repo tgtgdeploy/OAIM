@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { useAuthStore } from "@/stores/auth-store";
+import { registerTenant } from "@/lib/register-tenant";
+import type { Industry } from "@/lib/industry-context";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -64,6 +66,27 @@ export default function RegisterPage() {
         setAuthError(error);
         return;
       }
+
+      // Create tenant if we have a valid industry
+      const validIndustries: Industry[] = ["ecommerce", "fnb", "beauty"];
+      const industry = validIndustries.includes(businessType as Industry)
+        ? (businessType as Industry)
+        : "ecommerce";
+
+      // Get the newly created user's ID from the auth session
+      const { data: sessionData } = await import("@/lib/supabase").then(m => m.supabase.auth.getUser());
+      if (sessionData?.user) {
+        const { error: tenantError } = await registerTenant({
+          userId: sessionData.user.id,
+          businessName: name ? `${name}'s Business` : "My Business",
+          industry,
+          phone: phone || undefined,
+        });
+        if (tenantError) {
+          console.warn("Tenant creation failed:", tenantError);
+        }
+      }
+
       navigate("/app/onboarding");
     } finally {
       setIsSubmitting(false);

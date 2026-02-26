@@ -12,10 +12,11 @@ BEGIN;
 -- LAYER 1: No dependencies
 -- ─────────────────────────────────────────────────────────────────────────────
 
--- USERS (2 records)
+-- USERS (3 records)
 INSERT INTO users (id, email, full_name, avatar_url, created_at) VALUES
   ('a0000000-0000-0000-0000-000000000001', 'owner@oaim.demo', 'Ahmad Razif', NULL, NOW() - INTERVAL '90 days'),
-  ('a0000000-0000-0000-0000-000000000002', 'staff@oaim.demo', 'Nurul Hana', NULL, NOW() - INTERVAL '60 days')
+  ('a0000000-0000-0000-0000-000000000002', 'staff@oaim.demo', 'Nurul Hana', NULL, NOW() - INTERVAL '60 days'),
+  ('a0000000-0000-0000-0000-000000000099', 'admin@oaim.demo', 'Super Admin', NULL, NOW())
 ON CONFLICT (id) DO NOTHING;
 
 -- PLANS (4 records)
@@ -51,42 +52,52 @@ ON CONFLICT (id) DO NOTHING;
 -- LAYER 2: Depends on users
 -- ─────────────────────────────────────────────────────────────────────────────
 
--- TENANTS (2 records)
+-- TENANTS (3 records)
 INSERT INTO tenants (id, name, industry, status, plan, owner_id, whatsapp_phone_id, whatsapp_token, logo_url, settings, created_at) VALUES
   ('e0000000-0000-0000-0000-000000000001', 'Kedai Gadget KL', 'ecommerce', 'active', 'pro',
    'a0000000-0000-0000-0000-000000000001', '601234567890', 'whsk_demo_token_ecom',
    'https://placehold.co/100x100/3b82f6/white?text=KG',
    '{"timezone": "Asia/Kuala_Lumpur", "language": "ms"}'::jsonb,
    NOW() - INTERVAL '80 days'),
-  ('e0000000-0000-0000-0000-000000000002', 'Restoran Selera Kampung', 'restaurant', 'active', 'business',
+  ('e0000000-0000-0000-0000-000000000002', 'Restoran Selera Kampung', 'fnb', 'active', 'business',
    'a0000000-0000-0000-0000-000000000001', '601234567891', 'whsk_demo_token_resto',
    'https://placehold.co/100x100/f97316/white?text=RS',
    '{"timezone": "Asia/Kuala_Lumpur", "language": "ms"}'::jsonb,
-   NOW() - INTERVAL '70 days')
+   NOW() - INTERVAL '70 days'),
+  ('e0000000-0000-0000-0000-000000000003', 'Glow Beauty Spa', 'beauty', 'active', 'pro',
+   'a0000000-0000-0000-0000-000000000001', '601234567892', 'whsk_demo_token_beauty',
+   'https://placehold.co/100x100/ec4899/white?text=GB',
+   '{"timezone": "Asia/Kuala_Lumpur", "language": "en"}'::jsonb,
+   NOW() - INTERVAL '60 days')
 ON CONFLICT (id) DO NOTHING;
 
--- INDUSTRY_TEMPLATES (2 records)
+-- INDUSTRY_TEMPLATES (3 records)
 INSERT INTO industry_templates (id, key, label, industry, version, components, updated_at, created_at) VALUES
   ('f0000000-0000-0000-0000-000000000001', 'ecommerce_v1', 'E-Commerce Starter', 'ecommerce', '1.2.0',
    '[{"type": "hero", "title": "Shop Now"}, {"type": "product_grid", "columns": 3}, {"type": "testimonials"}, {"type": "footer"}]'::jsonb,
    NOW() - INTERVAL '10 days', NOW() - INTERVAL '60 days'),
-  ('f0000000-0000-0000-0000-000000000002', 'restaurant_v1', 'Restaurant Starter', 'restaurant', '1.1.0',
+  ('f0000000-0000-0000-0000-000000000002', 'fnb_v1', 'F&B / Restaurant Starter', 'fnb', '1.1.0',
    '[{"type": "hero", "title": "Welcome"}, {"type": "menu_section"}, {"type": "reservation_form"}, {"type": "map"}, {"type": "footer"}]'::jsonb,
-   NOW() - INTERVAL '5 days', NOW() - INTERVAL '55 days')
+   NOW() - INTERVAL '5 days', NOW() - INTERVAL '55 days'),
+  ('f0000000-0000-0000-0000-000000000003', 'beauty_v1', 'Beauty & Wellness Starter', 'beauty', '1.0.0',
+   '[{"type": "hero", "title": "Book Your Appointment"}, {"type": "services_grid"}, {"type": "therapists"}, {"type": "testimonials"}, {"type": "footer"}]'::jsonb,
+   NOW(), NOW() - INTERVAL '30 days')
 ON CONFLICT (id) DO NOTHING;
 
 -- ─────────────────────────────────────────────────────────────────────────────
 -- LAYER 3: Depends on tenants + users
 -- ─────────────────────────────────────────────────────────────────────────────
 
--- TENANT_USERS (3 records)
+-- TENANT_USERS (5 records)
 INSERT INTO tenant_users (id, tenant_id, user_id, role, created_at) VALUES
   ('10000000-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000001', 'tenant_owner', NOW() - INTERVAL '80 days'),
   ('10000000-0000-0000-0000-000000000002', 'e0000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000001', 'tenant_owner', NOW() - INTERVAL '70 days'),
-  ('10000000-0000-0000-0000-000000000003', 'e0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'staff', NOW() - INTERVAL '55 days')
+  ('10000000-0000-0000-0000-000000000003', 'e0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'staff', NOW() - INTERVAL '55 days'),
+  ('10000000-0000-0000-0000-000000000004', 'e0000000-0000-0000-0000-000000000003', 'a0000000-0000-0000-0000-000000000001', 'tenant_owner', NOW() - INTERVAL '60 days'),
+  ('10000000-0000-0000-0000-000000000099', 'e0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000099', 'super_admin', NOW())
 ON CONFLICT (id) DO NOTHING;
 
--- CONTACTS (8 records - 4 per tenant, different pipeline stages)
+-- CONTACTS (12 records - 4 per tenant, different pipeline stages)
 INSERT INTO contacts (id, tenant_id, name, phone, email, tags, stage, notes, created_at) VALUES
   -- Kedai Gadget KL contacts
   ('20000000-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000001', 'Tan Wei Ming', '+60123456001', 'weiming@example.com', ARRAY['vip','repeat'], 'closed_won', 'Loyal customer, bought 3 phones this year', NOW() - INTERVAL '45 days'),
@@ -97,10 +108,15 @@ INSERT INTO contacts (id, tenant_id, name, phone, email, tags, stage, notes, cre
   ('20000000-0000-0000-0000-000000000005', 'e0000000-0000-0000-0000-000000000002', 'Mohd Faizal', '+60123456005', 'faizal@example.com', ARRAY['catering','corporate'], 'closed_won', 'Regular corporate catering orders', NOW() - INTERVAL '40 days'),
   ('20000000-0000-0000-0000-000000000006', 'e0000000-0000-0000-0000-000000000002', 'Wong Siew Ping', '+60123456006', 'siewping@example.com', ARRAY['new'], 'new_inquiry', 'Enquired about private dining for 20 pax', NOW() - INTERVAL '1 day'),
   ('20000000-0000-0000-0000-000000000007', 'e0000000-0000-0000-0000-000000000002', 'Aisha Binti Yusof', '+60123456007', NULL, ARRAY['event'], 'quoted', 'Wedding reception quotation sent', NOW() - INTERVAL '4 days'),
-  ('20000000-0000-0000-0000-000000000008', 'e0000000-0000-0000-0000-000000000002', 'Lim Chee Keong', '+60123456008', 'limck@example.com', ARRAY['regular'], 'closed_lost', 'Chose competitor for Hari Raya event', NOW() - INTERVAL '15 days')
+  ('20000000-0000-0000-0000-000000000008', 'e0000000-0000-0000-0000-000000000002', 'Lim Chee Keong', '+60123456008', 'limck@example.com', ARRAY['regular'], 'closed_lost', 'Chose competitor for Hari Raya event', NOW() - INTERVAL '15 days'),
+  -- Glow Beauty Spa contacts
+  ('20000000-0000-0000-0000-000000000009', 'e0000000-0000-0000-0000-000000000003', 'Nurul Aisyah', '+60123456009', 'aisyah@example.com', ARRAY['vip','regular'], 'closed_won', 'Monthly facial treatment customer', NOW() - INTERVAL '50 days'),
+  ('20000000-0000-0000-0000-000000000010', 'e0000000-0000-0000-0000-000000000003', 'Jessica Tan', '+60123456010', 'jessica.t@example.com', ARRAY['new'], 'new_inquiry', 'Asked about hair treatment packages', NOW() - INTERVAL '1 day'),
+  ('20000000-0000-0000-0000-000000000011', 'e0000000-0000-0000-0000-000000000003', 'Priya Nair', '+60123456011', 'priya.n@example.com', ARRAY['bridal'], 'quoted', 'Bridal package quotation for March wedding', NOW() - INTERVAL '3 days'),
+  ('20000000-0000-0000-0000-000000000012', 'e0000000-0000-0000-0000-000000000003', 'Chen Mei Fong', '+60123456012', NULL, ARRAY['follow_up'], 'follow_up', 'Interested in body massage membership', NOW() - INTERVAL '2 days')
 ON CONFLICT (id) DO NOTHING;
 
--- PRODUCTS (8 records - 4 per tenant)
+-- PRODUCTS (12 records - 4 per tenant)
 INSERT INTO products (id, tenant_id, name, description, price, currency, stock, category, image_url, is_active, created_at) VALUES
   -- Kedai Gadget KL products
   ('30000000-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000001', 'iPhone 15 Pro Max 256GB', 'Latest Apple flagship with titanium frame', '5499.00', 'MYR', 12, 'Smartphones', 'https://placehold.co/400x400/1f2937/white?text=iPhone+15', NOW() - INTERVAL '30 days'),
@@ -111,15 +127,22 @@ INSERT INTO products (id, tenant_id, name, description, price, currency, stock, 
   ('30000000-0000-0000-0000-000000000005', 'e0000000-0000-0000-0000-000000000002', 'Nasi Lemak Special', 'Nasi lemak with ayam goreng berempah, sambal, telur', '12.90', 'MYR', NULL, 'Main Course', 'https://placehold.co/400x400/f97316/white?text=Nasi+Lemak', NOW() - INTERVAL '50 days'),
   ('30000000-0000-0000-0000-000000000006', 'e0000000-0000-0000-0000-000000000002', 'Mee Goreng Mamak', 'Classic mamak-style fried noodles', '10.90', 'MYR', NULL, 'Main Course', 'https://placehold.co/400x400/f97316/white?text=Mee+Goreng', NOW() - INTERVAL '50 days'),
   ('30000000-0000-0000-0000-000000000007', 'e0000000-0000-0000-0000-000000000002', 'Teh Tarik', 'Pulled milk tea, the Malaysian classic', '3.50', 'MYR', NULL, 'Beverages', 'https://placehold.co/400x400/f97316/white?text=Teh+Tarik', NOW() - INTERVAL '50 days'),
-  ('30000000-0000-0000-0000-000000000008', 'e0000000-0000-0000-0000-000000000002', 'Roti Canai Set', 'Flaky flatbread with dhal and sambal', '6.90', 'MYR', NULL, 'Main Course', 'https://placehold.co/400x400/f97316/white?text=Roti+Canai', NOW() - INTERVAL '50 days')
+  ('30000000-0000-0000-0000-000000000008', 'e0000000-0000-0000-0000-000000000002', 'Roti Canai Set', 'Flaky flatbread with dhal and sambal', '6.90', 'MYR', NULL, 'Main Course', 'https://placehold.co/400x400/f97316/white?text=Roti+Canai', NOW() - INTERVAL '50 days'),
+  -- Glow Beauty Spa services
+  ('30000000-0000-0000-0000-000000000009', 'e0000000-0000-0000-0000-000000000003', 'Signature Facial Treatment', 'Deep cleansing facial with hydration mask', '189.00', 'MYR', NULL, 'Facial', 'https://placehold.co/400x400/ec4899/white?text=Facial', NOW() - INTERVAL '55 days'),
+  ('30000000-0000-0000-0000-000000000010', 'e0000000-0000-0000-0000-000000000003', 'Full Body Massage (60 min)', 'Relaxing aromatherapy full body massage', '159.00', 'MYR', NULL, 'Massage', 'https://placehold.co/400x400/ec4899/white?text=Massage', NOW() - INTERVAL '55 days'),
+  ('30000000-0000-0000-0000-000000000011', 'e0000000-0000-0000-0000-000000000003', 'Hair Treatment Package', 'Keratin treatment with deep conditioning', '250.00', 'MYR', NULL, 'Hair', 'https://placehold.co/400x400/ec4899/white?text=Hair', NOW() - INTERVAL '55 days'),
+  ('30000000-0000-0000-0000-000000000012', 'e0000000-0000-0000-0000-000000000003', 'Bridal Makeup Package', 'Complete bridal makeup with trial session', '1200.00', 'MYR', NULL, 'Bridal', 'https://placehold.co/400x400/ec4899/white?text=Bridal', NOW() - INTERVAL '55 days')
 ON CONFLICT (id) DO NOTHING;
 
--- STAFF (4 records - 2 per tenant)
+-- STAFF (6 records - 2 per tenant)
 INSERT INTO staff (id, tenant_id, name, role, specialties, rating, today_bookings, weekly_hours, status, created_at) VALUES
   ('40000000-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000001', 'Ahmad Zikri', 'Sales Executive', ARRAY['smartphones','tablets'], '4.8', 3, 38, 'available', NOW() - INTERVAL '60 days'),
   ('40000000-0000-0000-0000-000000000002', 'e0000000-0000-0000-0000-000000000001', 'Priya Devi', 'Technical Support', ARRAY['repairs','warranty'], '4.5', 2, 40, 'busy', NOW() - INTERVAL '55 days'),
   ('40000000-0000-0000-0000-000000000003', 'e0000000-0000-0000-0000-000000000002', 'Chef Kamal', 'Head Chef', ARRAY['malay_cuisine','fusion'], '4.9', 0, 45, 'available', NOW() - INTERVAL '65 days'),
-  ('40000000-0000-0000-0000-000000000004', 'e0000000-0000-0000-0000-000000000002', 'Salmah', 'Floor Manager', ARRAY['service','events'], '4.7', 5, 42, 'busy', NOW() - INTERVAL '60 days')
+  ('40000000-0000-0000-0000-000000000004', 'e0000000-0000-0000-0000-000000000002', 'Salmah', 'Floor Manager', ARRAY['service','events'], '4.7', 5, 42, 'busy', NOW() - INTERVAL '60 days'),
+  ('40000000-0000-0000-0000-000000000005', 'e0000000-0000-0000-0000-000000000003', 'Lisa Wong', 'Senior Therapist', ARRAY['facial','massage','body_treatment'], '4.9', 4, 40, 'busy', NOW() - INTERVAL '55 days'),
+  ('40000000-0000-0000-0000-000000000006', 'e0000000-0000-0000-0000-000000000003', 'Aini Razali', 'Hair Stylist', ARRAY['hair','bridal_makeup','coloring'], '4.7', 2, 38, 'available', NOW() - INTERVAL '50 days')
 ON CONFLICT (id) DO NOTHING;
 
 -- RESTAURANT_TABLES (6 records - for restaurant tenant)
@@ -137,7 +160,9 @@ INSERT INTO campaigns (id, tenant_id, name, platform, status, budget, spent, lea
   ('60000000-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000001', 'iPhone 15 Launch Promo', 'facebook', 'active', '2000.00', '1250.00', 45, '27.78', '3.2', 'MYR', NOW() - INTERVAL '14 days'),
   ('60000000-0000-0000-0000-000000000002', 'e0000000-0000-0000-0000-000000000001', 'Year End Sale Google Ads', 'google', 'paused', '1500.00', '800.00', 22, '36.36', '2.8', 'MYR', NOW() - INTERVAL '30 days'),
   ('60000000-0000-0000-0000-000000000003', 'e0000000-0000-0000-0000-000000000002', 'Nasi Lemak Festival', 'facebook', 'active', '500.00', '320.00', 68, '4.71', '5.5', 'MYR', NOW() - INTERVAL '7 days'),
-  ('60000000-0000-0000-0000-000000000004', 'e0000000-0000-0000-0000-000000000002', 'Catering Promo Email', 'email', 'completed', '0.00', '0.00', 12, '0.00', NULL, 'MYR', NOW() - INTERVAL '21 days')
+  ('60000000-0000-0000-0000-000000000004', 'e0000000-0000-0000-0000-000000000002', 'Catering Promo Email', 'email', 'completed', '0.00', '0.00', 12, '0.00', NULL, 'MYR', NOW() - INTERVAL '21 days'),
+  ('60000000-0000-0000-0000-000000000005', 'e0000000-0000-0000-0000-000000000003', 'Valentine Spa Package', 'facebook', 'active', '800.00', '520.00', 35, '14.86', '4.2', 'MYR', NOW() - INTERVAL '10 days'),
+  ('60000000-0000-0000-0000-000000000006', 'e0000000-0000-0000-0000-000000000003', 'Bridal Season Promo', 'instagram', 'active', '600.00', '380.00', 18, '21.11', '3.8', 'MYR', NOW() - INTERVAL '5 days')
 ON CONFLICT (id) DO NOTHING;
 
 -- AUTOMATIONS (6 records - mix of tenant-specific + templates)
@@ -200,7 +225,11 @@ INSERT INTO appointments (id, tenant_id, client_name, service, therapist, date, 
   ('a3000000-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000001', 'Siti Aminah', 'Phone Setup & Data Transfer', 'Ahmad Zikri', (NOW() + INTERVAL '1 day')::date::text, '10:00', '30 min', 'confirmed', NOW() - INTERVAL '2 days'),
   ('a3000000-0000-0000-0000-000000000002', 'e0000000-0000-0000-0000-000000000001', 'Raj Kumar', 'Bulk Order Consultation', 'Ahmad Zikri', (NOW() + INTERVAL '2 days')::date::text, '14:00', '1 hour', 'pending', NOW() - INTERVAL '1 day'),
   ('a3000000-0000-0000-0000-000000000003', 'e0000000-0000-0000-0000-000000000001', 'Tan Wei Ming', 'Warranty Repair Pickup', 'Priya Devi', (NOW() - INTERVAL '1 day')::date::text, '11:00', '15 min', 'completed', NOW() - INTERVAL '5 days'),
-  ('a3000000-0000-0000-0000-000000000004', 'e0000000-0000-0000-0000-000000000002', 'Aisha Binti Yusof', 'Wedding Tasting Session', 'Chef Kamal', (NOW() + INTERVAL '3 days')::date::text, '15:00', '2 hours', 'confirmed', NOW() - INTERVAL '4 days')
+  ('a3000000-0000-0000-0000-000000000004', 'e0000000-0000-0000-0000-000000000002', 'Aisha Binti Yusof', 'Wedding Tasting Session', 'Chef Kamal', (NOW() + INTERVAL '3 days')::date::text, '15:00', '2 hours', 'confirmed', NOW() - INTERVAL '4 days'),
+  ('a3000000-0000-0000-0000-000000000005', 'e0000000-0000-0000-0000-000000000003', 'Nurul Aisyah', 'Signature Facial Treatment', 'Lisa Wong', (NOW() + INTERVAL '1 day')::date::text, '10:00', '1 hour', 'confirmed', NOW() - INTERVAL '2 days'),
+  ('a3000000-0000-0000-0000-000000000006', 'e0000000-0000-0000-0000-000000000003', 'Jessica Tan', 'Hair Treatment Package', 'Aini Razali', (NOW() + INTERVAL '2 days')::date::text, '14:00', '2 hours', 'pending', NOW() - INTERVAL '1 day'),
+  ('a3000000-0000-0000-0000-000000000007', 'e0000000-0000-0000-0000-000000000003', 'Priya Nair', 'Bridal Makeup Trial', 'Aini Razali', (NOW() + INTERVAL '5 days')::date::text, '11:00', '3 hours', 'confirmed', NOW() - INTERVAL '3 days'),
+  ('a3000000-0000-0000-0000-000000000008', 'e0000000-0000-0000-0000-000000000003', 'Chen Mei Fong', 'Full Body Massage', 'Lisa Wong', (NOW() - INTERVAL '1 day')::date::text, '16:00', '1 hour', 'completed', NOW() - INTERVAL '5 days')
 ON CONFLICT (id) DO NOTHING;
 
 -- RESERVATIONS (4 records - for restaurant tenant)
@@ -320,16 +349,19 @@ INSERT INTO members (id, tenant_id, user_id, name, phone, email, tags, tier, tot
   ('ad000000-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000001', NULL, 'Tan Wei Ming', '+60123456001', 'weiming@example.com', ARRAY['vip','repeat'], 'gold', 6598.00, 'TANWM01', 'Loyal customer, bought 3 phones this year', NOW() - INTERVAL '45 days'),
   ('ad000000-0000-0000-0000-000000000002', 'e0000000-0000-0000-0000-000000000001', NULL, 'Siti Aminah', '+60123456002', 'siti.a@example.com', ARRAY['new'], 'free', 0, NULL, 'Asked about iPhone 15 Pro pricing', NOW() - INTERVAL '2 days'),
   ('ad000000-0000-0000-0000-000000000003', 'e0000000-0000-0000-0000-000000000002', NULL, 'Mohd Faizal', '+60123456005', 'faizal@example.com', ARRAY['catering','corporate'], 'gold', 3500.00, 'FAISAL01', 'Regular corporate catering orders', NOW() - INTERVAL '40 days'),
-  ('ad000000-0000-0000-0000-000000000004', 'e0000000-0000-0000-0000-000000000002', NULL, 'Wong Siew Ping', '+60123456006', 'siewping@example.com', ARRAY['new'], 'free', 0, NULL, 'Enquired about private dining for 20 pax', NOW() - INTERVAL '1 day')
+  ('ad000000-0000-0000-0000-000000000004', 'e0000000-0000-0000-0000-000000000002', NULL, 'Wong Siew Ping', '+60123456006', 'siewping@example.com', ARRAY['new'], 'free', 0, NULL, 'Enquired about private dining for 20 pax', NOW() - INTERVAL '1 day'),
+  ('ad000000-0000-0000-0000-000000000005', 'e0000000-0000-0000-0000-000000000003', NULL, 'Nurul Aisyah', '+60123456009', 'aisyah@example.com', ARRAY['vip','regular'], 'gold', 2840.00, 'AISYAH01', 'Monthly facial treatment customer', NOW() - INTERVAL '50 days'),
+  ('ad000000-0000-0000-0000-000000000006', 'e0000000-0000-0000-0000-000000000003', NULL, 'Jessica Tan', '+60123456010', 'jessica.t@example.com', ARRAY['new'], 'free', 0, NULL, 'Asked about hair treatment packages', NOW() - INTERVAL '1 day')
 ON CONFLICT (id) DO NOTHING;
 
--- SUBSCRIPTIONS (2 records - one per tenant)
+-- SUBSCRIPTIONS (3 records - one per tenant)
 INSERT INTO subscriptions (id, tenant_id, plan_id, status, stripe_customer_id, stripe_subscription_id, current_period_start, current_period_end, trial_start_at, trial_expires_at, created_at, updated_at) VALUES
   ('ae000000-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000001', 'b0000000-0000-0000-0000-000000000003', 'active', 'cus_demo_ecom', 'sub_demo_ecom', NOW() - INTERVAL '30 days', NOW() + INTERVAL '30 days', NOW() - INTERVAL '90 days', NOW() - INTERVAL '83 days', NOW() - INTERVAL '90 days', NOW()),
-  ('ae000000-0000-0000-0000-000000000002', 'e0000000-0000-0000-0000-000000000002', 'b0000000-0000-0000-0000-000000000004', 'active', 'cus_demo_resto', 'sub_demo_resto', NOW() - INTERVAL '15 days', NOW() + INTERVAL '15 days', NOW() - INTERVAL '80 days', NOW() - INTERVAL '73 days', NOW() - INTERVAL '80 days', NOW())
+  ('ae000000-0000-0000-0000-000000000002', 'e0000000-0000-0000-0000-000000000002', 'b0000000-0000-0000-0000-000000000004', 'active', 'cus_demo_resto', 'sub_demo_resto', NOW() - INTERVAL '15 days', NOW() + INTERVAL '15 days', NOW() - INTERVAL '80 days', NOW() - INTERVAL '73 days', NOW() - INTERVAL '80 days', NOW()),
+  ('ae000000-0000-0000-0000-000000000003', 'e0000000-0000-0000-0000-000000000003', 'b0000000-0000-0000-0000-000000000003', 'active', 'cus_demo_beauty', 'sub_demo_beauty', NOW() - INTERVAL '20 days', NOW() + INTERVAL '10 days', NOW() - INTERVAL '60 days', NOW() - INTERVAL '53 days', NOW() - INTERVAL '60 days', NOW())
 ON CONFLICT (id) DO NOTHING;
 
--- BOT_CONFIGS (2 records - one per tenant)
+-- BOT_CONFIGS (3 records - one per tenant)
 INSERT INTO bot_configs (id, tenant_id, platform, system_prompt, industry_type, welcome_message, is_active, openclaw_agent_id, config, created_at) VALUES
   ('af000000-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000001', 'whatsapp',
    'You are a helpful e-commerce sales assistant for Kedai Gadget KL. Help customers find the right products, provide pricing info, and close sales. Always be friendly and professional.',
@@ -337,8 +369,12 @@ INSERT INTO bot_configs (id, tenant_id, platform, system_prompt, industry_type, 
    '{"tone": "friendly", "goal": "close_sales", "language": "en+ms"}'::jsonb, NOW() - INTERVAL '60 days'),
   ('af000000-0000-0000-0000-000000000002', 'e0000000-0000-0000-0000-000000000002', 'whatsapp',
    'You are a helpful restaurant assistant for Restoran Selera Kampung. Help guests with reservations, menu inquiries, and catering orders. Be warm and welcoming.',
-   'restaurant', 'Selamat datang ke Restoran Selera Kampung! Boleh saya bantu anda?', TRUE, NULL,
-   '{"tone": "friendly", "goal": "reservations", "language": "en+ms"}'::jsonb, NOW() - INTERVAL '55 days')
+   'fnb', 'Selamat datang ke Restoran Selera Kampung! Boleh saya bantu anda?', TRUE, NULL,
+   '{"tone": "friendly", "goal": "reservations", "language": "en+ms"}'::jsonb, NOW() - INTERVAL '55 days'),
+  ('af000000-0000-0000-0000-000000000003', 'e0000000-0000-0000-0000-000000000003', 'whatsapp',
+   'You are a helpful beauty salon assistant for Glow Beauty Spa. Help clients book appointments, recommend treatments, and answer questions about services. Be warm and caring.',
+   'beauty', 'Hi! Welcome to Glow Beauty Spa. How can I help you today?', TRUE, NULL,
+   '{"tone": "friendly", "goal": "bookings", "language": "en+ms"}'::jsonb, NOW() - INTERVAL '50 days')
 ON CONFLICT (id) DO NOTHING;
 
 -- AI_CONVERSATIONS (2 records)
@@ -363,15 +399,15 @@ COMMIT;
 -- =============================================================================
 -- SUMMARY
 -- =============================================================================
--- Layer 1: users(2), plans(4), feature_flags(8), design_assets(5)
--- Layer 2: tenants(2), industry_templates(2)
--- Layer 3: tenant_users(3), contacts(8), products(8), staff(4),
---          restaurant_tables(6), campaigns(4), automations(6), referrals(4),
+-- Layer 1: users(3), plans(4), feature_flags(8), design_assets(5)
+-- Layer 2: tenants(3), industry_templates(3)
+-- Layer 3: tenant_users(5), contacts(12), products(12), staff(6),
+--          restaurant_tables(6), campaigns(6), automations(6), referrals(4),
 --          landing_pages(3), support_tickets(4), case_studies(3),
---          appointments(4), reservations(4), webhook_logs(4), ai_logs(4)
+--          appointments(8), reservations(4), webhook_logs(4), ai_logs(4)
 -- Layer 4: conversations(4), orders(6), follow_ups(4)
 -- Layer 5: messages(8), deliveries(3), shipments(3), transactions(4)
--- Layer 6: members(4), subscriptions(2), bot_configs(2),
+-- Layer 6: members(6), subscriptions(3), bot_configs(3),
 --          ai_conversations(2), ai_messages(7)
--- Total: 32 tables, ~136 records
+-- Total: 32 tables, ~165 records (incl. superadmin + beauty demo)
 -- =============================================================================

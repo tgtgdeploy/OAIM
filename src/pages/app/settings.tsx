@@ -15,7 +15,6 @@ import { Store, Bot, Users, CreditCard } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTenants, useUpdateTenant } from "@/hooks/use-tenants";
 import { useTenantUsers } from "@/hooks/use-tenant-users";
-import { CheckoutModal } from "@/components/CheckoutModal";
 
 interface TenantSettings {
   email?: string;
@@ -54,12 +53,12 @@ export default function SettingsPage() {
   const { data: members = [], isLoading: membersLoading } = useTenantUsers(tenant?.id);
 
   const [bizName, setBizName] = useState("");
-  const [bizIndustry, setBizIndustry] = useState<string>("ecommerce");
+  const [bizIndustry, setBizIndustry] = useState<"ecommerce" | "fnb" | "beauty">("ecommerce");
   const [bizPhone, setBizPhone] = useState("");
   const [bizEmail, setBizEmail] = useState("");
   const [bizAddress, setBizAddress] = useState("");
+  const [subdomain, setSubdomain] = useState("");
 
-  const [showCheckout, setShowCheckout] = useState(false);
   const [autoReply, setAutoReply] = useState(true);
   const [aiTone, setAiTone] = useState("friendly");
   const [aiGoal, setAiGoal] = useState("close");
@@ -68,10 +67,12 @@ export default function SettingsPage() {
   useEffect(() => {
     if (!tenant) return;
     setBizName(tenant.name);
-    setBizIndustry(tenant.industry);
+    const ind = tenant.industry === "restaurant" ? "fnb" : tenant.industry;
+    setBizIndustry(ind as "ecommerce" | "fnb" | "beauty");
     setBizPhone(tenant.whatsapp_phone_id ?? "");
     setBizEmail(tenantSettings.email ?? "");
     setBizAddress(tenantSettings.address ?? "");
+    setSubdomain(tenant.subdomain ?? "");
     setAutoReply(tenantSettings.auto_reply ?? true);
     setAiTone(tenantSettings.ai_tone ?? "friendly");
     setAiGoal(tenantSettings.ai_goal ?? "close");
@@ -89,8 +90,9 @@ export default function SettingsPage() {
     updateTenant.mutate({
       id: tenant.id,
       name: bizName,
-      industry: bizIndustry as "ecommerce" | "restaurant" | "fnb" | "beauty",
+      industry: bizIndustry,
       whatsapp_phone_id: bizPhone || null,
+      subdomain: subdomain || null,
       settings: {
         ...tenantSettings,
         email: bizEmail,
@@ -152,13 +154,14 @@ export default function SettingsPage() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="biz-industry">{t("settings.industry")}</Label>
-                    <Select value={bizIndustry} onValueChange={setBizIndustry}>
+                    <Select value={bizIndustry} onValueChange={(v) => setBizIndustry(v as "ecommerce" | "fnb" | "beauty")}>
                       <SelectTrigger data-testid="select-industry">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="ecommerce">{t("settings.ecommerce")}</SelectItem>
-                        <SelectItem value="restaurant">{t("settings.restaurant")}</SelectItem>
+                        <SelectItem value="fnb">{t("settings.fnb")}</SelectItem>
+                        <SelectItem value="beauty">{t("settings.beauty")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -174,6 +177,23 @@ export default function SettingsPage() {
                 <div className="space-y-2">
                   <Label htmlFor="biz-address">{t("settings.address")}</Label>
                   <Textarea id="biz-address" value={bizAddress} onChange={(e) => setBizAddress(e.target.value)} className="resize-none" rows={2} data-testid="input-biz-address" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="biz-subdomain">{t("settings.subdomain")}</Label>
+                  <div className="flex items-center gap-0">
+                    <Input
+                      id="biz-subdomain"
+                      value={subdomain}
+                      onChange={(e) => setSubdomain(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
+                      placeholder={t("settings.subdomainPlaceholder")}
+                      className="rounded-r-none"
+                      data-testid="input-subdomain"
+                    />
+                    <span className="inline-flex items-center px-3 h-9 border border-l-0 rounded-r-md bg-muted text-muted-foreground text-sm">
+                      {t("settings.subdomainSuffix")}
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">{t("settings.subdomainDesc")}</p>
                 </div>
                 <Button onClick={handleSaveBusiness} disabled={updateTenant.isPending} data-testid="button-save-business">
                   {updateTenant.isPending ? t("common.saving") : t("settings.saveChanges")}
@@ -288,7 +308,7 @@ export default function SettingsPage() {
                     </div>
                     <p className="text-sm text-muted-foreground mt-1">{t("settings.proPlan")}</p>
                   </div>
-                  <Button variant="outline" data-testid="button-change-plan" onClick={() => setShowCheckout(true)}>{t("settings.changePlan")}</Button>
+                  <Button variant="outline" data-testid="button-change-plan">{t("settings.changePlan")}</Button>
                 </div>
                 <div>
                   <h4 className="text-sm font-semibold mb-2">{t("settings.usageThisMonth")}</h4>
@@ -315,7 +335,6 @@ export default function SettingsPage() {
           </TabsContent>
         </Tabs>
       </div>
-      <CheckoutModal open={showCheckout} onOpenChange={setShowCheckout} />
     </AppLayout>
   );
 }

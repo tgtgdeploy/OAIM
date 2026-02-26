@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { Link } from "wouter";
+import { useState, useRef } from "react";
+import { Link, useLocation } from "wouter";
 import { useTranslation } from "react-i18next";
+import { useAuthStore } from "@/stores/auth-store";
+import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -35,8 +37,50 @@ export default function OnboardingPage() {
   const [platform, setPlatform] = useState<Platform>("whatsapp");
   const { theme, toggleTheme } = useTheme();
   const { t } = useTranslation("app");
+  const [, navigate] = useLocation();
+  const tenant = useAuthStore((s) => s.tenant);
+  const refreshUserData = useAuthStore((s) => s.refreshUserData);
+  const phoneIdRef = useRef<HTMLInputElement>(null);
+  const waTokenRef = useRef<HTMLInputElement>(null);
+  const tgTokenRef = useRef<HTMLInputElement>(null);
   const totalSteps = 6;
   const progress = ((step + 1) / totalSteps) * 100;
+
+  async function handleCompleteSetup() {
+    if (!tenant) {
+      navigate("/app");
+      return;
+    }
+
+    // Save platform credentials
+    const updates: Record<string, unknown> = {};
+    if (platform === "whatsapp") {
+      const phoneId = phoneIdRef.current?.value;
+      const token = waTokenRef.current?.value;
+      if (phoneId) updates.whatsapp_phone_id = phoneId;
+      if (token) updates.whatsapp_token = token;
+    } else {
+      const token = tgTokenRef.current?.value;
+      if (token) updates.telegram_bot_token = token;
+    }
+
+    if (industry) {
+      updates.industry = industry === "restaurant" ? "fnb" : industry;
+    }
+
+    if (Object.keys(updates).length > 0) {
+      await supabase.from("tenants").update(updates).eq("id", tenant.id);
+    }
+
+    // Update bot_config
+    await supabase
+      .from("bot_configs")
+      .update({ platform, industry_type: industry ?? "ecommerce" })
+      .eq("tenant_id", tenant.id);
+
+    await refreshUserData();
+    navigate("/app");
+  }
 
   const stepLabels = [
     t("onboarding.stepBusiness"),
@@ -267,18 +311,18 @@ export default function OnboardingPage() {
                     <div className="space-y-4">
                       <div className="space-y-2">
                         <Label htmlFor="phone-id">{t("onboarding.phoneNumberId")}</Label>
-                        <Input id="phone-id" placeholder={t("onboarding.phoneNumberIdPlaceholder")} data-testid="input-phone-id" />
+                        <Input id="phone-id" ref={phoneIdRef} placeholder={t("onboarding.phoneNumberIdPlaceholder")} data-testid="input-phone-id" />
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="wa-token">{t("onboarding.accessToken")}</Label>
-                        <Input id="wa-token" type="password" placeholder={t("onboarding.accessTokenPlaceholder")} data-testid="input-wa-token" />
+                        <Input id="wa-token" ref={waTokenRef} type="password" placeholder={t("onboarding.accessTokenPlaceholder")} data-testid="input-wa-token" />
                       </div>
                     </div>
                   ) : (
                     <div className="space-y-4">
                       <div className="space-y-2">
                         <Label htmlFor="tg-token">{t("onboarding.telegramBotToken")}</Label>
-                        <Input id="tg-token" type="password" placeholder={t("onboarding.telegramBotTokenPlaceholder")} data-testid="input-tg-token" />
+                        <Input id="tg-token" ref={tgTokenRef} type="password" placeholder={t("onboarding.telegramBotTokenPlaceholder")} data-testid="input-tg-token" />
                       </div>
                     </div>
                   )}
@@ -419,12 +463,10 @@ export default function OnboardingPage() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             ) : (
-              <Link href="/app">
-                <Button data-testid="button-complete-setup">
-                  {t("onboarding.completeSetup")}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+              <Button onClick={handleCompleteSetup} data-testid="button-complete-setup">
+                {t("onboarding.completeSetup")}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
             )}
           </div>
         </div>

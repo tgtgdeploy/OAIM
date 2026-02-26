@@ -73,6 +73,22 @@ export function useUpdateProduct() {
   });
 }
 
+export function useProductWithVariants(id: string | undefined) {
+  return useQuery({
+    queryKey: ["products", "detail_with_variants", id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("products")
+        .select("*, product_variants(*)")
+        .eq("id", id!)
+        .single();
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!id,
+  });
+}
+
 export function useDeleteProduct() {
   const qc = useQueryClient();
   return useMutation({

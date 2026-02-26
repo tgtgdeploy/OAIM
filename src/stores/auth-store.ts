@@ -5,6 +5,13 @@ import type { Session } from '@supabase/supabase-js';
 import type { Row } from '@/lib/database.types';
 
 type UserRole = 'super_admin' | 'tenant_owner' | 'tenant_admin' | 'staff' | 'customer';
+type DemoIndustry = 'ecommerce' | 'fnb' | 'beauty';
+
+const DEMO_TENANTS: Record<DemoIndustry, { tenantId: string; tenantName: string; industry: string }> = {
+  ecommerce: { tenantId: 'e0000000-0000-0000-0000-000000000001', tenantName: 'Kedai Gadget KL', industry: 'ecommerce' },
+  fnb: { tenantId: 'e0000000-0000-0000-0000-000000000002', tenantName: 'Restoran Selera Kampung', industry: 'fnb' },
+  beauty: { tenantId: 'e0000000-0000-0000-0000-000000000003', tenantName: 'Glow Beauty Spa', industry: 'beauty' },
+};
 
 interface AuthState {
   user: SupabaseUser | null;
@@ -14,11 +21,13 @@ interface AuthState {
   tenant: Row<'tenants'> | null;
   tenantUser: Row<'tenant_users'> | null;
   initialized: boolean;
+  isDemo: boolean;
 
   // Actions
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signUp: (email: string, password: string, metadata?: Record<string, string>) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
+  demoLogin: (industry: DemoIndustry) => void;
   initAuthListener: () => () => void;
   refreshUserData: () => Promise<void>;
 }
@@ -33,6 +42,42 @@ export const useAuthStore = create<AuthState>()(
       tenant: null,
       tenantUser: null,
       initialized: false,
+      isDemo: false,
+
+      demoLogin: (industry: DemoIndustry) => {
+        const demo = DEMO_TENANTS[industry];
+        set({
+          isDemo: true,
+          role: 'tenant_owner',
+          user: null,
+          session: null,
+          loading: false,
+          initialized: true,
+          tenant: {
+            id: demo.tenantId,
+            name: demo.tenantName,
+            industry: demo.industry,
+            status: 'active',
+            plan: 'pro',
+            owner_id: 'a0000000-0000-0000-0000-000000000001',
+            whatsapp_phone_id: null,
+            whatsapp_token: null,
+            telegram_bot_token: null,
+            telegram_chat_id: null,
+            logo_url: null,
+            subdomain: null,
+            settings: {},
+            created_at: new Date().toISOString(),
+          } as Row<'tenants'>,
+          tenantUser: {
+            id: 'demo-tenant-user',
+            tenant_id: demo.tenantId,
+            user_id: 'a0000000-0000-0000-0000-000000000001',
+            role: 'tenant_owner',
+            created_at: new Date().toISOString(),
+          } as Row<'tenant_users'>,
+        });
+      },
 
       signIn: async (email, password) => {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -51,13 +96,17 @@ export const useAuthStore = create<AuthState>()(
       },
 
       signOut: async () => {
-        await supabase.auth.signOut();
+        const wasDemo = get().isDemo;
+        if (!wasDemo) {
+          await supabase.auth.signOut();
+        }
         set({
           user: null,
           session: null,
           role: null,
           tenant: null,
           tenantUser: null,
+          isDemo: false,
         });
       },
 

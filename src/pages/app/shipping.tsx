@@ -16,11 +16,20 @@ import {
 } from "@/components/ui/table";
 import { Filter, Truck, Package, MapPin, CheckCircle2 } from "lucide-react";
 import { useShipments } from "@/hooks/use-shipments";
+import { useOrders } from "@/hooks/use-orders";
+import { useMemo } from "react";
 import "@/styles/dashboard.css";
 
 export default function ShippingPage() {
   const { t } = useTranslation("app");
   const { data: shipments = [], isLoading } = useShipments();
+  const { data: orders = [] } = useOrders();
+
+  const orderMap = useMemo(() => {
+    const map = new Map<string, string>();
+    orders.forEach(o => map.set(o.id, o.id.substring(0, 8)));
+    return map;
+  }, [orders]);
 
   const activeShipments = shipments.filter((s) => s.status === "shipped" || s.status === "in_transit").length;
   const pendingPickup = shipments.filter((s) => s.status === "pending").length;
@@ -66,6 +75,7 @@ export default function ShippingPage() {
                   <TableHead className="hidden md:table-cell">{t("shipping.thCourier")}</TableHead>
                   <TableHead className="hidden lg:table-cell">{t("shipping.thTracking")}</TableHead>
                   <TableHead className="hidden sm:table-cell">{t("shipping.thDestination")}</TableHead>
+                  <TableHead className="hidden md:table-cell">{t("shipping.thOrder")}</TableHead>
                   <TableHead>{t("shipping.thStatus")}</TableHead>
                   <TableHead className="hidden sm:table-cell">{t("shipping.thDate")}</TableHead>
                 </TableRow>
@@ -91,6 +101,7 @@ export default function ShippingPage() {
                       <TableCell className="hidden md:table-cell text-sm text-muted-foreground">{s.courier ?? "—"}</TableCell>
                       <TableCell className="hidden lg:table-cell text-sm text-muted-foreground font-mono text-xs">{s.tracking_number ?? "—"}</TableCell>
                       <TableCell className="hidden sm:table-cell text-sm text-muted-foreground">{s.destination ?? "—"}</TableCell>
+                      <TableCell className="hidden md:table-cell text-sm text-muted-foreground font-mono">{s.order_id ? orderMap.get(s.order_id) || s.order_id.substring(0, 8) : "—"}</TableCell>
                       <TableCell><StatusBadge status={s.status} /></TableCell>
                       <TableCell className="hidden sm:table-cell text-sm text-muted-foreground">{new Date(s.shipped_date ?? s.created_at).toLocaleDateString()}</TableCell>
                     </TableRow>

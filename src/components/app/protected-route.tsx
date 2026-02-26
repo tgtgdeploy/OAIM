@@ -29,13 +29,22 @@ interface ProtectedRouteProps {
 }
 
 export function ProtectedRoute({ children, requiredRole = 'customer' }: ProtectedRouteProps) {
-  const { user, loading, initialized, role } = useAuthStore();
+  const { user, loading, initialized, role, isDemo } = useAuthStore();
   const [, navigate] = useLocation();
 
   useEffect(() => {
     if (!initialized || loading) return;
 
+    // Demo users can access /app/* but not /superadmin/*
+    if (isDemo) {
+      if (requiredRole === 'super_admin') {
+        navigate('/auth/login');
+      }
+      return;
+    }
+
     if (!user) {
+      navigate('/auth/login');
       return;
     }
 
@@ -50,9 +59,18 @@ export function ProtectedRoute({ children, requiredRole = 'customer' }: Protecte
         }
       }
     }
-  }, [user, loading, initialized, role, requiredRole, navigate]);
+  }, [user, loading, initialized, role, isDemo, requiredRole, navigate]);
 
   if (!initialized || loading) {
+    return <LoadingFallback />;
+  }
+
+  // Demo mode: allow access (except super_admin, handled above)
+  if (isDemo) {
+    return <>{children}</>;
+  }
+
+  if (!user) {
     return <LoadingFallback />;
   }
 

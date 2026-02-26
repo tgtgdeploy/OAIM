@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { AppLayout } from "./layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -12,8 +11,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus } from "lucide-react";
-import { useContacts, useCreateContact } from "@/hooks/use-contacts";
+import { Plus, Calendar } from "lucide-react";
+import { useDeals, useCreateDeal } from "@/hooks/use-deals";
+import { useContacts } from "@/hooks/use-contacts";
 import { useToast } from "@/hooks/use-toast";
 
 function formatRelativeTime(isoDate: string): string {
@@ -24,53 +24,59 @@ function formatRelativeTime(isoDate: string): string {
   const diffHours = Math.floor(diffMs / 3600000);
   const diffDays = Math.floor(diffMs / 86400000);
 
-  if (diffMins < 60) {
-    return `${diffMins}m ago`;
-  }
-  if (diffHours < 24) {
-    return `${diffHours}h ago`;
-  }
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
   return `${diffDays}d ago`;
 }
 
 export default function PipelinePage() {
   const { t } = useTranslation("app");
-  const { data: contacts = [], isLoading } = useContacts();
-  const createContact = useCreateContact();
+  const { data: deals = [], isLoading } = useDeals();
+  const { data: contacts = [] } = useContacts();
+  const createDeal = useCreateDeal();
   const { toast } = useToast();
 
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [defaultStage, setDefaultStage] = useState("");
-  const [formName, setFormName] = useState("");
-  const [formPhone, setFormPhone] = useState("");
+  const [formTitle, setFormTitle] = useState("");
+  const [formContactId, setFormContactId] = useState("");
+  const [formValue, setFormValue] = useState("");
+  const [formCurrency, setFormCurrency] = useState("MYR");
   const [formStage, setFormStage] = useState("");
-  const [formTags, setFormTags] = useState("");
+  const [formExpectedClose, setFormExpectedClose] = useState("");
   const [formNotes, setFormNotes] = useState("");
 
+  const contactMap = useMemo(() => {
+    const map = new Map<string, string>();
+    contacts.forEach(c => map.set(c.id, c.name));
+    return map;
+  }, [contacts]);
+
   const resetForm = () => {
-    setFormName("");
-    setFormPhone("");
+    setFormTitle("");
+    setFormContactId("");
+    setFormValue("");
+    setFormCurrency("MYR");
     setFormStage("");
-    setFormTags("");
+    setFormExpectedClose("");
     setFormNotes("");
   };
 
   const openDialog = (stage: string) => {
-    setDefaultStage(stage);
     setFormStage(stage);
     setDialogOpen(true);
   };
 
   const handleSubmit = () => {
-    if (!formName || !formPhone) return;
-    const tags = formTags.split(",").map(t => t.trim()).filter(Boolean);
-    createContact.mutate(
+    if (!formTitle) return;
+    createDeal.mutate(
       {
         tenant_id: "demo",
-        name: formName,
-        phone: formPhone,
-        tags,
-        stage: (formStage || "new_inquiry") as "new_inquiry" | "quoted" | "follow_up" | "closed_won" | "closed_lost",
+        title: formTitle,
+        contact_id: formContactId || null,
+        value: formValue ? parseFloat(formValue) : 0,
+        currency: formCurrency,
+        stage: (formStage || "new_inquiry") as "new_inquiry" | "quoted" | "follow_up" | "negotiation" | "closed_won" | "closed_lost",
+        expected_close_date: formExpectedClose || null,
         notes: formNotes || null,
       },
       {
@@ -83,40 +89,41 @@ export default function PipelinePage() {
     );
   };
 
-  const stageOrder = ["new_inquiry", "quoted", "follow_up", "closed_won"] as const;
+  const stageOrder = ["new_inquiry", "quoted", "follow_up", "negotiation", "closed_won"] as const;
   const stageColorMap: Record<string, string> = {
     new_inquiry: "bg-blue-500",
     quoted: "bg-yellow-500",
     follow_up: "bg-orange-500",
+    negotiation: "bg-purple-500",
     closed_won: "bg-green-500",
   };
-
-  const stagesData = stageOrder.map(stageId => ({
-    id: stageId,
-    color: stageColorMap[stageId],
-    deals: contacts.filter(c => c.stage === stageId).map(c => ({
-      id: c.id,
-      name: c.name,
-      value: "—",
-      product: c.tags.join(", ") || "—",
-      time: formatRelativeTime(c.created_at),
-    })),
-  }));
-
-  const totalDeals = contacts.length;
-  const totalValue = "—";
 
   const stageTitles: Record<string, string> = {
     new_inquiry: t("pipeline.stageNewInquiry"),
     quoted: t("pipeline.stageQuoted"),
     follow_up: t("pipeline.stageFollowUp"),
+    negotiation: t("pipeline.stageNegotiation"),
     closed_won: t("pipeline.stageClosedWon"),
   };
 
-  const stages = stagesData.map((s) => ({
-    ...s,
-    title: stageTitles[s.id] || s.id,
+  const stagesData = stageOrder.map(stageId => ({
+    id: stageId,
+    color: stageColorMap[stageId],
+    title: stageTitles[stageId] || stageId,
+    deals: deals.filter(d => d.stage === stageId).map(d => ({
+      id: d.id,
+      title: d.title,
+      contactName: d.contact_id ? contactMap.get(d.contact_id) || t("pipeline.noContact") : t("pipeline.noContact"),
+      value: d.value > 0 ? `${d.currency} ${d.value.toLocaleString()}` : "—",
+      expectedClose: d.expected_close_date ? new Date(d.expected_close_date).toLocaleDateString() : null,
+      time: formatRelativeTime(d.created_at),
+    })),
   }));
+
+  const totalDeals = deals.filter(d => d.stage !== "closed_lost").length;
+  const totalValue = deals
+    .filter(d => d.stage !== "closed_lost" && d.stage !== "closed_won")
+    .reduce((sum, d) => sum + d.value, 0);
 
   return (
     <AppLayout title={t("pipeline.title")}>
@@ -126,9 +133,11 @@ export default function PipelinePage() {
             <div>
               <div className="text-sm text-muted-foreground">{t("pipeline.activeDeals", { count: totalDeals })}</div>
             </div>
-            <Badge variant="secondary" className="text-sm">{t("pipeline.pipelineValue", { value: totalValue })}</Badge>
+            <Badge variant="secondary" className="text-sm">
+              {t("pipeline.pipelineValue", { value: totalValue > 0 ? `MYR ${totalValue.toLocaleString()}` : "—" })}
+            </Badge>
           </div>
-          <Button data-testid="button-add-deal" onClick={() => { setDefaultStage(""); setFormStage(""); setDialogOpen(true); }}>
+          <Button data-testid="button-add-deal" onClick={() => { setFormStage(""); setDialogOpen(true); }}>
             <Plus className="h-4 w-4 mr-2" />
             {t("pipeline.addDeal")}
           </Button>
@@ -167,7 +176,7 @@ export default function PipelinePage() {
         ) : (
           <div className="overflow-x-auto -mx-4 md:-mx-6 px-4 md:px-6">
             <div className="flex gap-4 min-w-max pb-4">
-              {stages.map((stage) => (
+              {stagesData.map((stage) => (
                 <div key={stage.id} className="w-72 flex-shrink-0" data-testid={`pipeline-stage-${stage.id}`}>
                   <div className="flex items-center gap-2 mb-3">
                     <div className={`h-2.5 w-2.5 rounded-full ${stage.color}`} />
@@ -181,16 +190,23 @@ export default function PipelinePage() {
                           <div className="flex items-start gap-2">
                             <Avatar className="h-7 w-7 flex-shrink-0 mt-0.5">
                               <AvatarFallback className="text-xs bg-primary/10 text-primary">
-                                {deal.name.split(" ").map(n => n[0]).join("")}
+                                {deal.title.split(" ").map(n => n[0]).join("").slice(0, 2)}
                               </AvatarFallback>
                             </Avatar>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between gap-2">
-                                <span className="text-sm font-medium truncate">{deal.name}</span>
+                                <span className="text-sm font-medium truncate">{deal.title}</span>
                                 <span className="text-sm font-bold text-primary whitespace-nowrap">{deal.value}</span>
                               </div>
-                              <p className="text-xs text-muted-foreground truncate">{deal.product}</p>
-                              <p className="text-xs text-muted-foreground mt-1">{deal.time}</p>
+                              <p className="text-xs text-muted-foreground truncate">{deal.contactName}</p>
+                              <div className="flex items-center gap-2 mt-1">
+                                {deal.expectedClose && (
+                                  <span className="text-xs text-muted-foreground flex items-center gap-1">
+                                    <Calendar className="h-3 w-3" />{deal.expectedClose}
+                                  </span>
+                                )}
+                                <span className="text-xs text-muted-foreground ml-auto">{deal.time}</span>
+                              </div>
                             </div>
                           </div>
                         </CardContent>
@@ -215,22 +231,46 @@ export default function PipelinePage() {
           </DialogHeader>
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label>{t("pipeline.contactName")}</Label>
+              <Label>{t("pipeline.dealTitle")}</Label>
               <Input
-                value={formName}
-                onChange={(e) => setFormName(e.target.value)}
+                value={formTitle}
+                onChange={(e) => setFormTitle(e.target.value)}
+                placeholder={t("pipeline.dealTitlePlaceholder")}
                 required
-                data-testid="input-deal-name"
+                data-testid="input-deal-title"
               />
             </div>
             <div className="space-y-2">
-              <Label>{t("pipeline.phone")}</Label>
-              <Input
-                value={formPhone}
-                onChange={(e) => setFormPhone(e.target.value)}
-                required
-                data-testid="input-deal-phone"
-              />
+              <Label>{t("pipeline.contact")}</Label>
+              <Select value={formContactId} onValueChange={setFormContactId}>
+                <SelectTrigger data-testid="select-deal-contact">
+                  <SelectValue placeholder={t("pipeline.selectContact")} />
+                </SelectTrigger>
+                <SelectContent>
+                  {contacts.map((c) => (
+                    <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>{t("pipeline.value")}</Label>
+                <Input
+                  type="number"
+                  value={formValue}
+                  onChange={(e) => setFormValue(e.target.value)}
+                  data-testid="input-deal-value"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>{t("pipeline.currency")}</Label>
+                <Input
+                  value={formCurrency}
+                  onChange={(e) => setFormCurrency(e.target.value)}
+                  data-testid="input-deal-currency"
+                />
+              </div>
             </div>
             <div className="space-y-2">
               <Label>{t("pipeline.stage")}</Label>
@@ -246,11 +286,12 @@ export default function PipelinePage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>{t("pipeline.tags")}</Label>
+              <Label>{t("pipeline.expectedCloseDate")}</Label>
               <Input
-                value={formTags}
-                onChange={(e) => setFormTags(e.target.value)}
-                data-testid="input-deal-tags"
+                type="date"
+                value={formExpectedClose}
+                onChange={(e) => setFormExpectedClose(e.target.value)}
+                data-testid="input-deal-close-date"
               />
             </div>
             <div className="space-y-2">
@@ -263,7 +304,7 @@ export default function PipelinePage() {
             </div>
           </div>
           <DialogFooter>
-            <Button onClick={handleSubmit} disabled={createContact.isPending} data-testid="button-save-deal">
+            <Button onClick={handleSubmit} disabled={createDeal.isPending} data-testid="button-save-deal">
               {t("common.save")}
             </Button>
           </DialogFooter>

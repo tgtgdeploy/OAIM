@@ -53,6 +53,22 @@ export function useCreateOrder() {
   });
 }
 
+export function useOrderWithDetails(id: string | undefined) {
+  return useQuery({
+    queryKey: ["orders", "detail_with_items", id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("orders")
+        .select("*, order_items(*)")
+        .eq("id", id!)
+        .single();
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!id,
+  });
+}
+
 export function useUpdateOrder() {
   const qc = useQueryClient();
   return useMutation({

@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/table";
 import { Filter, Receipt, CreditCard, Wallet, DollarSign } from "lucide-react";
 import { useOrders } from "@/hooks/use-orders";
+import { useContacts } from "@/hooks/use-contacts";
+import { useMemo } from "react";
 import "@/styles/dashboard.css";
 
 const PAID_STATUSES = ["completed", "shipped", "confirmed"] as const;
@@ -43,6 +45,13 @@ function formatTime(dateString: string): string {
 export default function CheckoutPage() {
   const { t } = useTranslation("app");
   const { data: orders = [], isLoading } = useOrders();
+  const { data: contacts = [] } = useContacts();
+
+  const contactMap = useMemo(() => {
+    const map = new Map<string, string>();
+    contacts.forEach(c => map.set(c.id, c.name));
+    return map;
+  }, [contacts]);
 
   const paidOrders = orders.filter((o) => isPaid(o.status));
   const openOrders = orders.filter((o) => isOpen(o.status));
@@ -180,7 +189,7 @@ export default function CheckoutPage() {
                             {order.id.substring(0, 8)}
                           </TableCell>
                           <TableCell className="text-sm">
-                            {order.contact_id.substring(0, 8)}
+                            {contactMap.get(order.contact_id) || order.contact_id.substring(0, 8)}
                           </TableCell>
                           <TableCell className="hidden sm:table-cell text-sm text-muted-foreground">
                             {itemCount}

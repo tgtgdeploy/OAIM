@@ -16,11 +16,27 @@ import {
 } from "@/components/ui/table";
 import { Filter, DollarSign, CreditCard, Wallet, TrendingUp } from "lucide-react";
 import { useTransactions } from "@/hooks/use-transactions";
+import { useContacts } from "@/hooks/use-contacts";
+import { useOrders } from "@/hooks/use-orders";
+import { useMemo } from "react";
 import "@/styles/dashboard.css";
 
 export default function PaymentsPage() {
   const { t } = useTranslation("app");
   const { data: transactions = [], isLoading } = useTransactions();
+  const { data: orders = [] } = useOrders();
+  const { data: contacts = [] } = useContacts();
+
+  const orderContactMap = useMemo(() => {
+    const contactMap = new Map<string, string>();
+    contacts.forEach(c => contactMap.set(c.id, c.name));
+    const map = new Map<string, string>();
+    orders.forEach(o => {
+      const contactName = contactMap.get(o.contact_id);
+      if (contactName) map.set(o.id, contactName);
+    });
+    return map;
+  }, [orders, contacts]);
 
   const totalRevenue = transactions
     .filter((txn) => txn.status === "success")
@@ -95,7 +111,11 @@ export default function PaymentsPage() {
                     <TableRow key={txn.id} className="cursor-pointer" data-testid={`row-txn-${txn.id}`}>
                       <TableCell className="font-medium text-sm">{txn.id.substring(0, 8)}</TableCell>
                       <TableCell className="text-sm">{txn.customer_name}</TableCell>
-                      <TableCell className="hidden md:table-cell text-sm text-muted-foreground">{txn.order_id?.substring(0, 8) ?? "—"}</TableCell>
+                      <TableCell className="hidden md:table-cell text-sm text-muted-foreground">
+                        {txn.order_id ? (
+                          <span className="font-mono">{txn.order_id.substring(0, 8)}</span>
+                        ) : "—"}
+                      </TableCell>
                       <TableCell className="text-right font-medium text-sm">{txn.currency} {parseFloat(txn.amount).toLocaleString()}</TableCell>
                       <TableCell className="hidden sm:table-cell text-sm text-muted-foreground">{txn.method}</TableCell>
                       <TableCell>{getStatusBadge(txn.status)}</TableCell>

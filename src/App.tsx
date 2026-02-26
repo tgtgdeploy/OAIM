@@ -5,11 +5,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/lib/theme-provider";
 import { IndustryProvider } from "@/lib/industry-context";
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import "@/i18n";
 import NotFound from "@/pages/not-found";
 import { useAuthStore } from "@/stores/auth-store";
 import { ProtectedRoute } from "@/components/app/protected-route";
+import { getSubdomain } from "@/lib/subdomain";
 
 const HomePage = lazy(() => import("@/pages/marketing/home"));
 const ProductsPage = lazy(() => import("@/pages/marketing/products"));
@@ -48,13 +49,6 @@ const TherapistsPage = lazy(() => import("@/pages/app/therapists"));
 const ServicesPage = lazy(() => import("@/pages/app/services"));
 const ShippingPage = lazy(() => import("@/pages/app/shipping"));
 const PaymentsPage = lazy(() => import("@/pages/app/payments"));
-const InventoryPage = lazy(() => import("@/pages/app/inventory"));
-const PurchaseOrdersPage = lazy(() => import("@/pages/app/purchase-orders"));
-const BillsPage = lazy(() => import("@/pages/app/bills"));
-const FinancePage = lazy(() => import("@/pages/app/finance"));
-const PerformancePage = lazy(() => import("@/pages/app/performance"));
-const MediaPlanPage = lazy(() => import("@/pages/app/media-plan"));
-const PluginsPage = lazy(() => import("@/pages/app/plugins"));
 
 const TenantsPage = lazy(() => import("@/pages/superadmin/tenants"));
 const PlansPage = lazy(() => import("@/pages/superadmin/plans"));
@@ -86,7 +80,48 @@ function LoadingFallback() {
   );
 }
 
+function SubdomainStorefront({ subdomain }: { subdomain: string }) {
+  const [industry, setIndustry] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    import("@/lib/supabase").then(({ supabase }) => {
+      supabase
+        .from("tenants")
+        .select("industry")
+        .eq("subdomain", subdomain)
+        .single()
+        .then(({ data }) => {
+          setIndustry(data?.industry ?? null);
+          setLoading(false);
+        });
+    });
+  }, [subdomain]);
+
+  if (loading) return <LoadingFallback />;
+  if (!industry) return <NotFound />;
+
+  const TemplateComponent =
+    industry === "fnb" || industry === "restaurant"
+      ? FnbTemplate
+      : industry === "beauty"
+        ? BeautyTemplate
+        : EcommerceTemplate;
+
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <TemplateComponent />
+    </Suspense>
+  );
+}
+
 function Router() {
+  const subdomain = getSubdomain();
+
+  if (subdomain) {
+    return <SubdomainStorefront subdomain={subdomain} />;
+  }
+
   return (
     <Suspense fallback={<LoadingFallback />}>
       <Switch>
@@ -105,35 +140,28 @@ function Router() {
         <Route path="/templates/beauty" component={BeautyTemplate} />
 
         <Route path="/app/onboarding" component={OnboardingPage} />
-        <Route path="/app">{() => <ProtectedRoute requiredRole="staff"><InboxPage /></ProtectedRoute>}</Route>
-        <Route path="/app/contacts">{() => <ProtectedRoute requiredRole="staff"><ContactsPage /></ProtectedRoute>}</Route>
-        <Route path="/app/pipeline">{() => <ProtectedRoute requiredRole="staff"><PipelinePage /></ProtectedRoute>}</Route>
-        <Route path="/app/orders">{() => <ProtectedRoute requiredRole="staff"><OrdersPage /></ProtectedRoute>}</Route>
-        <Route path="/app/products">{() => <ProtectedRoute requiredRole="staff"><AppProductsPage /></ProtectedRoute>}</Route>
-        <Route path="/app/follow-ups">{() => <ProtectedRoute requiredRole="staff"><FollowUpsPage /></ProtectedRoute>}</Route>
-        <Route path="/app/ads">{() => <ProtectedRoute requiredRole="staff"><AdsPage /></ProtectedRoute>}</Route>
-        <Route path="/app/automation">{() => <ProtectedRoute requiredRole="staff"><AppAutomationPage /></ProtectedRoute>}</Route>
-        <Route path="/app/support">{() => <ProtectedRoute requiredRole="staff"><AppSupportPage /></ProtectedRoute>}</Route>
-        <Route path="/app/referral">{() => <ProtectedRoute requiredRole="staff"><AppReferralPage /></ProtectedRoute>}</Route>
-        <Route path="/app/team">{() => <ProtectedRoute requiredRole="tenant_admin"><AppTeamPage /></ProtectedRoute>}</Route>
-        <Route path="/app/settings">{() => <ProtectedRoute requiredRole="tenant_admin"><SettingsPage /></ProtectedRoute>}</Route>
-        <Route path="/app/menu">{() => <ProtectedRoute requiredRole="staff"><MenuPage /></ProtectedRoute>}</Route>
-        <Route path="/app/reservations">{() => <ProtectedRoute requiredRole="staff"><ReservationsPage /></ProtectedRoute>}</Route>
-        <Route path="/app/delivery">{() => <ProtectedRoute requiredRole="staff"><DeliveryPage /></ProtectedRoute>}</Route>
-        <Route path="/app/tables">{() => <ProtectedRoute requiredRole="staff"><TablesPage /></ProtectedRoute>}</Route>
-        <Route path="/app/checkout">{() => <ProtectedRoute requiredRole="staff"><CheckoutPage /></ProtectedRoute>}</Route>
-        <Route path="/app/booking">{() => <ProtectedRoute requiredRole="staff"><BookingPage /></ProtectedRoute>}</Route>
-        <Route path="/app/therapists">{() => <ProtectedRoute requiredRole="staff"><TherapistsPage /></ProtectedRoute>}</Route>
-        <Route path="/app/services">{() => <ProtectedRoute requiredRole="staff"><ServicesPage /></ProtectedRoute>}</Route>
-        <Route path="/app/shipping">{() => <ProtectedRoute requiredRole="staff"><ShippingPage /></ProtectedRoute>}</Route>
-        <Route path="/app/payments">{() => <ProtectedRoute requiredRole="staff"><PaymentsPage /></ProtectedRoute>}</Route>
-        <Route path="/app/inventory">{() => <ProtectedRoute requiredRole="staff"><InventoryPage /></ProtectedRoute>}</Route>
-        <Route path="/app/purchase-orders">{() => <ProtectedRoute requiredRole="staff"><PurchaseOrdersPage /></ProtectedRoute>}</Route>
-        <Route path="/app/bills">{() => <ProtectedRoute requiredRole="staff"><BillsPage /></ProtectedRoute>}</Route>
-        <Route path="/app/finance">{() => <ProtectedRoute requiredRole="staff"><FinancePage /></ProtectedRoute>}</Route>
-        <Route path="/app/performance">{() => <ProtectedRoute requiredRole="staff"><PerformancePage /></ProtectedRoute>}</Route>
-        <Route path="/app/media-plan">{() => <ProtectedRoute requiredRole="staff"><MediaPlanPage /></ProtectedRoute>}</Route>
-        <Route path="/app/plugins">{() => <ProtectedRoute requiredRole="staff"><PluginsPage /></ProtectedRoute>}</Route>
+        <Route path="/app" component={InboxPage} />
+        <Route path="/app/contacts" component={ContactsPage} />
+        <Route path="/app/pipeline" component={PipelinePage} />
+        <Route path="/app/orders" component={OrdersPage} />
+        <Route path="/app/products" component={AppProductsPage} />
+        <Route path="/app/follow-ups" component={FollowUpsPage} />
+        <Route path="/app/ads" component={AdsPage} />
+        <Route path="/app/automation" component={AppAutomationPage} />
+        <Route path="/app/support" component={AppSupportPage} />
+        <Route path="/app/referral" component={AppReferralPage} />
+        <Route path="/app/team" component={AppTeamPage} />
+        <Route path="/app/settings" component={SettingsPage} />
+        <Route path="/app/menu" component={MenuPage} />
+        <Route path="/app/reservations" component={ReservationsPage} />
+        <Route path="/app/delivery" component={DeliveryPage} />
+        <Route path="/app/tables" component={TablesPage} />
+        <Route path="/app/checkout" component={CheckoutPage} />
+        <Route path="/app/booking" component={BookingPage} />
+        <Route path="/app/therapists" component={TherapistsPage} />
+        <Route path="/app/services" component={ServicesPage} />
+        <Route path="/app/shipping" component={ShippingPage} />
+        <Route path="/app/payments" component={PaymentsPage} />
 
         <Route path="/superadmin">{() => <ProtectedRoute requiredRole="super_admin"><TenantsPage /></ProtectedRoute>}</Route>
         <Route path="/superadmin/plans">{() => <ProtectedRoute requiredRole="super_admin"><PlansPage /></ProtectedRoute>}</Route>
@@ -164,8 +192,8 @@ function App() {
   const initAuthListener = useAuthStore((s) => s.initAuthListener);
 
   useEffect(() => {
-    const unsubscribe = initAuthListener();
-    return unsubscribe;
+    const unsub = initAuthListener();
+    return unsub;
   }, [initAuthListener]);
 
   return (
