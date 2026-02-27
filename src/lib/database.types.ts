@@ -792,6 +792,11 @@ export interface Database {
           time: string;
           duration: string | null;
           status: "pending" | "confirmed" | "completed" | "cancelled";
+          contact_id: string | null;
+          service_id: string | null;
+          therapist_id: string | null;
+          price: string | null;
+          notes: string | null;
           created_at: string;
         };
         Insert: {
@@ -804,6 +809,11 @@ export interface Database {
           time: string;
           duration?: string | null;
           status?: "pending" | "confirmed" | "completed" | "cancelled";
+          contact_id?: string | null;
+          service_id?: string | null;
+          therapist_id?: string | null;
+          price?: string | null;
+          notes?: string | null;
           created_at?: string;
         };
         Update: {
@@ -816,6 +826,11 @@ export interface Database {
           time?: string;
           duration?: string | null;
           status?: "pending" | "confirmed" | "completed" | "cancelled";
+          contact_id?: string | null;
+          service_id?: string | null;
+          therapist_id?: string | null;
+          price?: string | null;
+          notes?: string | null;
           created_at?: string;
         };
         Relationships: [];
@@ -831,6 +846,8 @@ export interface Database {
           table_label: string | null;
           status: "pending" | "confirmed" | "seated" | "completed" | "cancelled";
           note: string | null;
+          contact_id: string | null;
+          phone: string | null;
           created_at: string;
         };
         Insert: {
@@ -843,6 +860,8 @@ export interface Database {
           table_label?: string | null;
           status?: "pending" | "confirmed" | "seated" | "completed" | "cancelled";
           note?: string | null;
+          contact_id?: string | null;
+          phone?: string | null;
           created_at?: string;
         };
         Update: {
@@ -855,6 +874,8 @@ export interface Database {
           table_label?: string | null;
           status?: "pending" | "confirmed" | "seated" | "completed" | "cancelled";
           note?: string | null;
+          contact_id?: string | null;
+          phone?: string | null;
           created_at?: string;
         };
         Relationships: [];
@@ -870,6 +891,9 @@ export interface Database {
           today_bookings: number;
           weekly_hours: number;
           status: "available" | "busy" | "off";
+          image_url: string | null;
+          phone: string | null;
+          email: string | null;
           created_at: string;
         };
         Insert: {
@@ -882,6 +906,9 @@ export interface Database {
           today_bookings?: number;
           weekly_hours?: number;
           status?: "available" | "busy" | "off";
+          image_url?: string | null;
+          phone?: string | null;
+          email?: string | null;
           created_at?: string;
         };
         Update: {
@@ -894,6 +921,9 @@ export interface Database {
           today_bookings?: number;
           weekly_hours?: number;
           status?: "available" | "busy" | "off";
+          image_url?: string | null;
+          phone?: string | null;
+          email?: string | null;
           created_at?: string;
         };
         Relationships: [];
